@@ -1,0 +1,3 @@
+DevFast.Net.Collection 0.1.0
+
+ 1. New feature - 
