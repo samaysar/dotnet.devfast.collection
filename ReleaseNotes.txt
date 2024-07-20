@@ -1,0 +1,118 @@
+DevFast.Net.Extensions 0.3.0
+
+ 1. New feature - Adding following new extension methods in DevFast.Net.Extensions.SystemTypes.Enumerables:
+			- ToBlockingEnumerable(this IAsyncEnumerable<T>, CancellationToken, bool)
+
+ 2. New feature - Adding following new extension methods in DevFast.Net.Extensions.SystemTypes.Strings:
+			- IsNows(this string?)
+			- IsNotNows(this string?)
+			- ToTrimmedUpperSafe(this string?, string, CultureInfo?)
+			- ToTrimmedLowerSafe(this string?, string, CultureInfo?)
+			- TrimSafeOrEmpty(this string?, params char[]?)
+			- TrimSafeOrNull(this string?, params char[]?)
+			- TrimSafeOrDefault(this string?, string?, params char[]?)
+			- TryTo(this string?, out bool)
+			- TryTo(this string?, out Guid)
+			- TryTo(this string?, out int, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out long, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out byte, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out sbyte, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out short, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out ushort, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out uint, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out ulong, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out float, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out double, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out decimal, NumberStyles, IFormatProvider?)
+			- TryTo(this string?, out DateOnly, DateTimeStyles, IFormatProvider?)
+			- TryTo(this string?, out DateOnly, string, DateTimeStyles, IFormatProvider?)
+			- TryTo(this string?, out DateOnly, string[], DateTimeStyles, IFormatProvider?)
+			- TryTo(this string?, out TimeOnly, DateTimeStyles, IFormatProvider?)
+			- TryTo(this string?, out TimeOnly, string, DateTimeStyles, IFormatProvider?)
+			- TryTo(this string?, out TimeOnly, string[], DateTimeStyles, IFormatProvider?)
+			- TryTo(this string?, out DateTimeOnly, DateTimeStyles, IFormatProvider?)
+			- TryTo(this string?, out DateTimeOnly, string, DateTimeStyles, IFormatProvider?)
+			- TryTo(this string?, out DateTimeOnly, string[], DateTimeStyles, IFormatProvider?)
+			
+ 3. New feature - Adding following new extension methods in DevFast.Net.Extensions.SystemTypes.ReadOnlySpan:
+	A. .Net 6 onwards:
+			- TryTo(this ReadOnlySpan<char>, out bool)
+			- TryTo(this ReadOnlySpan<char>, out Guid)
+			- TryTo(this ReadOnlySpan<char>, out int, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out long, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out byte, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out sbyte, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out short, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out ushort, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out uint, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out ulong, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out float, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out double, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out decimal, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out DateOnly, DateTimeStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out DateOnly, string, DateTimeStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out DateOnly, string[], DateTimeStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out TimeOnly, DateTimeStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out TimeOnly, string, DateTimeStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out TimeOnly, string[], DateTimeStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out DateTimeOnly, DateTimeStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out DateTimeOnly, string, DateTimeStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<char>, out DateTimeOnly, string[], DateTimeStyles, IFormatProvider?)
+	B. .Net 8 onwards:
+			- TryTo(this ReadOnlySpan<byte>, out int, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out long, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out byte, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out sbyte, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out short, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out ushort, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out uint, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out ulong, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out float, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out double, NumberStyles, IFormatProvider?)
+			- TryTo(this ReadOnlySpan<byte>, out decimal, NumberStyles, IFormatProvider?)
+
+
+DevFast.Net.Extensions 0.2.0
+
+ 1. New feature - Adding net8.0 as target framework.
+
+DevFast.Net.Extensions 0.1.1
+
+ 1. New feature - Adding following new extension methods in DevFast.Net.Extensions.SystemTypes.Enumerables:
+			- CountAsync<T>(this IAsyncEnumerable<T>, CancellationToken, bool)
+			- CountLongAsync<T>(this IAsyncEnumerable<T>, CancellationToken, bool)
+			- SelectAsync<TIn,TOut>(this IAsyncEnumerable<TIn>, Func<TIn,CancellationToken,TOut>, CancellationToken, bool)
+			- WhereAsync<T>(this IAsyncEnumerable<T>, Func<T,CancellationToken,bool>, CancellationToken, bool)
+
+ 2. Modifications - Using ValueTask, instead of Task, on following extension methods of DevFast.Net.Extensions.SystemTypes.Enumerables:
+			- ForEachAsync<T>(this IEnumerable<T>, Func<T,CancellationToken,ValueTask>, CancellationToken, bool)
+			- SelectAsync<TIn,TOut>(this IEnumerable<TIn>, Func<TIn,CancellationToken,ValueTask<TOut>>, CancellationToken, bool)
+			- ForEachAsync<T>(this IAsyncEnumerable<T>, Func<T,CancellationToken,ValueTask>, CancellationToken, bool)
+			- SelectAsync<TIn,TOut>(this IAsyncEnumerable<TIn>, Func<TIn,CancellationToken,ValueTask<TOut>>, CancellationToken, bool)
+			- ToListAsync<T>(this IAsyncEnumerable<T>, CancellationToken, bool)
+			- WhereAsync<T>(this IAsyncEnumerable<T>, Func<T,CancellationToken,ValueTask<bool>>, CancellationToken, bool)
+
+
+DevFast.Net.Extensions 0.1.0
+
+ 1. New feature - namespace DevFast.Net.Extensions.SystemTypes added, containing
+	A. Static Class ByteArrays with extensions methods
+			- CopyToSafe(this byte[], byte[], int, int, int)
+			- CopyToUnSafe(this byte[], byte[], int, int, int)
+			- DoubleByteCapacity(this byte[])
+			- EnsureByteCapacity(byte[], int)
+			- EnsureByteCapacity(this byte[], int)
+			- LiftNCopySafe(this byte[], int, int, int)
+			- LiftNCopyUnSafe(this byte[], int, int, int)
+	B. Static Class Enumerables with extensions methods
+			- ForEach<T>(this IEnumerable<T>, Action<T,CancellationToken>, CancellationToken)
+			- ForEachAsync<T>(this IEnumerable<T>, Func<T,CancellationToken,Task>, CancellationToken, bool)
+			- SelectAsync<TIn,TOut>(this IEnumerable<TIn>, Func<TIn,CancellationToken,Task<TOut>>, CancellationToken, bool)
+			- ForEachAsync<T>(this IAsyncEnumerable<T>, Func<T,CancellationToken,Task>, CancellationToken, bool)
+			- SelectAsync<TIn,TOut>(this IAsyncEnumerable<TIn>, Func<TIn,CancellationToken,Task<TOut>>, CancellationToken, bool)
+			- SkipAsync<TIn>(this IAsyncEnumerable<TIn>, int, CancellationToken, bool)
+			- TakeAsync<TIn>(this IAsyncEnumerable<TIn>, int, CancellationToken, bool)
+			- ToChunksAsync<T>(this IAsyncEnumerable<T>, int, CancellationToken, bool, bool)
+			- ToListAsync<T>(this IAsyncEnumerable<T>, CancellationToken, bool)
+			- WhereAsync<T>(this IAsyncEnumerable<T>, Func<T,CancellationToken,Task<bool>>, CancellationToken, bool)
+		
