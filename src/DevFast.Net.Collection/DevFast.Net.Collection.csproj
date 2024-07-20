@@ -1,11 +1,54 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <NoWarn>CA1062;CA1068</NoWarn>
+    <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>bin/$(Configuration)/$(TargetFramework)/$(AssemblyName).xml</DocumentationFile>
+    <DefaultDocumentationFolder>../../docs/$(TargetFramework)</DefaultDocumentationFolder>
+    <DefaultDocumentationGeneratedPages>Namespaces,Types</DefaultDocumentationGeneratedPages>
+    <DefaultDocumentationConfigurationFile>../../DocConfig.json</DefaultDocumentationConfigurationFile>
+    <DefaultDocumentationLinksBaseUrl>https://github.com/samaysar/dotnet.devfast.collection/tree/master/docs</DefaultDocumentationLinksBaseUrl>
+    <Title>DevFast.Net.Collection</Title>
+    <Company>samaysar</Company>
+    <Version Condition="'$(vNugetPack)'==''">1.0.0</Version>
+    <Version Condition="'$(vNugetPack)'!=''">$(vNugetPack)</Version>
+    <PackageVersion Condition="'$(vNugetPack)'==''">1.0.0-alpha</PackageVersion>
+    <PackageVersion Condition="'$(vNugetPack)'!=''">$(vNugetPack)</PackageVersion>
+    <FileVersion Condition="'$(vNugetPack)'==''">1.0.0</FileVersion>
+    <FileVersion Condition="'$(vNugetPack)'!=''">$(vNugetPack)</FileVersion>
+    <AssemblyVersion Condition="'$(vNugetPack)'==''">1.0.0</AssemblyVersion>
+    <AssemblyVersion Condition="'$(vNugetPack)'!=''">$(vNugetPack)</AssemblyVersion>
+    <InformationalVersion Condition="'$(vNugetPack)'==''">1.0.0-alpha.0</InformationalVersion>
+    <InformationalVersion Condition="'$(vNugetPack)'!=''">$(vNugetPack).0</InformationalVersion>
+    <AssemblyTitle>DevFast.Net.Collection (TargetFramework: $(TargetFramework))</AssemblyTitle>
+    <Authors>Divya Sarthi MAHESHWARI</Authors>
+    <Description>Package contains well-tested optimized data-structures like FastDictionary, Heap etc.</Description>
+    <Copyright>Copyright © Divya Sarthi MAHESHWARI 2023</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/samaysar/dotnet.devfast</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/samaysar/dotnet.devfast.collection</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>devfast;fastdev;dotnet;collection;fastdictionary;dictionary;heap;fastgroupby;</PackageTags>
+    <PackageReleaseNotes>https://raw.githubusercontent.com/samaysar/dotnet.devfast.collection/master/ReleaseNotes.txt</PackageReleaseNotes>
+    <NeutralLanguage />
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <LangVersion>latest</LangVersion>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AnalysisLevel>6.0-all</AnalysisLevel>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <WarningLevel>9999</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="Abstractions\" />
   </ItemGroup>
