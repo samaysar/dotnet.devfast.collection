@@ -49,11 +49,12 @@
   <PropertyGroup>
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Abstractions\" />
-  </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DefaultDocumentation" Version="0.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="DevFast.Net.Text" Version="0.2.0" />
   </ItemGroup>
 
