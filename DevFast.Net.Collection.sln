@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevFast.Net.Collection", "src\DevFast.Net.Collection\DevFast.Net.Collection.csproj", "{7B177AF8-FA6A-45BD-A1B8-CF3497EE3A33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevFast.Net.Collection", "src\DevFast.Net.Collection\DevFast.Net.Collection.csproj", "{7B177AF8-FA6A-45BD-A1B8-CF3497EE3A33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevFast.Net.Collection.Tests", "src\DevFast.Net.Collection.Tests\DevFast.Net.Collection.Tests.csproj", "{DE0EA0E3-F9B6-4B4E-ABB6-A228B3832A65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7B177AF8-FA6A-45BD-A1B8-CF3497EE3A33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B177AF8-FA6A-45BD-A1B8-CF3497EE3A33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B177AF8-FA6A-45BD-A1B8-CF3497EE3A33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE0EA0E3-F9B6-4B4E-ABB6-A228B3832A65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE0EA0E3-F9B6-4B4E-ABB6-A228B3832A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE0EA0E3-F9B6-4B4E-ABB6-A228B3832A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE0EA0E3-F9B6-4B4E-ABB6-A228B3832A65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
