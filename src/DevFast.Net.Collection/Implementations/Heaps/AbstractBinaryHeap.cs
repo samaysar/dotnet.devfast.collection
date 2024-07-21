@@ -9,7 +9,7 @@ namespace DevFast.Net.Collection.Implementations.Heaps;
 /// <summary>
 /// Abstract binary heap implementation.
 /// </summary>
-public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
+public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
 {
     private T[] _heapData;
 
@@ -37,11 +37,21 @@ public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
     /// <inheritdoc />
     public int Capacity => _heapData.Length;
 
+#if NETCOREAPP3_0_OR_GREATER
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#else
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     private static int LeftChildIndex(int elementIndex)
     {
         return (elementIndex << 1) + 1;
     }
 
+#if NETCOREAPP3_0_OR_GREATER
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#else
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     private static int ParentIndex(int elementIndex)
     {
         return (elementIndex - 1) >> 1;
@@ -50,19 +60,11 @@ public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
     /// <inheritdoc />
     public T Peek()
     {
-        return TryPeek(out T? item)
-#if !NETSTANDARD2_1_OR_GREATER && !NETCOREAPP3_0_OR_GREATER
-            && item != null
-#endif
-            ? item : throw new InvalidOperationException($"{nameof(Peek)} not permitted on empty heap.");
+        return TryPeek(out T? item) ? item : throw new InvalidOperationException($"{nameof(Peek)} not permitted on empty heap.");
     }
 
     /// <inheritdoc />
-    public virtual bool TryPeek(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
-        [NotNullWhen(true)]
-#endif
-    out T? item)
+    public virtual bool TryPeek([NotNullWhen(true)] out T? item)
     {
         if (IsEmpty)
         {
@@ -76,19 +78,16 @@ public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
     /// <inheritdoc />
     public T Pop()
     {
-        return TryPop(out T? item)
-#if !NETSTANDARD2_1_OR_GREATER && !NETCOREAPP3_0_OR_GREATER
-            && item != null
-#endif
-            ? item : throw new InvalidOperationException($"{nameof(Pop)} not permitted on empty heap.");
+        return TryPop(out T? item) ? item : throw new InvalidOperationException($"{nameof(Pop)} not permitted on empty heap.");
     }
 
     /// <inheritdoc />
-    public virtual bool TryPop(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
-        [NotNullWhen(true)]
+#if NETCOREAPP3_0_OR_GREATER
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#else
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
-    out T? item)
+    public virtual bool TryPop([NotNullWhen(true)] out T? item)
     {
         if (IsEmpty)
         {
@@ -108,6 +107,11 @@ public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
     }
 
     /// <inheritdoc />
+#if NETCOREAPP3_0_OR_GREATER
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#else
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     public virtual bool TryAdd(T item)
     {
         return AddCore(item.ThrowArgumentExceptionForNull(nameof(item)));
@@ -116,11 +120,7 @@ public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
     /// <inheritdoc />
     public IEnumerable<T> PopAll()
     {
-        while (TryPop(out T? item)
-#if !NETSTANDARD2_1_OR_GREATER && !NETCOREAPP3_0_OR_GREATER
-            && item != null
-#endif
-        )
+        while (TryPop(out T? item))
         {
             yield return item;
         }
@@ -220,7 +220,11 @@ public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
     /// <summary>
     /// Ensures that there is a capacity to add an element.
     /// </summary>
+#if NETCOREAPP3_0_OR_GREATER
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     protected virtual bool EnsureCapacity()
     {
         return !IsFull;
@@ -231,7 +235,6 @@ public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
     /// </summary>
     /// <param name="size">Size of the new array.</param>
     /// <exception cref="ArgumentException">When the given size is less than current count.</exception>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected void InternalReSizeData(int size)
     {
         T[] newCollection = new T[size.ThrowArgumentExceptionOnPredicateFail(x => x < Count, $"Cannot resize; {nameof(size)}", $"size >= {nameof(Count)}.")];
@@ -239,6 +242,11 @@ public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
         _heapData = newCollection;
     }
 
+#if NETCOREAPP3_0_OR_GREATER
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#else
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     private int SwapNReturnLastParam(int firstIndex, int secondIndex)
     {
         (_heapData[secondIndex], _heapData[firstIndex]) = (_heapData[firstIndex], _heapData[secondIndex]);
@@ -258,13 +266,13 @@ public abstract class AbstractBinaryHeap<T> : IHeap<T>, ICompactAbleHeap
     /// <inheritdoc/>
     public T[] All()
     {
-        T[] newCollection = new T[Count];
         if (Count != 0)
         {
-            Array.Copy(_heapData, newCollection, Count);
+            T[] newCollection = new T[Count];
+            new ReadOnlySpan<T>(_heapData, 0, Count).CopyTo(newCollection);
+            return newCollection;
         }
-
-        return newCollection;
+        return [];
     }
 
     /// <inheritdoc/>

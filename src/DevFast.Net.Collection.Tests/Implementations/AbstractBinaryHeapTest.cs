@@ -1,0 +1,204 @@
+﻿using System.Reflection;
+using DevFast.Net.Collection.Implementations.Heaps;
+
+namespace DevFast.Net.Collection.Tests.Implementations;
+
+[TestFixture]
+public class AbstractBinaryHeapTest
+{
+    [Test]
+    [TestCase(-1)]
+    [TestCase(int.MinValue)]
+    public void Ctor_Throws_Error_For_Invalid_Arguments(int capacity)
+    {
+        Ae? ctorEx = Throws<TargetInvocationException>(() => For<AbstractBinaryHeap<int>>(capacity))?
+                .InnerException as Ae;
+        That(ctorEx, Is.Not.Null);
+        That(ctorEx!.Message, Is.EqualTo(""));
+    }
+
+    [Test]
+    [TestCase(0)]
+    [TestCase(1)]
+    [TestCase(10)]
+    public void Properties_Are_Well_Defined(int capacity)
+    {
+        IHeap<int> instance = Substitute.For<AbstractBinaryHeap<int>>(capacity);
+        Assert.True(instance.IsEmpty);
+        Assert.AreEqual(instance.Count, 0);
+        Assert.AreEqual(instance.Capacity, capacity);
+        if (capacity == 0)
+        {
+            Assert.True(instance.IsFull);
+        }
+        else
+        {
+            Assert.False(instance.IsFull);
+        }
+    }
+
+    [Test]
+    public void Add_N_Try_Add_Behaves_For_Empty_Heap()
+    {
+        IHeap<int> instance = new TestAbstractBinaryHeap(0, (x, y) => x < y);
+        Assert.IsFalse(instance.TryAdd(1));
+        var ex = Assert.Throws<DdnDfException>(() => instance.Add(1));
+        Assert.NotNull(ex);
+        Assert.IsTrue(ex.ErrorCode.Equals(DdnDfErrorCode.DemandUnfulfilled));
+        Assert.IsTrue(ex.Message.Equals("(DemandUnfulfilled) Unable to add element in the heap."));
+    }
+
+    [Test]
+    public void Add_N_Try_Add_Behaves_For_Non_Empty_Heap()
+    {
+        IHeap<int> instance = new TestAbstractBinaryHeap(1, (x, y) => x < y);
+        Assert.True(instance.IsEmpty);
+        Assert.IsTrue(instance.TryAdd(1));
+        Assert.IsFalse(instance.TryAdd(1));
+        var ex = Assert.Throws<DdnDfException>(() => instance.Add(1));
+        Assert.NotNull(ex);
+        Assert.IsTrue(ex.ErrorCode.Equals(DdnDfErrorCode.DemandUnfulfilled));
+        Assert.IsTrue(ex.Message.Equals("(DemandUnfulfilled) Unable to add element in the heap."));
+        instance = new TestAbstractBinaryHeap(3, (x, y) => x < y);
+        instance.Add(3);
+        Assert.False(instance.IsFull);
+        instance.Add(2);
+        Assert.False(instance.IsFull);
+        Assert.IsTrue(instance.TryAdd(1));
+        Assert.True(instance.IsFull);
+    }
+
+    [Test]
+    public void AddAll_Properly_Adds_All_Elements_And_Returns_The_Count()
+    {
+        int[] items = new[] { 2, 4, 0, 1, 2 };
+        Assert.IsTrue(new TestAbstractBinaryHeap(0, (x, y) => x < y).AddAll(items).Equals(0));
+        Assert.IsTrue(new TestAbstractBinaryHeap(3, (x, y) => x < y).AddAll(items).Equals(3));
+        Assert.IsTrue(new TestAbstractBinaryHeap(5, (x, y) => x < y).AddAll(items).Equals(5));
+        Assert.IsTrue(new TestAbstractBinaryHeap(10, (x, y) => x < y).AddAll(items).Equals(5));
+    }
+
+    [Test]
+    public void PopAll_Properly_Maintains_Order_And_Sequence()
+    {
+        int[] items = new[] { 2, 4, 0, 1, 2 };
+        int[] expected = new[] { 0, 1, 2, 2, 4 };
+        var instance = new TestAbstractBinaryHeap(10, (x, y) => x < y);
+        instance.AddAll(items);
+        var poppedItems = instance.PopAll().ToList();
+        Assert.IsTrue(poppedItems.Count().Equals(5));
+        Assert.AreEqual(poppedItems, expected);
+        poppedItems = instance.PopAll().ToList();
+        Assert.IsTrue(poppedItems.Count().Equals(0));
+        instance.AddAll(items);
+        poppedItems = instance.PopAll().ToList();
+        Assert.IsTrue(poppedItems.Count().Equals(5));
+    }
+
+    [Test]
+    [TestCase(0)]
+    [TestCase(1)]
+    [TestCase(10)]
+    public void Peek_N_TryPeek_Behaves_For_Empty_Heap(int capacity)
+    {
+        IHeap<int> instance = Substitute.ForPartsOf<AbstractBinaryHeap<int>>(capacity);
+        _ = Assert.Throws<IndexOutOfRangeException>(() => instance.Peek());
+        Assert.False(instance.TryPeek(out _));
+    }
+
+    [Test]
+    public void Peek_N_TryPeek_Behaves_For_Non_Empty_Heap()
+    {
+        IHeap<int> instance = new TestAbstractBinaryHeap(1, (x, y) => x < y);
+        instance.Add(1);
+        Assert.AreEqual(instance.Peek(), 1);
+        Assert.True(instance.TryPeek(out var val) && val.Equals(1));
+    }
+
+    [Test]
+    [TestCase(0)]
+    [TestCase(1)]
+    [TestCase(10)]
+    public void Pop_N_TryPop_Behaves_For_Empty_Heap(int capacity)
+    {
+        IHeap<int> instance = Substitute.ForPartsOf<AbstractBinaryHeap<int>>(capacity);
+        _ = Assert.Throws<IndexOutOfRangeException>(() => instance.Pop());
+        Assert.False(instance.TryPop(out _));
+    }
+
+    [Test]
+    public void Pop_N_TryPop_Behaves_For_Non_Empty_Heap()
+    {
+        IHeap<int> instance = new TestAbstractBinaryHeap(5, (x, y) => x < y);
+        instance.Add(3);
+        instance.Add(2);
+        instance.Add(1);
+        instance.Add(4);
+        instance.Add(1);
+        Assert.AreEqual(instance.Pop(), 1);
+        Assert.AreEqual(instance.Pop(), 1);
+        Assert.AreEqual(instance.Pop(), 2);
+        Assert.AreEqual(instance.Pop(), 3);
+        Assert.AreEqual(instance.Pop(), 4);
+        Assert.True(instance.IsEmpty);
+        Assert.IsFalse(instance.TryPop(out _));
+    }
+
+    [Test]
+    public void Compact_Behaves()
+    {
+        AbstractBinaryHeap<int> instance = Substitute.For<AbstractBinaryHeap<int>>(2);
+        Assert.AreEqual(instance.Capacity, 2);
+        instance.Compact();
+        Assert.AreEqual(instance.Capacity, 0);
+    }
+
+    [Test]
+    public void GetFirstUnsafe_Throws_Error_When_Capacity_Is_Zero()
+    {
+        AbstractBinaryHeap<int> instance = Substitute.For<AbstractBinaryHeap<int>>(0);
+        _ = Assert.Throws<IndexOutOfRangeException>(() => instance.GetFirstUnsafe());
+    }
+
+    [Test]
+    public void GetFirstUnsafe_Blindly_Returns_Whatever_At_0Th_Index_Irrespective_Of_Count()
+    {
+        var instance = new TestAbstractBinaryHeap(5, (x, y) => x < y);
+        Assert.IsTrue(instance.GetFirstUnsafe().Equals(0));
+        instance.Add(0);
+        Assert.IsTrue(instance.GetFirstUnsafe().Equals(0));
+        instance.Add(-1);
+        Assert.IsTrue(instance.GetFirstUnsafe().Equals(-1));
+    }
+
+    [Test]
+    public void InternalStateAsEnumerable_Exposes_Internal_Buffer()
+    {
+        var instance = new TestAbstractBinaryHeap(10, (x, y) => x < y);
+        Assert.True(instance.InternalStateAsEnumerable().ToList().Count.Equals(0));
+        int[] items = new[] { 100, -58, 0, -52, 1, 10 };
+        instance.AddAll(items);
+        HashSet<int> internalState = new(instance.InternalStateAsEnumerable());
+        foreach (int item in items)
+        {
+            Assert.IsTrue(internalState.Contains(item));
+        }
+    }
+
+    [Test]
+    public void IEnumerable_Works_Fine_With_All()
+    {
+        var instance = new TestAbstractBinaryHeap(10, (x, y) => x < y);
+        Assert.True(instance.ToList().Count.Equals(0));
+        int[] items = new[] { 100, -58, 0, -52, 1, 10 };
+        instance.AddAll(items);
+        HashSet<int> internalState = new(instance.All());
+        IEnumerable<T> asEnumerable = instance as IEnumerable;
+        List<object> all = asEnumerable.Cast<object>().ToList();
+        foreach (int item in items)
+        {
+            Assert.IsTrue(internalState.Contains(item));
+            Assert.IsTrue(all.Contains(item));
+        }
+    }
+}

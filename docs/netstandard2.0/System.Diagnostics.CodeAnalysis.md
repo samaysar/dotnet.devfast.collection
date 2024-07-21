@@ -1,0 +1,21 @@
+#### [DevFast.Net.Collection](index.md 'index')
+
+## System.Diagnostics.CodeAnalysis Namespace
+
+| Classes | |
+| :--- | :--- |
+| [AllowNullAttribute](System.Diagnostics.CodeAnalysis.AllowNullAttribute.md 'System.Diagnostics.CodeAnalysis.AllowNullAttribute') | Specifies that null is allowed as an input even if the corresponding type disallows it. |
+| [DisallowNullAttribute](System.Diagnostics.CodeAnalysis.DisallowNullAttribute.md 'System.Diagnostics.CodeAnalysis.DisallowNullAttribute') | Specifies that null is disallowed as an input even if the corresponding type allows it. |
+| [DoesNotReturnAttribute](System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute.md 'System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute') | Applied to a method that will never return under any circumstance. |
+| [DoesNotReturnIfAttribute](System.Diagnostics.CodeAnalysis.DoesNotReturnIfAttribute.md 'System.Diagnostics.CodeAnalysis.DoesNotReturnIfAttribute') | Specifies that the method will not return if the associated Boolean parameter is passed the specified value. |
+| [ExperimentalAttribute](System.Diagnostics.CodeAnalysis.ExperimentalAttribute.md 'System.Diagnostics.CodeAnalysis.ExperimentalAttribute') | Indicates that an API is experimental and it may change in the future. |
+| [MaybeNullAttribute](System.Diagnostics.CodeAnalysis.MaybeNullAttribute.md 'System.Diagnostics.CodeAnalysis.MaybeNullAttribute') | Specifies that an output may be null even if the corresponding type disallows it. |
+| [MaybeNullWhenAttribute](System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute.md 'System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute') | Specifies that when a method returns [ReturnValue](System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute.md#System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute.ReturnValue 'System.Diagnostics.CodeAnalysis.MaybeNullWhenAttribute.ReturnValue'), the parameter may be null even if the corresponding type disallows it. |
+| [MemberNotNullAttribute](System.Diagnostics.CodeAnalysis.MemberNotNullAttribute.md 'System.Diagnostics.CodeAnalysis.MemberNotNullAttribute') | Specifies that the method or property will ensure that the listed field and property members have not-null values. |
+| [MemberNotNullWhenAttribute](System.Diagnostics.CodeAnalysis.MemberNotNullWhenAttribute.md 'System.Diagnostics.CodeAnalysis.MemberNotNullWhenAttribute') | Specifies that the method or property will ensure that the listed field and property members have not-null values when returning with the specified return value condition. |
+| [NotNullAttribute](System.Diagnostics.CodeAnalysis.NotNullAttribute.md 'System.Diagnostics.CodeAnalysis.NotNullAttribute') | Specifies that an output will not be null even if the corresponding type allows it. Specifies that an input argument was not null when the call returns. |
+| [NotNullIfNotNullAttribute](System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute.md 'System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute') | Specifies that the output will be non-null if the named parameter is non-null. |
+| [NotNullWhenAttribute](System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.md 'System.Diagnostics.CodeAnalysis.NotNullWhenAttribute') | Specifies that when a method returns [ReturnValue](System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.md#System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.ReturnValue 'System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.ReturnValue'), the parameter will not be null even if the corresponding type allows it. |
+| [SetsRequiredMembersAttribute](System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute.md 'System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute') | Specifies that this constructor sets all required members for the current type, and callers do not need to set any required members themselves. |
+| [StringSyntaxAttribute](System.Diagnostics.CodeAnalysis.StringSyntaxAttribute.md 'System.Diagnostics.CodeAnalysis.StringSyntaxAttribute') | Specifies the syntax used in a string. |
+| [UnscopedRefAttribute](System.Diagnostics.CodeAnalysis.UnscopedRefAttribute.md 'System.Diagnostics.CodeAnalysis.UnscopedRefAttribute') | Used to indicate a byref escapes and is not scoped. |

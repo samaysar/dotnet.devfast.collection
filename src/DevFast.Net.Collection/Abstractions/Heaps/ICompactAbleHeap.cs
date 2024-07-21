@@ -3,7 +3,7 @@
 /// <summary>
 /// Interface to declare compaction contract.
 /// </summary>
-public interface ICompactAbleHeap
+public interface ICompactAbleHeap<T> : IHeap<T>
 {
     /// <summary>
     /// Internally allocated storage will be compacted to match the current usage.

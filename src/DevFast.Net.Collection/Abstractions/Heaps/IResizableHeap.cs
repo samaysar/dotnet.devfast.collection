@@ -3,7 +3,7 @@
 /// <summary>
 /// Interface to declare resizing operations contract.
 /// </summary>
-public interface IResizableHeap<T> : IHeap<T>, ICompactAbleHeap
+public interface IResizableHeap<T> : ICompactAbleHeap<T>
 {
     /// <summary>
     /// Gets the current truth value whether resizing is possible or not.
