@@ -1,5 +1,5 @@
 #### [DevFast.Net.Collection](index.md 'index')
-### [DevFast.Net.Collection.Abstractions](DevFast.Net.Collection.Abstractions.md 'DevFast.Net.Collection.Abstractions')
+### [DevFast.Net.Collection.Abstractions.Heaps](DevFast.Net.Collection.Abstractions.Heaps.md 'DevFast.Net.Collection.Abstractions.Heaps')
 
 ## IResizeStrategy Interface
 
@@ -10,7 +10,7 @@ public interface IResizeStrategy
 ```
 ### Properties
 
-<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.CanResize'></a>
+<a name='DevFast.Net.Collection.Abstractions.Heaps.IResizeStrategy.CanResize'></a>
 
 ## IResizeStrategy.CanResize Property
 
@@ -24,7 +24,7 @@ bool CanResize { get; }
 [System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')
 ### Methods
 
-<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.TryComputeNewSize(int,int)'></a>
+<a name='DevFast.Net.Collection.Abstractions.Heaps.IResizeStrategy.TryComputeNewSize(int,int)'></a>
 
 ## IResizeStrategy.TryComputeNewSize(int, int) Method
 
@@ -35,13 +35,13 @@ bool TryComputeNewSize(int currentSize, out int newSize);
 ```
 #### Parameters
 
-<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.TryComputeNewSize(int,int).currentSize'></a>
+<a name='DevFast.Net.Collection.Abstractions.Heaps.IResizeStrategy.TryComputeNewSize(int,int).currentSize'></a>
 
 `currentSize` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
 
 Current size of the heap
 
-<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.TryComputeNewSize(int,int).newSize'></a>
+<a name='DevFast.Net.Collection.Abstractions.Heaps.IResizeStrategy.TryComputeNewSize(int,int).newSize'></a>
 
 `newSize` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
 

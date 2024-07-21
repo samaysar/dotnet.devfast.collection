@@ -1,4 +1,4 @@
-﻿namespace DevFast.Net.Collection.Abstractions;
+﻿namespace DevFast.Net.Collection.Abstractions.Heaps;
 
 /// <summary>
 /// Heap data structure interface.
@@ -29,6 +29,7 @@ public interface IHeap<T> : IEnumerable<T>
     /// <summary>
     /// Returns the first element of the heap without removing it from the heap.
     /// </summary>
+    /// <exception cref="InvalidOperationException">When the heap is empty.</exception>
     T Peek();
 
     /// <summary>
@@ -36,11 +37,12 @@ public interface IHeap<T> : IEnumerable<T>
     /// without removing it from the heap.
     /// </summary>
     /// <param name="item">out element</param>
-    bool TryPeek(out T item);
+    bool TryPeek(out T? item);
 
     /// <summary>
     /// Removes and returns the first element from the heap.
     /// </summary>
+    /// <exception cref="InvalidOperationException">When the heap is empty.</exception>
     T Pop();
 
     /// <summary>
@@ -48,12 +50,14 @@ public interface IHeap<T> : IEnumerable<T>
     /// and outs that element.
     /// </summary>
     /// <param name="item">out element</param>
-    bool TryPop(out T item);
+    bool TryPop(out T? item);
 
     /// <summary>
     /// Adds given element to the heap.
     /// </summary>
     /// <param name="item">Element to add</param>
+    /// <exception cref="ArgumentException">When element is <see langword="null"/>.</exception>
+    /// <exception cref="InvalidOperationException">When element cannot be added.</exception>
     void Add(T item);
 
     /// <summary>
@@ -61,10 +65,11 @@ public interface IHeap<T> : IEnumerable<T>
     /// Returns the truth value whether it was successfully added or not.
     /// </summary>
     /// <param name="item">Element to add.</param>
+    /// <exception cref="ArgumentException">When element is <see langword="null"/>.</exception>
     bool TryAdd(T item);
 
     /// <summary>
-    /// Removes all the elements from the heap.
+    /// Removes all the elements (in order) from the heap.
     /// </summary>
     IEnumerable<T> PopAll();
 
@@ -73,11 +78,14 @@ public interface IHeap<T> : IEnumerable<T>
     /// Returns the count of the elements that were successfully added.
     /// </summary>
     /// <param name="items">Enumeration of the Elements to add.</param>
+    /// <exception cref="ArgumentException">When any of the element in the <paramref name="items"/> is <see langword="null"/>.</exception>
     int AddAll(IEnumerable<T> items);
 
     /// <summary>
     /// Returns a copy of the internal collection without removing elements from it.
+    /// <para>
+    /// Enumerating on such a copy does NOT guarantee order.
+    /// </para>
     /// </summary>
-    /// <returns></returns>
     T[] All();
 }

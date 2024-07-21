@@ -1,4 +1,4 @@
-﻿namespace DevFast.Net.Collection.Abstractions;
+﻿namespace DevFast.Net.Collection.Abstractions.Heaps;
 
 /// <summary>
 /// Interface exposing sizing strategy for the binary heap.
