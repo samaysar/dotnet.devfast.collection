@@ -12,8 +12,6 @@ DevFast.Net.Collection.Abstractions.Heaps.IHeap<T>,
 System.Collections.Generic.IEnumerable<T>,
 System.Collections.IEnumerable
 ```
-- *Constructors*
-  - **[AbstractBinaryHeap(int)](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.AbstractBinaryHeap(int) 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.AbstractBinaryHeap(int)')**
 - *Properties*
   - **[Capacity](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.Capacity 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.Capacity')**
   - **[Count](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.Count 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.Count')**
@@ -24,11 +22,7 @@ System.Collections.IEnumerable
   - **[AddAll(IEnumerable&lt;T&gt;)](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.AddAll(System.Collections.Generic.IEnumerable_T_) 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.AddAll(System.Collections.Generic.IEnumerable<T>)')**
   - **[All()](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.All() 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.All()')**
   - **[Compact()](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.Compact() 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.Compact()')**
-  - **[EnsureCapacity()](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.EnsureCapacity() 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.EnsureCapacity()')**
   - **[GetEnumerator()](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.GetEnumerator() 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.GetEnumerator()')**
-  - **[GetFirstUnsafe()](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.GetFirstUnsafe() 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.GetFirstUnsafe()')**
-  - **[InternalReSizeData(int)](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.InternalReSizeData(int) 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.InternalReSizeData(int)')**
-  - **[LeftPrecedes(T, T)](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.LeftPrecedes(T,T) 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.LeftPrecedes(T, T)')**
   - **[Peek()](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.Peek() 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.Peek()')**
   - **[Pop()](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.Pop() 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.Pop()')**
   - **[PopAll()](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.PopAll() 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.PopAll()')**
@@ -58,24 +52,6 @@ System.Collections.IEnumerable
 Inheritance [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.Object 'System.Object') &#129106; AbstractBinaryHeap<T>
 
 Implements [DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap&lt;](DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.T')[&gt;](DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>'), [DevFast.Net.Collection.Abstractions.Heaps.IHeap&lt;](DevFast.Net.Collection.Abstractions.Heaps.IHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.IHeap<T>')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.T')[&gt;](DevFast.Net.Collection.Abstractions.Heaps.IHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.IHeap<T>'), [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.T')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1'), [System.Collections.IEnumerable](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.IEnumerable 'System.Collections.IEnumerable')
-### Constructors
-
-<a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.AbstractBinaryHeap(int)'></a>
-
-## AbstractBinaryHeap(int) Constructor
-
-Ctor with initial heap capacity.
-
-```csharp
-protected AbstractBinaryHeap(int initialCapacity);
-```
-#### Parameters
-
-<a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.AbstractBinaryHeap(int).initialCapacity'></a>
-
-`initialCapacity` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
-
-Initial capacity of the heap.
 ### Properties
 
 <a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.Capacity'></a>
@@ -223,19 +199,6 @@ public void Compact();
 
 Implements [Compact()](DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.md#DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.Compact() 'DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>.Compact()')
 
-<a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.EnsureCapacity()'></a>
-
-## AbstractBinaryHeap<T>.EnsureCapacity() Method
-
-Ensures that there is a capacity to add an element.
-
-```csharp
-protected virtual bool EnsureCapacity();
-```
-
-#### Returns
-[System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')
-
 <a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.GetEnumerator()'></a>
 
 ## AbstractBinaryHeap<T>.GetEnumerator() Method
@@ -251,71 +214,6 @@ Implements [GetEnumerator()](https://docs.microsoft.com/en-us/dotnet/api/System.
 #### Returns
 [System.Collections.Generic.IEnumerator&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerator-1 'System.Collections.Generic.IEnumerator`1')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.T')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerator-1 'System.Collections.Generic.IEnumerator`1')  
 An enumerator that can be used to iterate through the collection.
-
-<a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.GetFirstUnsafe()'></a>
-
-## AbstractBinaryHeap<T>.GetFirstUnsafe() Method
-
-Its an unsafe getter. !!! Does not check for the presence of the element
-at 0th index. !!!
-
-```csharp
-internal T GetFirstUnsafe();
-```
-
-#### Returns
-[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.T')
-
-<a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.InternalReSizeData(int)'></a>
-
-## AbstractBinaryHeap<T>.InternalReSizeData(int) Method
-
-Replaces the internal array with a new array of a given [size](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.InternalReSizeData(int).size 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.InternalReSizeData(int).size').
-
-```csharp
-protected void InternalReSizeData(int size);
-```
-#### Parameters
-
-<a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.InternalReSizeData(int).size'></a>
-
-`size` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
-
-Size of the new array.
-
-#### Exceptions
-
-[System.ArgumentException](https://docs.microsoft.com/en-us/dotnet/api/System.ArgumentException 'System.ArgumentException')  
-When the given size is less than current count.
-
-<a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.LeftPrecedes(T,T)'></a>
-
-## AbstractBinaryHeap<T>.LeftPrecedes(T, T) Method
-
-Returns the truth value whether given [left](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.LeftPrecedes(T,T).left 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.LeftPrecedes(T, T).left') element precedes
-compared to given [right](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.LeftPrecedes(T,T).right 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.LeftPrecedes(T, T).right') element, in assumed sorted order (i.e. if
-we start popping out elements from heap, whether element provided as [left](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.LeftPrecedes(T,T).left 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.LeftPrecedes(T, T).left') must
-be popped out before the element provided as [right](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.LeftPrecedes(T,T).right 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.LeftPrecedes(T, T).right')).
-
-```csharp
-protected abstract bool LeftPrecedes(T left, T right);
-```
-#### Parameters
-
-<a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.LeftPrecedes(T,T).left'></a>
-
-`left` [T](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.T')
-
-Left element
-
-<a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.LeftPrecedes(T,T).right'></a>
-
-`right` [T](DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap<T>.T')
-
-Right element
-
-#### Returns
-[System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')
 
 <a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBinaryHeap_T_.Peek()'></a>
 
