@@ -22,6 +22,11 @@ public interface IHeapCollection<T> : ICollection<T>, IReadOnlyCollection<T>
     int Capacity { get; }
 
     /// <summary>
+    /// Gets the number of elements currently present in the heap.
+    /// </summary>
+    new int Count { get; }
+
+    /// <summary>
     /// Returns the first element of the heap without removing it from the heap.
     /// </summary>
     /// <exception cref="InvalidOperationException">When the heap is empty.</exception>
@@ -85,8 +90,7 @@ public interface IHeapCollection<T> : ICollection<T>, IReadOnlyCollection<T>
     T[] All();
 
     /// <summary>
-    /// dsad
+    /// Creates and return the current internal state as <see cref="ReadOnlySpan{T}"/>.
     /// </summary>
-    /// <returns></returns>
     ReadOnlySpan<T> AsSpan();
 }
