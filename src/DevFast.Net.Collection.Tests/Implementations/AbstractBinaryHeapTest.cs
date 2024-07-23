@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using DevFast.Net.Collection.Abstractions.Heaps;
 using DevFast.Net.Collection.Implementations.Heaps;
 
 namespace DevFast.Net.Collection.Tests.Implementations;
@@ -23,9 +24,9 @@ public class AbstractBinaryHeapTest
     [TestCase(10)]
     public void Properties_Are_Well_Defined(int capacity)
     {
-        IHeap<int> instance = Substitute.For<AbstractBinaryHeap<int>>(capacity);
-        Assert.True(instance.IsEmpty);
-        Assert.AreEqual(instance.Count, 0);
+        IHeapCollection<int> instance = For<AbstractBinaryHeap<int>>(capacity);
+        That(instance, Is.Empty);
+        That(instance.Count, Is.EqualTo(0));
         Assert.AreEqual(instance.Capacity, capacity);
         if (capacity == 0)
         {
@@ -40,9 +41,9 @@ public class AbstractBinaryHeapTest
     [Test]
     public void Add_N_Try_Add_Behaves_For_Empty_Heap()
     {
-        IHeap<int> instance = new TestAbstractBinaryHeap(0, (x, y) => x < y);
+        IHeapCollection<int> instance = new TestAbstractBinaryHeap(0, (x, y) => x < y);
         Assert.IsFalse(instance.TryAdd(1));
-        var ex = Assert.Throws<DdnDfException>(() => instance.Add(1));
+        var ex = Throws<DdnDfException>(() => instance.Add(1));
         Assert.NotNull(ex);
         Assert.IsTrue(ex.ErrorCode.Equals(DdnDfErrorCode.DemandUnfulfilled));
         Assert.IsTrue(ex.Message.Equals("(DemandUnfulfilled) Unable to add element in the heap."));
@@ -51,11 +52,11 @@ public class AbstractBinaryHeapTest
     [Test]
     public void Add_N_Try_Add_Behaves_For_Non_Empty_Heap()
     {
-        IHeap<int> instance = new TestAbstractBinaryHeap(1, (x, y) => x < y);
+        IHeapCollection<int> instance = new TestAbstractBinaryHeap(1, (x, y) => x < y);
         Assert.True(instance.IsEmpty);
         Assert.IsTrue(instance.TryAdd(1));
         Assert.IsFalse(instance.TryAdd(1));
-        var ex = Assert.Throws<DdnDfException>(() => instance.Add(1));
+        var ex = Throws<DdnDfException>(() => instance.Add(1));
         Assert.NotNull(ex);
         Assert.IsTrue(ex.ErrorCode.Equals(DdnDfErrorCode.DemandUnfulfilled));
         Assert.IsTrue(ex.Message.Equals("(DemandUnfulfilled) Unable to add element in the heap."));
@@ -101,18 +102,18 @@ public class AbstractBinaryHeapTest
     [TestCase(10)]
     public void Peek_N_TryPeek_Behaves_For_Empty_Heap(int capacity)
     {
-        IHeap<int> instance = Substitute.ForPartsOf<AbstractBinaryHeap<int>>(capacity);
-        _ = Assert.Throws<IndexOutOfRangeException>(() => instance.Peek());
+        IHeapCollection<int> instance = ForPartsOf<AbstractBinaryHeap<int>>(capacity);
+        _ = Throws<IndexOutOfRangeException>(() => instance.Peek());
         Assert.False(instance.TryPeek(out _));
     }
 
     [Test]
     public void Peek_N_TryPeek_Behaves_For_Non_Empty_Heap()
     {
-        IHeap<int> instance = new TestAbstractBinaryHeap(1, (x, y) => x < y);
+        IHeapCollection<int> instance = new TestAbstractBinaryHeap(1, (x, y) => x < y);
         instance.Add(1);
         Assert.AreEqual(instance.Peek(), 1);
-        Assert.True(instance.TryPeek(out var val) && val.Equals(1));
+        Assert.True(instance.TryPeek(out int val) && val.Equals(1));
     }
 
     [Test]
@@ -121,15 +122,15 @@ public class AbstractBinaryHeapTest
     [TestCase(10)]
     public void Pop_N_TryPop_Behaves_For_Empty_Heap(int capacity)
     {
-        IHeap<int> instance = Substitute.ForPartsOf<AbstractBinaryHeap<int>>(capacity);
-        _ = Assert.Throws<IndexOutOfRangeException>(() => instance.Pop());
+        IHeapCollection<int> instance = ForPartsOf<AbstractBinaryHeap<int>>(capacity);
+        _ = Throws<IndexOutOfRangeException>(() => instance.Pop());
         Assert.False(instance.TryPop(out _));
     }
 
     [Test]
     public void Pop_N_TryPop_Behaves_For_Non_Empty_Heap()
     {
-        IHeap<int> instance = new TestAbstractBinaryHeap(5, (x, y) => x < y);
+        IHeapCollection<int> instance = new TestAbstractBinaryHeap(5, (x, y) => x < y);
         instance.Add(3);
         instance.Add(2);
         instance.Add(1);
@@ -147,7 +148,7 @@ public class AbstractBinaryHeapTest
     [Test]
     public void Compact_Behaves()
     {
-        AbstractBinaryHeap<int> instance = Substitute.For<AbstractBinaryHeap<int>>(2);
+        AbstractBinaryHeap<int> instance = For<AbstractBinaryHeap<int>>(2);
         Assert.AreEqual(instance.Capacity, 2);
         instance.Compact();
         Assert.AreEqual(instance.Capacity, 0);
@@ -156,7 +157,7 @@ public class AbstractBinaryHeapTest
     [Test]
     public void GetFirstUnsafe_Throws_Error_When_Capacity_Is_Zero()
     {
-        AbstractBinaryHeap<int> instance = Substitute.For<AbstractBinaryHeap<int>>(0);
+        AbstractBinaryHeap<int> instance = For<AbstractBinaryHeap<int>>(0);
         _ = Assert.Throws<IndexOutOfRangeException>(() => instance.GetFirstUnsafe());
     }
 

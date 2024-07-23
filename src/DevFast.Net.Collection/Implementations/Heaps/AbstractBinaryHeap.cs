@@ -12,13 +12,16 @@ namespace DevFast.Net.Collection.Implementations.Heaps;
 public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
 {
     private T[] _heapData;
+    private readonly IEqualityComparer<T>? _comparer;
 
     /// <summary>
     /// Ctor with initial heap capacity.
     /// </summary>
     /// <param name="initialCapacity">Initial capacity of the heap.</param>
-    protected AbstractBinaryHeap(int initialCapacity)
+    /// <param name="equalityComparer">Equality comparer for items.</param>
+    protected AbstractBinaryHeap(int initialCapacity, IEqualityComparer<T>? equalityComparer)
     {
+        _comparer = equalityComparer;
         _heapData = new T[initialCapacity
             .ThrowArgumentExceptionOnPredicateFail(static x => x > 0,
             $"Inside {nameof(AbstractBinaryHeap<T>)}, {nameof(initialCapacity)}", ": 'value > 0'")];
@@ -36,6 +39,9 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
 
     /// <inheritdoc />
     public int Capacity => _heapData.Length;
+
+    /// <inheritdoc />
+    public bool IsReadOnly => false;
 
 #if NETCOREAPP3_0_OR_GREATER
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
@@ -71,8 +77,8 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
             item = default;
             return false;
         }
-        item = _heapData[0]!;
-        return true;
+        item = GetFirstUnsafe();
+        return item != null;
     }
 
     /// <inheritdoc />
@@ -238,7 +244,7 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
     protected void InternalReSizeData(int size)
     {
         T[] newCollection = new T[size.ThrowArgumentExceptionOnPredicateFail(x => x < Count, $"Cannot resize; {nameof(size)}", $"size >= {nameof(Count)}.")];
-        new ReadOnlySpan<T>(_heapData, 0, Count).CopyTo(newCollection);
+        CopyTo(newCollection, 0);
         _heapData = newCollection;
     }
 
@@ -269,7 +275,7 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
         if (Count != 0)
         {
             T[] newCollection = new T[Count];
-            new ReadOnlySpan<T>(_heapData, 0, Count).CopyTo(newCollection);
+            CopyTo(newCollection, 0);
             return newCollection;
         }
         return [];
@@ -285,5 +291,49 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
+    }
+
+    /// <inheritdoc/>
+    public virtual void Clear()
+    {
+        throw new NotSupportedException();
+    }
+
+    /// <inheritdoc/>
+    public bool Contains(T item)
+    {
+        if (_comparer == null)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                if (EqualityComparer<T>.Default.Equals(item, _heapData[i]))
+                {
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                if (_comparer.Equals(item, _heapData[i]))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /// <inheritdoc/>
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+        new ReadOnlySpan<T>(_heapData, 0, Count).CopyTo(array.AsSpan(arrayIndex));
+    }
+
+    /// <inheritdoc/>
+    public bool Remove(T item)
+    {
+        throw new NotSupportedException();
     }
 }

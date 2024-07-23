@@ -4,7 +4,7 @@
 /// Heap data structure interface.
 /// </summary>
 /// <typeparam name="T">Heap element type</typeparam>
-public interface IHeap<T> : IEnumerable<T>
+public interface IHeapCollection<T> : ICollection<T>, IReadOnlyCollection<T>
 {
     /// <summary>
     /// Gets the truth value whether the heap is empty or not.
@@ -15,11 +15,6 @@ public interface IHeap<T> : IEnumerable<T>
     /// Gets the truth value whether the heap is full or not.
     /// </summary>
     bool IsFull { get; }
-
-    /// <summary>
-    /// Current count of the elements in the heap.
-    /// </summary>
-    int Count { get; }
 
     /// <summary>
     /// Current capacity of the heap.
@@ -58,7 +53,7 @@ public interface IHeap<T> : IEnumerable<T>
     /// <param name="item">Element to add</param>
     /// <exception cref="ArgumentException">When element is <see langword="null"/>.</exception>
     /// <exception cref="InvalidOperationException">When element cannot be added.</exception>
-    void Add(T item);
+    new void Add(T item);
 
     /// <summary>
     /// Tries adding given element in the heap.
@@ -88,4 +83,10 @@ public interface IHeap<T> : IEnumerable<T>
     /// </para>
     /// </summary>
     T[] All();
+
+    /// <summary>
+    /// dsad
+    /// </summary>
+    /// <returns></returns>
+    ReadOnlySpan<T> AsSpan();
 }
