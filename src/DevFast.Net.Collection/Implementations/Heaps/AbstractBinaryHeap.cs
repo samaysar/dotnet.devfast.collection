@@ -205,7 +205,10 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
     /// <inheritdoc/>
     public void CopyTo(T[] array, int arrayIndex)
     {
-        AsSpan().CopyTo(array.AsSpan(arrayIndex));
+        AsSpan().CopyTo(
+            array.ThrowArgumentExceptionOnPredicateFail(x => x.Length - arrayIndex >= Count, nameof(array),
+                $"'Length - {nameof(arrayIndex)} >= Count'"
+            ).AsSpan(arrayIndex));
     }
 
     /// <inheritdoc/>
@@ -255,16 +258,11 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
     /// <exception cref="ArgumentException">When the given size is less than current count.</exception>
     protected void ReSizeCapacity(int size)
     {
-        T[] newCollection = new T[size.ThrowArgumentExceptionOnPredicateFail(x => x < Count, $"Cannot resize; {nameof(size)}", $"size >= {nameof(Count)}.")];
+        T[] newCollection = new T[size.ThrowArgumentExceptionOnPredicateFail(x => x >= Count, $"Cannot resize; {nameof(size)}", $"size >= {nameof(Count)}.")];
         CopyTo(newCollection, 0);
         _heapData = newCollection;
     }
 
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     private bool AddCore(T item)
     {
         if (!EnsureCapacity())
@@ -297,11 +295,6 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
         return (elementIndex - 1) >> 1;
     }
 
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     private void BubbleUp(int current)
     {
         while (!current.Equals(0))
@@ -316,11 +309,6 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
         }
     }
 
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     private void PushDown()
     {
         int current = 0;

@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 using DevFast.Net.Collection.Abstractions.Heaps;
 using DevFast.Net.Collection.Implementations.Heaps;
 
@@ -108,112 +109,158 @@ public class AbstractBinaryHeapTest
         That(instance.TryPeek(out _), Is.False);
     }
 
-    //[Test]
-    //public void Peek_N_TryPeek_Behaves_For_Non_Empty_Heap()
-    //{
-    //    IHeapCollection<int> instance = new TestAbstractBinaryHeap(1, (x, y) => x < y)
-    //    {
-    //        1
-    //    };
-    //    Assert.AreEqual(instance.Peek(), 1);
-    //    Assert.True(instance.TryPeek(out int val) && val.Equals(1));
-    //}
+    [Test]
+    public void Peek_N_TryPeek_Behaves_For_Non_Empty_Heap()
+    {
+        IHeapCollection<int> instance = new TestAbstractBinaryHeap(1, (x, y) => x < y)
+        {
+            1
+        };
+        That(instance.Peek(), Is.EqualTo(1));
+        That(instance.TryPeek(out int val) && val.Equals(1), Is.True);
+    }
 
-    //[Test]
-    //[TestCase(0)]
-    //[TestCase(1)]
-    //[TestCase(10)]
-    //public void Pop_N_TryPop_Behaves_For_Empty_Heap(int capacity)
-    //{
-    //    IHeapCollection<int> instance = ForPartsOf<AbstractBinaryHeap<int>>(capacity);
-    //    _ = Throws<IndexOutOfRangeException>(() => instance.Pop());
-    //    Assert.False(instance.TryPop(out _));
-    //}
+    [Test]
+    [TestCase(0)]
+    [TestCase(1)]
+    [TestCase(10)]
+    public void Pop_N_TryPop_Behaves_For_Empty_Heap(int capacity)
+    {
+        IHeapCollection<int> instance = ForPartsOf<AbstractBinaryHeap<int>>(capacity);
+        _ = Throws<InvalidOperationException>(() => instance.Pop());
+        That(instance.TryPop(out _), Is.False);
+    }
 
-    //[Test]
-    //public void Pop_N_TryPop_Behaves_For_Non_Empty_Heap()
-    //{
-    //    IHeapCollection<int> instance = new TestAbstractBinaryHeap(5, (x, y) => x < y)
-    //    {
-    //        3,
-    //        2,
-    //        1,
-    //        4,
-    //        1
-    //    };
-    //    Assert.AreEqual(instance.Pop(), 1);
-    //    Assert.AreEqual(instance.Pop(), 1);
-    //    Assert.AreEqual(instance.Pop(), 2);
-    //    Assert.AreEqual(instance.Pop(), 3);
-    //    Assert.AreEqual(instance.Pop(), 4);
-    //    Assert.True(instance.IsEmpty);
-    //    Assert.IsFalse(instance.TryPop(out _));
-    //}
+    [Test]
+    public void Pop_N_TryPop_Behaves_For_Non_Empty_Heap()
+    {
+        IHeapCollection<int> instance = new TestAbstractBinaryHeap(5, (x, y) => x < y)
+        {
+            3,
+            2,
+            1,
+            4,
+            1
+        };
+        That(instance.Pop(), Is.EqualTo(1));
+        That(instance.Pop(), Is.EqualTo(1));
+        That(instance.Pop(), Is.EqualTo(2));
+        That(instance.Pop(), Is.EqualTo(3));
+        That(instance.Pop(), Is.EqualTo(4));
+        That(instance.IsEmpty, Is.True);
+        That(instance.TryPop(out _), Is.False);
+    }
 
-    //[Test]
-    //public void Compact_Behaves()
-    //{
-    //    AbstractBinaryHeap<int> instance = For<AbstractBinaryHeap<int>>(2);
-    //    Assert.AreEqual(instance.Capacity, 2);
-    //    instance.Compact();
-    //    Assert.AreEqual(instance.Capacity, 0);
-    //}
+    [Test]
+    public void Compact_Behaves()
+    {
+        AbstractBinaryHeap<int> instance = For<AbstractBinaryHeap<int>>(2);
+        That(instance.Capacity, Is.EqualTo(2));
+        instance.Compact();
+        That(instance.Capacity, Is.EqualTo(0));
+    }
 
-    //[Test]
-    //public void GetFirstUnsafe_Throws_Error_When_Capacity_Is_Zero()
-    //{
-    //    AbstractBinaryHeap<int> instance = For<AbstractBinaryHeap<int>>(0);
-    //    _ = Assert.Throws<IndexOutOfRangeException>(() => instance.GetFirstUnsafe());
-    //}
+    [Test]
+    public void All_And_IEnumerable_Works_Fine_With()
+    {
+        TestAbstractBinaryHeap instance = new(10, (x, y) => x < y);
+        That(instance.All().Count, Is.EqualTo(0));
+        That(instance.ToList().Count, Is.EqualTo(0));
+        int[] items = new[] { 100, -58, 0, -52, 1, 10 };
+        _ = instance.AddAll(items);
+        HashSet<int> internalState = new(instance.All());
+        IEnumerable asEnumerable = instance;
+        List<object> all = asEnumerable.Cast<object>().ToList();
+        foreach (int item in items)
+        {
+            That(internalState.Contains(item), Is.True);
+            That(all.Contains(item), Is.True);
+        }
+    }
 
-    //[Test]
-    //public void GetFirstUnsafe_Blindly_Returns_Whatever_At_0Th_Index_Irrespective_Of_Count()
-    //{
-    //    TestAbstractBinaryHeap instance = new(5, (x, y) => x < y);
-    //    Assert.IsTrue(instance.GetFirstUnsafe().Equals(0));
-    //    instance.Add(0);
-    //    Assert.IsTrue(instance.GetFirstUnsafe().Equals(0));
-    //    instance.Add(-1);
-    //    Assert.IsTrue(instance.GetFirstUnsafe().Equals(-1));
-    //}
+    [Test]
+    public void Clear_Works_Fine()
+    {
+        TestAbstractBinaryHeap instance = new(10, (x, y) => x < y);
+        int[] items = new[] { 100, -58, 0, -52, 1, 10 };
+        _ = instance.AddAll(items);
+        That(instance.All().Count, Is.EqualTo(6));
+        instance.Clear();
+        That(instance.All().Count, Is.EqualTo(0));
+    }
 
-    //[Test]
-    //public void InternalStateAsEnumerable_Exposes_Internal_Buffer()
-    //{
-    //    TestAbstractBinaryHeap instance = new(10, (x, y) => x < y);
-    //    Assert.True(instance.InternalStateAsEnumerable().ToList().Count.Equals(0));
-    //    int[] items = new[] { 100, -58, 0, -52, 1, 10 };
-    //    _ = instance.AddAll(items);
-    //    HashSet<int> internalState = new(instance.InternalStateAsEnumerable());
-    //    foreach (int item in items)
-    //    {
-    //        Assert.IsTrue(internalState.Contains(item));
-    //    }
-    //}
+    [Test]
+    public void Contains_Finds_Elements()
+    {
+        TestAbstractBinaryHeap instance = new(10, (x, y) => x < y);
+        int[] items = new[] { 100, -58, 0, -52, 1, 10 };
+        _ = instance.AddAll(items);
+        That(instance.Contains(0), Is.True);
+        That(instance.Contains(-58), Is.True);
+        That(instance.Contains(167537573), Is.False);
+        instance = new(10, (x, y) => x < y, EqualityComparer<int>.Default);
+        _ = instance.AddAll(items);
+        That(instance.Contains(0), Is.True);
+        That(instance.Contains(-58), Is.True);
+        That(instance.Contains(167537573), Is.False);
+    }
 
-    //[Test]
-    //public void IEnumerable_Works_Fine_With_All()
-    //{
-    //    TestAbstractBinaryHeap instance = new(10, (x, y) => x < y);
-    //    Assert.True(instance.ToList().Count.Equals(0));
-    //    int[] items = new[] { 100, -58, 0, -52, 1, 10 };
-    //    _ = instance.AddAll(items);
-    //    HashSet<int> internalState = new(instance.All());
-    //    IEnumerable<T> asEnumerable = instance as IEnumerable;
-    //    List<object> all = asEnumerable.Cast<object>().ToList();
-    //    foreach (int item in items)
-    //    {
-    //        Assert.IsTrue(internalState.Contains(item));
-    //        Assert.IsTrue(all.Contains(item));
-    //    }
-    //}
+    [Test]
+    public void CopyTo_Correctly_Copied_Elements()
+    {
+        TestAbstractBinaryHeap instance = new(10, (x, y) => x < y);
+        int[] items = new[] { 100, -58, 98754, -52, 1, 10 };
+        _ = instance.AddAll(items);
+        Ae? ex = Throws<ArgumentException>(() => instance.CopyTo(Array.Empty<int>(), 0));
+        That(ex, Is.Not.Null);
+        That(ex!.Message, Is.EqualTo("array does not satisfy 'Length - arrayIndex >= Count'."));
+        int[] data = new int[6];
+        instance.CopyTo(data, 0);
+        That(data.Contains(100), Is.True);
+        That(data.Contains(-58), Is.True);
+        That(data.Contains(98754), Is.True);
+        That(data.Contains(-52), Is.True);
+        That(data.Contains(1), Is.True);
+        That(data.Contains(10), Is.True);
+        data = new int[10];
+        instance.CopyTo(data, 4);
+        That(data[0], Is.EqualTo(0));
+        That(data[1], Is.EqualTo(0));
+        That(data[2], Is.EqualTo(0));
+        That(data[3], Is.EqualTo(0));
+        That(data.Contains(100), Is.True);
+        That(data.Contains(-58), Is.True);
+        That(data.Contains(98754), Is.True);
+        That(data.Contains(-52), Is.True);
+        That(data.Contains(1), Is.True);
+        That(data.Contains(10), Is.True);
+    }
+
+    [Test]
+    public void Remove_Is_NotSupported()
+    {
+        TestAbstractBinaryHeap instance = new(0, (x, y) => x < y);
+        That(Throws<NotSupportedException>(() => instance.Remove(0)), Is.Not.Null);
+    }
+
+    [Test]
+    public void AsSpan_Provides_Correct_Span_Size()
+    {
+        TestAbstractBinaryHeap instance = new(10, (x, y) => x < y);
+        That(instance.AsSpan().IsEmpty, Is.True);
+        int[] items = new[] { 100, -58, 98754, -52, 1, 10 };
+        _ = instance.AddAll(items);
+        That(instance.AsSpan().IsEmpty, Is.False);
+        That(instance.AsSpan().Length, Is.EqualTo(6));
+    }
 
     public class TestAbstractBinaryHeap : AbstractBinaryHeap<int>
     {
         private readonly Func<int, int, bool> _comparer;
 
         public TestAbstractBinaryHeap(int initialCapacity,
-            Func<int, int, bool> comparer) : base(initialCapacity)
+            Func<int, int, bool> comparer,
+            IEqualityComparer<int>? eqComparer = null) : base(initialCapacity, eqComparer)
         {
             _comparer = comparer;
         }
