@@ -9,4 +9,3 @@ Under this [namespace](https://docs.microsoft.com/en-us/dotnet/csharp/language-r
 | [ICompactAbleHeap&lt;T&gt;](DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>') | Interface to declare compaction contract. |
 | [IHeapCollection&lt;T&gt;](DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection<T>') | Heap data structure interface. |
 | [IResizableHeap&lt;T&gt;](DevFast.Net.Collection.Abstractions.Heaps.IResizableHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.IResizableHeap<T>') | Interface to declare resizing operations contract. |
-| [IResizeStrategy](DevFast.Net.Collection.Abstractions.Heaps.IResizeStrategy.md 'DevFast.Net.Collection.Abstractions.Heaps.IResizeStrategy') | Interface exposing sizing strategy for the binary heap. |

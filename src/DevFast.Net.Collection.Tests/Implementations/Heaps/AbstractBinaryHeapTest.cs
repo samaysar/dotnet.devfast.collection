@@ -3,7 +3,7 @@ using System.Reflection;
 using DevFast.Net.Collection.Abstractions.Heaps;
 using DevFast.Net.Collection.Implementations.Heaps;
 
-namespace DevFast.Net.Collection.Tests.Implementations;
+namespace DevFast.Net.Collection.Tests.Implementations.Heaps;
 
 [TestFixture]
 public class AbstractBinaryHeapTest
@@ -211,7 +211,7 @@ public class AbstractBinaryHeapTest
         TestAbstractBinaryHeap instance = new(10, (x, y) => x < y);
         int[] items = new[] { 100, -58, 98754, -52, 1, 10 };
         _ = instance.AddAll(items);
-        Ae? ex = Throws<ArgumentException>(() => instance.CopyTo(Array.Empty<int>(), 0));
+        Ae? ex = Throws<Ae>(() => instance.CopyTo(Array.Empty<int>(), 0));
         That(ex, Is.Not.Null);
         That(ex!.Message, Is.EqualTo("array does not satisfy 'Length - arrayIndex >= Count'."));
         int[] data = new int[6];
