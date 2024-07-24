@@ -16,7 +16,7 @@ public class AbstractBinaryHeapTest
         Ae? ctorEx = Throws<TargetInvocationException>(() => For<AbstractBinaryHeap<int>>(capacity))?
                 .InnerException as Ae;
         That(ctorEx, Is.Not.Null);
-        That(ctorEx!.Message, Is.EqualTo("Inside AbstractBinaryHeap, initialCapacity does not satisfy : 'value > 0'."));
+        That(ctorEx!.Message, Is.EqualTo("initialCapacity does not satisfy : 'value >= 0'."));
     }
 
     [Test]

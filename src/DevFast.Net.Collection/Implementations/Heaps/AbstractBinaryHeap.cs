@@ -18,6 +18,7 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
     /// Ctor with initial heap capacity.
     /// </summary>
     /// <param name="initialCapacity">Initial capacity of the heap.</param>
+    /// <exception cref="ArgumentException">When capacity is less than 0.</exception>
     protected AbstractBinaryHeap(int initialCapacity) : this(initialCapacity, null)
     {
     }
@@ -27,12 +28,12 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
     /// </summary>
     /// <param name="initialCapacity">Initial capacity of the heap.</param>
     /// <param name="equalityComparer">Equality comparer for items.</param>
+    /// <exception cref="ArgumentException">When capacity is less than 0.</exception>
     protected AbstractBinaryHeap(int initialCapacity, IEqualityComparer<T>? equalityComparer)
     {
         _comparer = equalityComparer;
         _heapData = new T[initialCapacity
-            .ThrowArgumentExceptionOnPredicateFail(static x => x >= 0,
-            $"Inside {nameof(AbstractBinaryHeap<T>)}, {nameof(initialCapacity)}", ": 'value > 0'")];
+            .ThrowArgumentExceptionOnPredicateFail(static x => x >= 0, nameof(initialCapacity), ": 'value >= 0'")];
         Count = 0;
     }
 
@@ -258,9 +259,12 @@ public abstract class AbstractBinaryHeap<T> : ICompactAbleHeap<T>
     /// <exception cref="ArgumentException">When the given size is less than current count.</exception>
     protected void ReSizeCapacity(int size)
     {
-        T[] newCollection = new T[size.ThrowArgumentExceptionOnPredicateFail(x => x >= Count, $"Cannot resize; {nameof(size)}", $"size >= {nameof(Count)}.")];
-        CopyTo(newCollection, 0);
-        _heapData = newCollection;
+        if (size != Capacity)
+        {
+            T[] newCollection = new T[size.ThrowArgumentExceptionOnPredicateFail(x => x >= Count, $"Cannot resize; {nameof(size)}", $"size >= {nameof(Count)}.")];
+            CopyTo(newCollection, 0);
+            _heapData = newCollection;
+        }
     }
 
     private bool AddCore(T item)
