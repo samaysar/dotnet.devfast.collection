@@ -11,7 +11,7 @@ namespace DevFast.Net.Collection.Implementations.ReSizing
     /// </remarks>
     /// <param name="stepSize">Step size for the increments.</param>
     /// <exception cref="ArgumentException">When step size is zero (0) or negative.</exception>
-    public sealed class FixedStep(int stepSize) : IResizeStrategy
+    public sealed class FixedStepReSizing(int stepSize) : IResizeStrategy
     {
         private readonly int _stepSize = stepSize.ThrowArgumentExceptionOnPredicateFail(static x => x > 0, nameof(stepSize), "'value > 0'");
 
