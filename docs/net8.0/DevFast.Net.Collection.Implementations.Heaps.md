@@ -6,4 +6,5 @@
 
 | Classes | |
 | :--- | :--- |
-| [MinHeap](DevFast.Net.Collection.Implementations.Heaps.MinHeap.md 'DevFast.Net.Collection.Implementations.Heaps.MinHeap') | Implementation of Binary Min Heap. |
+| [MaxHeap&lt;T&gt;](DevFast.Net.Collection.Implementations.Heaps.MaxHeap_T_.md 'DevFast.Net.Collection.Implementations.Heaps.MaxHeap<T>') | Implementation of Binary Max Heap. |
+| [MinHeap&lt;T&gt;](DevFast.Net.Collection.Implementations.Heaps.MinHeap_T_.md 'DevFast.Net.Collection.Implementations.Heaps.MinHeap<T>') | Implementation of Binary Min Heap. |
