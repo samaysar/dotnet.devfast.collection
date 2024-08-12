@@ -9,7 +9,7 @@ namespace DevFast.Net.Collection.Implementations.Heaps.AbstractBase;
 /// Sizable binary heap abstract implementation.
 /// Think of it as HeapBuilder (similar to StringBuilder) when
 /// final size of the heap is not known in advance (e.g. data coming from db, network etc).
-/// Once construction is done, capacity can be frozen, with ot without compaction (<see cref="FreezeCapacity(bool)"/>).
+/// Once construction is done, capacity can be frozen, with or without compaction (<see cref="FreezeCapacity(bool)"/>).
 /// </summary>
 /// <typeparam name="T">Heap type</typeparam>
 public abstract class SizableBinaryHeap<T> : BinaryHeap<T>, IResizableHeap<T>

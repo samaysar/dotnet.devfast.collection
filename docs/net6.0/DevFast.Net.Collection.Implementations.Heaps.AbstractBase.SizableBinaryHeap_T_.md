@@ -6,7 +6,7 @@
 Sizable binary heap abstract implementation.
 Think of it as HeapBuilder (similar to StringBuilder) when
 final size of the heap is not known in advance (e.g. data coming from db, network etc).
-Once construction is done, capacity can be frozen, with ot without compaction ([FreezeCapacity(bool)](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.FreezeCapacity(bool) 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap<T>.FreezeCapacity(bool)')).
+Once construction is done, capacity can be frozen, with or without compaction ([FreezeCapacity(bool)](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.FreezeCapacity(bool) 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap<T>.FreezeCapacity(bool)')).
 
 ```csharp
 public abstract class SizableBinaryHeap<T> : DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>,
@@ -27,7 +27,7 @@ System.Collections.Generic.IReadOnlyCollection<T>
 Sizable binary heap abstract implementation.
 Think of it as HeapBuilder (similar to StringBuilder) when
 final size of the heap is not known in advance (e.g. data coming from db, network etc).
-Once construction is done, capacity can be frozen, with ot without compaction ([FreezeCapacity(bool)](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.FreezeCapacity(bool) 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap<T>.FreezeCapacity(bool)')).
+Once construction is done, capacity can be frozen, with or without compaction ([FreezeCapacity(bool)](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.FreezeCapacity(bool) 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap<T>.FreezeCapacity(bool)')).
 
 ```csharp
 public abstract class SizableBinaryHeap<T> : DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>,

@@ -2,7 +2,7 @@
 
 ## DevFast.Net.Collection Assembly
 
-Package contains well-tested optimized data-structures like FastDictionary, Heap etc.
+Package contains well-tested optimized data-structures like Heap etc.
 
 ### [.Net Standard 2.0 Documentation](netstandard2.0/index.md 'index')
 ### [.Net Standard 2.1 Documentation](netstandard2.1/index.md 'index')
