@@ -3,11 +3,16 @@
 
 ## IResizeStrategy Interface
 
-Interface exposing sizing strategy for the binary heap.
+Interface exposing sizing strategy for any collection that can be resized.
 
 ```csharp
 public interface IResizeStrategy
 ```
+
+Derived  
+&#8627; [FixedStepReSizing](DevFast.Net.Collection.Implementations.ReSizing.FixedStepReSizing.md 'DevFast.Net.Collection.Implementations.ReSizing.FixedStepReSizing')  
+&#8627; [MultipleReSizing](DevFast.Net.Collection.Implementations.ReSizing.MultipleReSizing.md 'DevFast.Net.Collection.Implementations.ReSizing.MultipleReSizing')  
+&#8627; [NoResizing](DevFast.Net.Collection.Implementations.ReSizing.NoResizing.md 'DevFast.Net.Collection.Implementations.ReSizing.NoResizing')
 ### Properties
 
 <a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.CanResize'></a>
@@ -24,24 +29,24 @@ bool CanResize { get; }
 [System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')
 ### Methods
 
-<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.TryComputeNewSize(int,int)'></a>
+<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.TryComputeNewSize(long,int)'></a>
 
-## IResizeStrategy.TryComputeNewSize(int, int) Method
+## IResizeStrategy.TryComputeNewSize(long, int) Method
 
-Calculates the new size of the heap, based on the given value of current size.
+Calculates the new size, based on the given value of current size.
 
 ```csharp
-bool TryComputeNewSize(int currentSize, out int newSize);
+bool TryComputeNewSize(in long currentSize, out int newSize);
 ```
 #### Parameters
 
-<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.TryComputeNewSize(int,int).currentSize'></a>
+<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.TryComputeNewSize(long,int).currentSize'></a>
 
-`currentSize` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
+`currentSize` [System.Int64](https://docs.microsoft.com/en-us/dotnet/api/System.Int64 'System.Int64')
 
-Current size of the heap
+Current size
 
-<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.TryComputeNewSize(int,int).newSize'></a>
+<a name='DevFast.Net.Collection.Abstractions.IResizeStrategy.TryComputeNewSize(long,int).newSize'></a>
 
 `newSize` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
 

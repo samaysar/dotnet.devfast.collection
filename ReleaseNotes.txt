@@ -1,3 +1,12 @@
-DevFast.Net.Collection 0.1.0
+DevFast.Net.Collection 1.0.0
 
- 1. New feature - 
+ 1. New feature - namespace DevFast.Net.Collection.Implementations.Heaps.AbstractBase added, containing
+	A. Generic Abstract class BinaryHeap
+	B. Generic Abstract class SizableBinaryHeap
+ 2. New feature - namespace DevFast.Net.Collection.Implementations.Heaps added, containing
+	A. Generic class MinHeap extends SizableBinaryHeap
+	B. Generic class MaxHeap extends SizableBinaryHeap
+ 3. New feature - namespace DevFast.Net.Collection.Implementations.ReSizing added, containing
+	A. class FixedStepReSizing - strategy to increase collection capacity by constant size
+	B. class MultipleReSizing - strategy to increase collection capacity by constant multiple
+	C. class NoReSizing - strategy for avoiding collection resizing
