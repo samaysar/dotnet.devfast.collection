@@ -3,7 +3,7 @@ using DevFast.Net.Collection.Abstractions.Heaps;
 using DevFast.Net.Collection.Implementations.ReSizing;
 using DevFast.Net.Extensions.Etc;
 
-namespace DevFast.Net.Collection.Implementations.Heaps;
+namespace DevFast.Net.Collection.Implementations.Heaps.AbstractBase;
 
 /// <summary>
 /// Sizable binary heap abstract implementation.
@@ -12,7 +12,7 @@ namespace DevFast.Net.Collection.Implementations.Heaps;
 /// Once construction is done, capacity can be frozen, with ot without compaction (<see cref="FreezeCapacity(bool)"/>).
 /// </summary>
 /// <typeparam name="T">Heap type</typeparam>
-public abstract class AbstractSizableBinaryHeap<T> : AbstractBinaryHeap<T>, IResizableHeap<T>
+public abstract class SizableBinaryHeap<T> : BinaryHeap<T>, IResizableHeap<T>
 {
     private IResizeStrategy _resizing;
 
@@ -21,7 +21,7 @@ public abstract class AbstractSizableBinaryHeap<T> : AbstractBinaryHeap<T>, IRes
     /// </summary>
     /// <param name="initialCapacity">Initial capacity of the heap</param>
     /// <exception cref="ArgumentException">When capacity is less than 0.</exception>
-    protected AbstractSizableBinaryHeap(int initialCapacity) : this(initialCapacity, NoResizing.Default)
+    protected SizableBinaryHeap(int initialCapacity) : this(initialCapacity, NoResizing.Default)
     {
     }
 
@@ -33,7 +33,7 @@ public abstract class AbstractSizableBinaryHeap<T> : AbstractBinaryHeap<T>, IRes
     /// <param name="initialCapacity">Initial capacity of the heap</param>
     /// <param name="resizeStrategy">Heap resizing strategy.</param>
     /// <exception cref="ArgumentException">When capacity is less than 0 or resize-strategy is null.</exception>
-    protected AbstractSizableBinaryHeap(int initialCapacity, IResizeStrategy resizeStrategy) : base(initialCapacity)
+    protected SizableBinaryHeap(int initialCapacity, IResizeStrategy resizeStrategy) : base(initialCapacity)
     {
         _resizing = resizeStrategy.ThrowArgumentExceptionForNull(nameof(resizeStrategy));
     }

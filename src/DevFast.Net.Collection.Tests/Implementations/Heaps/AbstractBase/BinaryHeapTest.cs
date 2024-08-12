@@ -1,19 +1,19 @@
 ﻿using System.Collections;
 using System.Reflection;
 using DevFast.Net.Collection.Abstractions.Heaps;
-using DevFast.Net.Collection.Implementations.Heaps;
+using DevFast.Net.Collection.Implementations.Heaps.AbstractBase;
 
-namespace DevFast.Net.Collection.Tests.Implementations.Heaps;
+namespace DevFast.Net.Collection.Tests.Implementations.Heaps.AbstractBase;
 
 [TestFixture]
-public class AbstractBinaryHeapTest
+public class BinaryHeapTest
 {
     [Test]
     [TestCase(-1)]
     [TestCase(int.MinValue)]
     public void Ctor_Throws_Error_For_Invalid_Arguments(int capacity)
     {
-        Ae? ctorEx = Throws<TargetInvocationException>(() => For<AbstractBinaryHeap<int>>(capacity))?
+        Ae? ctorEx = Throws<TargetInvocationException>(() => For<BinaryHeap<int>>(capacity))?
                 .InnerException as Ae;
         That(ctorEx, Is.Not.Null);
         That(ctorEx!.Message, Is.EqualTo("initialCapacity does not satisfy : 'value >= 0'."));
@@ -25,7 +25,7 @@ public class AbstractBinaryHeapTest
     [TestCase(10)]
     public void Properties_Are_Well_Defined(int capacity)
     {
-        IHeapCollection<int> instance = For<AbstractBinaryHeap<int>>(capacity);
+        IHeapCollection<int> instance = For<BinaryHeap<int>>(capacity);
         That(instance, Is.Empty);
         That(instance.Count, Is.EqualTo(0));
         That(instance.Capacity, Is.EqualTo(capacity));
@@ -104,7 +104,7 @@ public class AbstractBinaryHeapTest
     [TestCase(10)]
     public void Peek_N_TryPeek_Behaves_For_Empty_Heap(int capacity)
     {
-        IHeapCollection<int> instance = ForPartsOf<AbstractBinaryHeap<int>>(capacity);
+        IHeapCollection<int> instance = ForPartsOf<BinaryHeap<int>>(capacity);
         _ = Throws<InvalidOperationException>(() => instance.Peek());
         That(instance.TryPeek(out _), Is.False);
     }
@@ -126,7 +126,7 @@ public class AbstractBinaryHeapTest
     [TestCase(10)]
     public void Pop_N_TryPop_Behaves_For_Empty_Heap(int capacity)
     {
-        IHeapCollection<int> instance = ForPartsOf<AbstractBinaryHeap<int>>(capacity);
+        IHeapCollection<int> instance = ForPartsOf<BinaryHeap<int>>(capacity);
         _ = Throws<InvalidOperationException>(() => instance.Pop());
         That(instance.TryPop(out _), Is.False);
     }
@@ -154,7 +154,7 @@ public class AbstractBinaryHeapTest
     [Test]
     public void Compact_Behaves()
     {
-        AbstractBinaryHeap<int> instance = For<AbstractBinaryHeap<int>>(2);
+        BinaryHeap<int> instance = For<BinaryHeap<int>>(2);
         That(instance.Capacity, Is.EqualTo(2));
         instance.Compact();
         That(instance.Capacity, Is.EqualTo(0));
@@ -254,7 +254,7 @@ public class AbstractBinaryHeapTest
         That(instance.AsSpan().Length, Is.EqualTo(6));
     }
 
-    public class TestAbstractBinaryHeap : AbstractBinaryHeap<int>
+    public class TestAbstractBinaryHeap : BinaryHeap<int>
     {
         private readonly Func<int, int, bool> _comparer;
 
