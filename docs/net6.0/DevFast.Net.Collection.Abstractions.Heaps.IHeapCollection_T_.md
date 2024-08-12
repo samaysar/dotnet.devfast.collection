@@ -21,7 +21,6 @@ System.Collections.Generic.IReadOnlyCollection<T>
 Heap element type
 
 Derived  
-&#8627; [ICompactAbleHeap&lt;T&gt;](DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>')  
 &#8627; [IResizableHeap&lt;T&gt;](DevFast.Net.Collection.Abstractions.Heaps.IResizableHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.IResizableHeap<T>')  
 &#8627; [BinaryHeap&lt;T&gt;](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>')  
 &#8627; [SizableBinaryHeap&lt;T&gt;](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.md 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap<T>')
@@ -164,6 +163,19 @@ System.ReadOnlySpan<T> AsSpan();
 
 #### Returns
 [System.ReadOnlySpan&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.ReadOnlySpan-1 'System.ReadOnlySpan`1')[T](DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.md#DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.T 'DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection<T>.T')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.ReadOnlySpan-1 'System.ReadOnlySpan`1')
+
+<a name='DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.Compact()'></a>
+
+## IHeapCollection<T>.Compact() Method
+
+Internally allocated storage will be compacted to match the current usage.
+
+The operation may take time to re-allocate required memory in order to maintain
+internal state.
+
+```csharp
+void Compact();
+```
 
 <a name='DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.Peek()'></a>
 

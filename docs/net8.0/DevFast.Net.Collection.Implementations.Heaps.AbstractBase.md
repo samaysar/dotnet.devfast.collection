@@ -2,6 +2,8 @@
 
 ## DevFast.Net.Collection.Implementations.Heaps.AbstractBase Namespace
 
+[namespace](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/namespace 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/namespace') contains [abstract](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract') heap implementations.
+
 | Classes | |
 | :--- | :--- |
 | [BinaryHeap&lt;T&gt;](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>') | Abstract binary heap implementation. |

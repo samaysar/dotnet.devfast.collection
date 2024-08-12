@@ -7,7 +7,6 @@ Abstract binary heap implementation.
 
 ```csharp
 public abstract class BinaryHeap<T> :
-DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>,
 DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection<T>,
 System.Collections.Generic.ICollection<T>,
 System.Collections.Generic.IEnumerable<T>,
@@ -46,7 +45,6 @@ Abstract binary heap implementation.
 
 ```csharp
 public abstract class BinaryHeap<T> :
-DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>,
 DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection<T>,
 System.Collections.Generic.ICollection<T>,
 System.Collections.Generic.IEnumerable<T>,
@@ -64,7 +62,7 @@ Inheritance [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.O
 Derived  
 &#8627; [SizableBinaryHeap&lt;T&gt;](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap_T_.md 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.SizableBinaryHeap<T>')
 
-Implements [DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap&lt;](DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>.T')[&gt;](DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>'), [DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection&lt;](DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection<T>')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>.T')[&gt;](DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection<T>'), [System.Collections.Generic.ICollection&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1 'System.Collections.Generic.ICollection`1')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>.T')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1 'System.Collections.Generic.ICollection`1'), [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>.T')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1'), [System.Collections.IEnumerable](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.IEnumerable 'System.Collections.IEnumerable'), [System.Collections.Generic.IReadOnlyCollection&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyCollection-1 'System.Collections.Generic.IReadOnlyCollection`1')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>.T')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyCollection-1 'System.Collections.Generic.IReadOnlyCollection`1')
+Implements [DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection&lt;](DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection<T>')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>.T')[&gt;](DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.md 'DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection<T>'), [System.Collections.Generic.ICollection&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1 'System.Collections.Generic.ICollection`1')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>.T')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1 'System.Collections.Generic.ICollection`1'), [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>.T')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1'), [System.Collections.IEnumerable](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.IEnumerable 'System.Collections.IEnumerable'), [System.Collections.Generic.IReadOnlyCollection&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyCollection-1 'System.Collections.Generic.IReadOnlyCollection`1')[T](DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.md#DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.T 'DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap<T>.T')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyCollection-1 'System.Collections.Generic.IReadOnlyCollection`1')
 ### Properties
 
 <a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.Capacity'></a>
@@ -253,11 +251,14 @@ The [System.Collections.Generic.ICollection&lt;&gt;](https://docs.microsoft.com/
 
 Internally allocated storage will be compacted to match the current usage.
 
+The operation may take time to re-allocate required memory in order to maintain
+internal state.
+
 ```csharp
 public void Compact();
 ```
 
-Implements [Compact()](DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.md#DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap_T_.Compact() 'DevFast.Net.Collection.Abstractions.Heaps.ICompactAbleHeap<T>.Compact()')
+Implements [Compact()](DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.md#DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection_T_.Compact() 'DevFast.Net.Collection.Abstractions.Heaps.IHeapCollection<T>.Compact()')
 
 <a name='DevFast.Net.Collection.Implementations.Heaps.AbstractBase.BinaryHeap_T_.Contains(T)'></a>
 

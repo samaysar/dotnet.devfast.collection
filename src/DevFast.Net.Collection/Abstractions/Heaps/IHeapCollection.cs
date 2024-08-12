@@ -93,4 +93,13 @@ public interface IHeapCollection<T> : ICollection<T>, IReadOnlyCollection<T>
     /// Creates and return the current internal state as <see cref="ReadOnlySpan{T}"/>.
     /// </summary>
     ReadOnlySpan<T> AsSpan();
+
+    /// <summary>
+    /// Internally allocated storage will be compacted to match the current usage.
+    /// <para>
+    /// The operation may take time to re-allocate required memory in order to maintain
+    /// internal state.
+    /// </para>
+    /// </summary>
+    void Compact();
 }

@@ -9,7 +9,7 @@ namespace DevFast.Net.Collection.Implementations.Heaps.AbstractBase;
 /// <summary>
 /// Abstract binary heap implementation.
 /// </summary>
-public abstract class BinaryHeap<T> : ICompactAbleHeap<T>
+public abstract class BinaryHeap<T> : IHeapCollection<T>
 {
     private T[] _heapData;
     private readonly IEqualityComparer<T>? _comparer;
