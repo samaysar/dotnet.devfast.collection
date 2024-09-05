@@ -83,12 +83,12 @@ public sealed partial class FastDictionary<TKey, TValue>
 
         private bool AcquireNextEnumerator()
         {
+            _currentEnumerator?.Dispose();
             if (_instance.TryGetPartition(_currentPosition++, out Dictionary<TKey, TValue>? d))
             {
                 Monitor.Enter(d);
                 try
                 {
-                    _currentEnumerator?.Dispose();
                     _currentEnumerator = d.Keys.ToList().GetEnumerator();
                 }
                 finally
@@ -99,7 +99,6 @@ public sealed partial class FastDictionary<TKey, TValue>
             }
             else
             {
-                _currentEnumerator?.Dispose();
                 _currentEnumerator = null;
                 return false;
             }

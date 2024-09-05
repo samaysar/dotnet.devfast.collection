@@ -123,10 +123,10 @@ public sealed partial class FastDictionary<TKey, TValue> :
     }
 
     /// <inheritdoc />
-    public ICollection<TKey> Keys => throw new NotImplementedException();
+    public ICollection<TKey> Keys => ((IReadOnlyDictionary<TKey, TValue>)this).Keys.ToList();
 
     /// <inheritdoc />
-    public ICollection<TValue> Values => throw new NotImplementedException();
+    public ICollection<TValue> Values => ((IReadOnlyDictionary<TKey, TValue>)this).Values.ToList();
 
     /// <inheritdoc />
     public int Count
@@ -156,27 +156,68 @@ public sealed partial class FastDictionary<TKey, TValue> :
     public bool IsReadOnly => false;
 
     /// <inheritdoc />
-    IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => throw new NotImplementedException();
+    IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => new KeyEnumerable(this);
 
     /// <inheritdoc />
-    IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => throw new NotImplementedException();
+    IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => new ValueEnumerable(this);
 
     /// <inheritdoc />
     public void Add(TKey key, TValue value)
     {
-        throw new NotImplementedException();
+        Dictionary<TKey, TValue> d = GetPartition(key);
+        Monitor.Enter(d);
+        try
+        {
+            d.Add(key, value);
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
     }
 
     /// <inheritdoc />
     public void Add(KeyValuePair<TKey, TValue> item)
     {
-        throw new NotImplementedException();
+        Add(item.Key, item.Value);
     }
 
     /// <inheritdoc />
     public void Clear()
     {
         throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Clear items in the all the partitions.
+    /// </summary>
+    /// <param name="releaseMemory">If <see langword="true"/>, partitions are recreated to release previously allocated memory.</param>
+    public void Clear(bool releaseMemory)
+    {
+        //We do not want to take all locks together
+        //this call will provide best-effort clearing on whole collection.
+        for (int i = 0; i < _data.Length; i++)
+        {
+            Dictionary<TKey, TValue> d = _data[i];
+            Monitor.Enter(d);
+            try
+            {
+                if (releaseMemory)
+                {
+                    _ = Interlocked.CompareExchange(ref _data[i],
+                        new Dictionary<TKey, TValue>(_initialCapacity, _comparer),
+                        d);
+                }
+                else
+                {
+                    d.Clear();
+                }
+            }
+            finally
+            {
+                Monitor.Exit(d);
+            }
+        }
     }
 
     /// <inheritdoc />
@@ -232,6 +273,32 @@ public sealed partial class FastDictionary<TKey, TValue> :
 #else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
+    private bool TryAddCore(TKey key,
+        TValue newValue,
+        out TValue existingValue)
+    {
+        Dictionary<TKey, TValue> d = GetPartition(key);
+        Monitor.Enter(d);
+        try
+        {
+            if (!d.TryGetValue(key, out existingValue))
+            {
+                d.Add(key, newValue);
+                return true;
+            }
+            return false;
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
+    }
+
+#if NETCOREAPP3_0_OR_GREATER
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+#else
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
     private Dictionary<TKey, TValue> GetPartition(TKey key)
     {
         unchecked
@@ -242,13 +309,12 @@ public sealed partial class FastDictionary<TKey, TValue> :
 
     private bool TryGetPartition(int position, [NotNullWhen(true)] out Dictionary<TKey, TValue>? partition)
     {
-        partition = default;
-        if (position < 0 || position >= _concurrencyLevel)
+        if (position >= 0 && position < _concurrencyLevel)
         {
-            return false;
+            partition = _data[position];
+            return true;
         }
-
-        partition = _data[position];
-        return true;
+        partition = default;
+        return false;
     }
 }
