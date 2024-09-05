@@ -79,6 +79,7 @@ public sealed partial class FastDictionary<TKey, TValue>
         public void Dispose()
         {
             _currentEnumerator?.Dispose();
+            _currentEnumerator = null;
         }
 
         private bool AcquireNextEnumerator()
