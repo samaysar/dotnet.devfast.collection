@@ -39,7 +39,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// </para>
     /// </summary>
     /// <param name="comparer">Equality comparer for the key</param>
-    public FastDictionary(IEqualityComparer<TKey> comparer) : this(0, comparer)
+    public FastDictionary(IEqualityComparer<TKey>? comparer) : this(0, comparer)
     {
     }
 
@@ -71,7 +71,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <param name="initialCapacity">Initial estimated capacity</param>
     /// <param name="comparer">Equality comparer for the key</param>
     public FastDictionary(int initialCapacity,
-        IEqualityComparer<TKey> comparer) : this(initialCapacity,
+        IEqualityComparer<TKey>? comparer) : this(initialCapacity,
         Environment.ProcessorCount,
         comparer)
     {
@@ -91,7 +91,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <param name="comparer">Equality comparer for the key</param>
     public FastDictionary(int initialCapacity,
         int concurrencyLevel,
-        IEqualityComparer<TKey> comparer)
+        IEqualityComparer<TKey>? comparer)
     {
         _comparer = comparer ?? EqualityComparer<TKey>.Default;
         _concurrencyLevel = Math.Max(2, concurrencyLevel);
@@ -122,11 +122,45 @@ public sealed partial class FastDictionary<TKey, TValue> :
         }
     }
 
-    /// <inheritdoc />
-    public ICollection<TKey> Keys => ((IReadOnlyDictionary<TKey, TValue>)this).Keys.ToList();
+    /// <summary>
+    /// Gets an <see cref="ICollection{T}"/> that contains the keys of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+    /// enumeration. Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
+    /// That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// Partition snapshots are created as enumerable visits those. However, space complexity of
+    /// this implementation is HIGH due to the fact that all the partitions are visited almost immediately
+    /// in order to create a copy of all the keys from all the partitions.
+    /// <para>
+    /// In order to reduce space complexity, use either <see cref="IReadOnlyDictionary{TKey, TValue}.Keys"/>
+    /// or <see cref="EnumerableOfKeys"/>.
+    /// </para>
+    /// </summary>
+    public ICollection<TKey> Keys => EnumerableOfKeys().ToList();
 
-    /// <inheritdoc />
-    public ICollection<TValue> Values => ((IReadOnlyDictionary<TKey, TValue>)this).Values.ToList();
+    /// <summary>
+    /// Gets an <see cref="ICollection{T}"/> that contains the values of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+    /// enumeration. Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
+    /// That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// Partition snapshots are created as enumerable visits those. However, space complexity of
+    /// this implementation is HIGH due to the fact that all the partitions are visited almost immediately
+    /// in order to create a copy of all the keys from all the partitions.
+    /// <para>
+    /// In order to reduce space complexity, use either <see cref="IReadOnlyDictionary{TKey, TValue}.Values"/>
+    /// or <see cref="EnumerableOfValues"/>.
+    /// </para>
+    /// </summary>
+    public ICollection<TValue> Values => EnumerableOfValues().ToList();
 
     /// <inheritdoc />
     public int Count
@@ -157,11 +191,33 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <inheritdoc />
     public bool IsReadOnly => false;
 
-    /// <inheritdoc />
-    IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => new KeyEnumerable(this);
+    /// <summary>
+    /// Gets an enumerable collection that contains the keys of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+    /// enumeration. Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
+    /// That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// </summary>
+    IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => EnumerableOfKeys();
 
-    /// <inheritdoc />
-    IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => new ValueEnumerable(this);
+    /// <summary>
+    /// Gets an enumerable collection that contains the values of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+    /// enumeration. Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
+    /// That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// </summary>
+    IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => EnumerableOfValues();
 
     /// <inheritdoc />
     public void Add(TKey key, TValue value)
@@ -296,14 +352,12 @@ public sealed partial class FastDictionary<TKey, TValue> :
     public bool Contains(KeyValuePair<TKey, TValue> item, IEqualityComparer<TValue>? valueComparer)
     {
         bool foundValue;
-        TValue v;
+        TValue? v;
         Dictionary<TKey, TValue> d = GetPartition(item.Key);
         Monitor.Enter(d);
         try
         {
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             foundValue = d.TryGetValue(item.Key, out v);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
         }
         finally
         {
@@ -339,10 +393,36 @@ public sealed partial class FastDictionary<TKey, TValue> :
         }
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Gets an enumerable collection that contains the <see cref="KeyValuePair{TKey, TValue}"/> of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+    /// enumeration. Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition
+    /// at a time. That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// </summary>
     public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
     {
         return new Enumerator(this);
+    }
+
+    /// <summary>
+    /// Create a new <see cref="IEnumerable{T}"/> on the keys of the <see cref="Dictionary{TKey, TValue}"/>.
+    /// </summary>
+    public IEnumerable<TKey> EnumerableOfKeys()
+    {
+        return new KeyEnumerable(this);
+    }
+
+    /// <summary>
+    /// Create a new <see cref="IEnumerable{T}"/> on the values of the <see cref="Dictionary{TKey, TValue}"/>.
+    /// </summary>
+    public IEnumerable<TValue> EnumerableOfValues()
+    {
+        return new ValueEnumerable(this);
     }
 
     /// <summary>
@@ -453,9 +533,11 @@ public sealed partial class FastDictionary<TKey, TValue> :
         Monitor.Enter(d);
         try
         {
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CS8601 // Possible null reference assignment.
             return d.TryGetValue(key, out value);
 #pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         }
         finally
         {
@@ -475,13 +557,15 @@ public sealed partial class FastDictionary<TKey, TValue> :
         Monitor.Enter(d);
         try
         {
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CS8601 // Possible null reference assignment.
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
             return d.Remove(key, out value);
-#pragma warning restore CS8601 // Possible null reference assignment.
 #else
             return d.TryGetValue(key, out value) && d.Remove(key);
 #endif
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning restore IDE0079 // Remove unnecessary suppression
         }
         finally
         {
@@ -518,7 +602,17 @@ public sealed partial class FastDictionary<TKey, TValue> :
         }
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Gets an enumerable collection that contains the boxed <see cref="KeyValuePair{TKey, TValue}"/> of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+    /// enumeration. Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition
+    /// at a time. That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// </summary>
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
@@ -537,9 +631,11 @@ public sealed partial class FastDictionary<TKey, TValue> :
         Monitor.Enter(d);
         try
         {
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable CS8601 // Possible null reference assignment.
             if (!d.TryGetValue(key, out existingValue))
 #pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning restore IDE0079 // Remove unnecessary suppression
             {
                 d.Add(key, newValue);
                 return true;
@@ -565,11 +661,6 @@ public sealed partial class FastDictionary<TKey, TValue> :
         }
     }
 
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     private bool TryGetPartition(int position, [NotNullWhen(true)] out Dictionary<TKey, TValue>? partition)
     {
         if (position >= 0 && position < _concurrencyLevel)

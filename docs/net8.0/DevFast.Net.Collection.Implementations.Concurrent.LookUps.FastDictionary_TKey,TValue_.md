@@ -35,6 +35,8 @@ System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyVal
   - **[Clear(int)](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.Clear(int) 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.Clear(int)')**
   - **[Contains(KeyValuePair&lt;TKey,TValue&gt;, IEqualityComparer&lt;TValue&gt;)](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_) 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.Contains(System.Collections.Generic.KeyValuePair<TKey,TValue>, System.Collections.Generic.IEqualityComparer<TValue>)')**
   - **[ContainsKey(TKey)](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.ContainsKey(TKey) 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.ContainsKey(TKey)')**
+  - **[EnumerableOfKeys()](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.EnumerableOfKeys() 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.EnumerableOfKeys()')**
+  - **[EnumerableOfValues()](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.EnumerableOfValues() 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.EnumerableOfValues()')**
   - **[GetEnumerator()](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.GetEnumerator() 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.GetEnumerator()')**
   - **[GetOrAdd(TKey, Func&lt;TKey,TValue&gt;)](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.GetOrAdd(TKey,System.Func_TKey,TValue_) 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.GetOrAdd(TKey, System.Func<TKey,TValue>)')**
   - **[GetOrAdd(TKey, TValue)](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.GetOrAdd(TKey,TValue) 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.GetOrAdd(TKey, TValue)')**
@@ -45,6 +47,8 @@ System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyVal
   - **[TryRemove(TKey, TValue)](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TryRemove(TKey,TValue) 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TryRemove(TKey, TValue)')**
   - **[TryUpdate(TKey, TValue, TValue, IEqualityComparer&lt;TValue&gt;)](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_) 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>)')**
 - *Explicit Interface Implementations*
+  - **[System.Collections.Generic.IReadOnlyDictionary&lt;TKey,TValue&gt;.Keys](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_.Keys 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>.Keys')**
+  - **[System.Collections.Generic.IReadOnlyDictionary&lt;TKey,TValue&gt;.Values](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_.Values 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>.Values')**
   - **[System.Collections.IEnumerable.GetEnumerator()](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.System.Collections.IEnumerable.GetEnumerator() 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.System.Collections.IEnumerable.GetEnumerator()')**
 
 ## FastDictionary<TKey,TValue> Class
@@ -134,7 +138,7 @@ NOTE: Total expected memory allocation is bit more than [initialCapacity](DevFas
 NOTE: [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>).initialCapacity') has internal lower bound=0 and [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>).concurrencyLevel') has internal lower bound=2.
 
 ```csharp
-public FastDictionary(int initialCapacity, int concurrencyLevel, System.Collections.Generic.IEqualityComparer<TKey> comparer);
+public FastDictionary(int initialCapacity, int concurrencyLevel, System.Collections.Generic.IEqualityComparer<TKey>? comparer);
 ```
 #### Parameters
 
@@ -168,7 +172,7 @@ NOTE: Total expected memory allocation is bit more than [initialCapacity](DevFas
 NOTE: [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.FastDictionary(int,System.Collections.Generic.IEqualityComparer_TKey_).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.FastDictionary(int, System.Collections.Generic.IEqualityComparer<TKey>).initialCapacity') has internal lower bound=0.
 
 ```csharp
-public FastDictionary(int initialCapacity, System.Collections.Generic.IEqualityComparer<TKey> comparer);
+public FastDictionary(int initialCapacity, System.Collections.Generic.IEqualityComparer<TKey>? comparer);
 ```
 #### Parameters
 
@@ -195,7 +199,7 @@ and uses the [comparer](DevFast.Net.Collection.Implementations.Concurrent.LookUp
 NOTE: Total expected memory allocation is bit more than default_initial_capacity * default_concurrency_level.
 
 ```csharp
-public FastDictionary(System.Collections.Generic.IEqualityComparer<TKey> comparer);
+public FastDictionary(System.Collections.Generic.IEqualityComparer<TKey>? comparer);
 ```
 #### Parameters
 
@@ -240,7 +244,20 @@ Implements [IsReadOnly](https://docs.microsoft.com/en-us/dotnet/api/System.Colle
 
 ## FastDictionary<TKey,TValue>.Keys Property
 
-Gets an enumerable collection that contains the keys in the read-only dictionary.
+Gets an [System.Collections.Generic.ICollection&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1 'System.Collections.Generic.ICollection`1') that contains the keys of the dictionary.
+
+IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+enumeration. Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition.
+That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+Partition snapshots are created as enumerable visits those. However, space complexity of
+this implementation is HIGH due to the fact that all the partitions are visited almost immediately
+in order to create a copy of all the keys from all the partitions.
+
+In order to reduce space complexity, use either [System.Collections.Generic.IReadOnlyDictionary&lt;&gt;.Keys](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyDictionary-2.Keys 'System.Collections.Generic.IReadOnlyDictionary`2.Keys')
+or [EnumerableOfKeys()](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.EnumerableOfKeys() 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.EnumerableOfKeys()').
 
 ```csharp
 public System.Collections.Generic.ICollection<TKey> Keys { get; }
@@ -285,7 +302,20 @@ The property is retrieved and [key](DevFast.Net.Collection.Implementations.Concu
 
 ## FastDictionary<TKey,TValue>.Values Property
 
-Gets an enumerable collection that contains the values in the read-only dictionary.
+Gets an [System.Collections.Generic.ICollection&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1 'System.Collections.Generic.ICollection`1') that contains the values of the dictionary.
+
+IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+enumeration. Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition.
+That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+Partition snapshots are created as enumerable visits those. However, space complexity of
+this implementation is HIGH due to the fact that all the partitions are visited almost immediately
+in order to create a copy of all the keys from all the partitions.
+
+In order to reduce space complexity, use either [System.Collections.Generic.IReadOnlyDictionary&lt;&gt;.Values](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyDictionary-2.Values 'System.Collections.Generic.IReadOnlyDictionary`2.Values')
+or [EnumerableOfValues()](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.EnumerableOfValues() 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.EnumerableOfValues()').
 
 ```csharp
 public System.Collections.Generic.ICollection<TValue> Values { get; }
@@ -478,11 +508,44 @@ Implements [ContainsKey(TKey)](https://docs.microsoft.com/en-us/dotnet/api/Syste
 [System.ArgumentNullException](https://docs.microsoft.com/en-us/dotnet/api/System.ArgumentNullException 'System.ArgumentNullException')  
 [key](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.ContainsKey(TKey).key 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.ContainsKey(TKey).key') is [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null').
 
+<a name='DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.EnumerableOfKeys()'></a>
+
+## FastDictionary<TKey,TValue>.EnumerableOfKeys() Method
+
+Create a new [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') on the keys of the [System.Collections.Generic.Dictionary&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.Dictionary-2 'System.Collections.Generic.Dictionary`2').
+
+```csharp
+public System.Collections.Generic.IEnumerable<TKey> EnumerableOfKeys();
+```
+
+#### Returns
+[System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TKey](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TKey')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.EnumerableOfValues()'></a>
+
+## FastDictionary<TKey,TValue>.EnumerableOfValues() Method
+
+Create a new [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') on the values of the [System.Collections.Generic.Dictionary&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.Dictionary-2 'System.Collections.Generic.Dictionary`2').
+
+```csharp
+public System.Collections.Generic.IEnumerable<TValue> EnumerableOfValues();
+```
+
+#### Returns
+[System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TValue](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
+
 <a name='DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.GetEnumerator()'></a>
 
 ## FastDictionary<TKey,TValue>.GetEnumerator() Method
 
-Returns an enumerator that iterates through the collection.
+Gets an enumerable collection that contains the [System.Collections.Generic.KeyValuePair&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2') of the dictionary.
+
+IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+enumeration. Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition
+at a time. That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
 
 ```csharp
 public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey,TValue>> GetEnumerator();
@@ -491,8 +554,7 @@ public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValu
 Implements [GetEnumerator()](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1.GetEnumerator 'System.Collections.Generic.IEnumerable`1.GetEnumerator'), [GetEnumerator()](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.IEnumerable.GetEnumerator 'System.Collections.IEnumerable.GetEnumerator')
 
 #### Returns
-[System.Collections.Generic.IEnumerator&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerator-1 'System.Collections.Generic.IEnumerator`1')[System.Collections.Generic.KeyValuePair&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TKey](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TValue](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerator-1 'System.Collections.Generic.IEnumerator`1')  
-An enumerator that can be used to iterate through the collection.
+[System.Collections.Generic.IEnumerator&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerator-1 'System.Collections.Generic.IEnumerator`1')[System.Collections.Generic.KeyValuePair&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TKey](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TValue](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerator-1 'System.Collections.Generic.IEnumerator`1')
 
 <a name='DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.GetOrAdd(TKey,System.Func_TKey,TValue_)'></a>
 
@@ -739,11 +801,58 @@ Value comparer. If not provided then default implementation will be used.
 [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if the value with [key](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).key 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).key') was equal to [comparisonValue](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).comparisonValue 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).comparisonValue') and was replaced with [newValue](DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).newValue 'DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).newValue'); otherwise, [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool').
 ### Explicit Interface Implementations
 
+<a name='DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_.Keys'></a>
+
+## FastDictionary<TKey,TValue>.System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>.Keys Property
+
+Gets an enumerable collection that contains the keys of the dictionary.
+
+IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+enumeration. Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition.
+That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+
+```csharp
+System.Collections.Generic.IEnumerable<TKey> System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>.Keys { get; }
+```
+
+Implements [Keys](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyDictionary-2.Keys 'System.Collections.Generic.IReadOnlyDictionary`2.Keys')
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_.Values'></a>
+
+## FastDictionary<TKey,TValue>.System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>.Values Property
+
+Gets an enumerable collection that contains the values of the dictionary.
+
+IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+enumeration. Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition.
+That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+
+```csharp
+System.Collections.Generic.IEnumerable<TValue> System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>.Values { get; }
+```
+
+Implements [Values](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyDictionary-2.Values 'System.Collections.Generic.IReadOnlyDictionary`2.Values')
+
 <a name='DevFast.Net.Collection.Implementations.Concurrent.LookUps.FastDictionary_TKey,TValue_.System.Collections.IEnumerable.GetEnumerator()'></a>
 
 ## FastDictionary<TKey,TValue>.System.Collections.IEnumerable.GetEnumerator() Method
 
-Returns an enumerator that iterates through a collection.
+Gets an enumerable collection that contains the boxed [System.Collections.Generic.KeyValuePair&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2') of the dictionary.
+
+IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
+enumeration. Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition
+at a time. That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
 
 ```csharp
 System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator();
