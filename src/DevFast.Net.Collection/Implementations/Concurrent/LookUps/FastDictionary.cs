@@ -98,9 +98,9 @@ public sealed partial class FastDictionary<TKey, TValue> :
     {
         _comparer = comparer ?? EqualityComparer<TKey>.Default;
         _concurrencyHash = GetConcurrencyHash(Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel));
-        _data = new Dictionary<TKey, TValue>[_concurrencyHash];
+        _data = new Dictionary<TKey, TValue>[_concurrencyHash + 1];
         initialCapacity = Math.Max(FixedValues.MinInitialCapacity, initialCapacity);
-        for (int i = 0; i < _concurrencyHash; i++)
+        for (int i = 0; i < _concurrencyHash + 1; i++)
         {
             _data[i] = new Dictionary<TKey, TValue>(initialCapacity, _comparer);
         }
@@ -653,7 +653,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
 
     private bool TryGetPartition(int position, [NotNullWhen(true)] out Dictionary<TKey, TValue>? partition)
     {
-        if (position >= 0 && position < _concurrencyHash)
+        if (position >= 0 && position < PartitionCount)
         {
             partition = _data[position];
             return true;
