@@ -251,8 +251,7 @@ Implements [IsReadOnly](https://docs.microsoft.com/en-us/dotnet/api/System.Colle
 
 Gets an [System.Collections.Generic.ICollection&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1 'System.Collections.Generic.ICollection`1') that contains the keys of the dictionary.
 
-IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-enumeration. Current implementation returns
+IMPLEMENTATION NOTES: Current implementation returns
 enumerator that creates a snapshot (thus, consuming space) on a partition.
 That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
@@ -327,8 +326,7 @@ The property is set and the [System.Collections.Generic.IDictionary&lt;&gt;](htt
 
 Gets an [System.Collections.Generic.ICollection&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.ICollection-1 'System.Collections.Generic.ICollection`1') that contains the values of the dictionary.
 
-IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-enumeration. Current implementation returns
+IMPLEMENTATION NOTES: Current implementation returns
 enumerator that creates a snapshot (thus, consuming space) on a partition.
 That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
@@ -541,6 +539,13 @@ Implements [ContainsKey(TKey)](https://docs.microsoft.com/en-us/dotnet/api/Syste
 
 Create a new [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') on the keys of the [System.Collections.Generic.Dictionary&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.Dictionary-2 'System.Collections.Generic.Dictionary`2').
 
+IMPLEMENTATION NOTES: Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition
+at a time. That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+
 ```csharp
 public System.Collections.Generic.IEnumerable<TKey> EnumerableOfKeys();
 ```
@@ -555,6 +560,13 @@ Implements [EnumerableOfKeys()](DevFast.Net.Collection.Abstractions.Concurrent.L
 ## FastDictionary<TKey,TValue>.EnumerableOfValues() Method
 
 Create a new [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') on the values of the [System.Collections.Generic.Dictionary&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.Dictionary-2 'System.Collections.Generic.Dictionary`2').
+
+IMPLEMENTATION NOTES: Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition
+at a time. That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
 
 ```csharp
 public System.Collections.Generic.IEnumerable<TValue> EnumerableOfValues();
@@ -571,12 +583,12 @@ Implements [EnumerableOfValues()](DevFast.Net.Collection.Abstractions.Concurrent
 
 Gets an enumerable collection that contains the [System.Collections.Generic.KeyValuePair&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2') of the dictionary.
 
-IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-enumeration. Current implementation returns
+IMPLEMENTATION NOTES: Current implementation returns
 enumerator that creates a snapshot (thus, consuming space) on a partition
 at a time. That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
 [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
 
 ```csharp
 public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey,TValue>> GetEnumerator();
@@ -838,8 +850,7 @@ Value comparer. If not provided then default implementation will be used.
 
 Gets an enumerable collection that contains the keys of the dictionary.
 
-IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-enumeration. Current implementation returns
+IMPLEMENTATION NOTES: Current implementation returns
 enumerator that creates a snapshot (thus, consuming space) on a partition.
 That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
@@ -858,8 +869,7 @@ Implements [Keys](https://docs.microsoft.com/en-us/dotnet/api/System.Collections
 
 Gets an enumerable collection that contains the values of the dictionary.
 
-IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-enumeration. Current implementation returns
+IMPLEMENTATION NOTES: Current implementation returns
 enumerator that creates a snapshot (thus, consuming space) on a partition.
 That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
@@ -878,12 +888,12 @@ Implements [Values](https://docs.microsoft.com/en-us/dotnet/api/System.Collectio
 
 Gets an enumerable collection that contains the boxed [System.Collections.Generic.KeyValuePair&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2') of the dictionary.
 
-IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-enumeration. Current implementation returns
+IMPLEMENTATION NOTES: Current implementation returns
 enumerator that creates a snapshot (thus, consuming space) on a partition
 at a time. That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
 [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
 
 ```csharp
 System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator();

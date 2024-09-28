@@ -89,6 +89,13 @@ Initial capacity of the partitions to be re-created.
 
 Create a new [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') on the keys of the [System.Collections.Generic.Dictionary&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.Dictionary-2 'System.Collections.Generic.Dictionary`2').
 
+IMPLEMENTATION NOTES: Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition
+at a time. That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+
 ```csharp
 System.Collections.Generic.IEnumerable<TKey> EnumerableOfKeys();
 ```
@@ -101,6 +108,13 @@ System.Collections.Generic.IEnumerable<TKey> EnumerableOfKeys();
 ## IFastDictionary<TKey,TValue>.EnumerableOfValues() Method
 
 Create a new [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') on the values of the [System.Collections.Generic.Dictionary&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.Dictionary-2 'System.Collections.Generic.Dictionary`2').
+
+IMPLEMENTATION NOTES: Current implementation returns
+enumerator that creates a snapshot (thus, consuming space) on a partition
+at a time. That said, if one is adding/removing elements concurrently, while
+enumerating on the collection, it is well possible that lookup may yield
+[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
+In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
 
 ```csharp
 System.Collections.Generic.IEnumerable<TValue> EnumerableOfValues();

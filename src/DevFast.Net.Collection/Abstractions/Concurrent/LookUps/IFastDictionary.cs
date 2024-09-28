@@ -5,10 +5,7 @@
 /// </summary>
 /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-#pragma warning disable S3444 // Interfaces should not simply inherit from base interfaces with colliding members
-public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>,
-#pragma warning restore S3444 // Interfaces should not simply inherit from base interfaces with colliding members
-    IReadOnlyDictionary<TKey, TValue>
+public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>
     where TKey : notnull
 {
     /// <summary>
@@ -18,11 +15,27 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>,
 
     /// <summary>
     /// Create a new <see cref="IEnumerable{T}"/> on the keys of the <see cref="Dictionary{TKey, TValue}"/>.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition
+    /// at a time. That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
     /// </summary>
     IEnumerable<TKey> EnumerableOfKeys();
 
     /// <summary>
     /// Create a new <see cref="IEnumerable{T}"/> on the values of the <see cref="Dictionary{TKey, TValue}"/>.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition
+    /// at a time. That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
     /// </summary>
     IEnumerable<TValue> EnumerableOfValues();
 

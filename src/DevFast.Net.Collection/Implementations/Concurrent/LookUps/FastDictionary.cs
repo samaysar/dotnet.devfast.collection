@@ -128,8 +128,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <summary>
     /// Gets an <see cref="ICollection{T}"/> that contains the keys of the dictionary.
     /// <para>
-    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-    /// enumeration. Current implementation returns
+    /// IMPLEMENTATION NOTES: Current implementation returns
     /// enumerator that creates a snapshot (thus, consuming space) on a partition.
     /// That said, if one is adding/removing elements concurrently, while
     /// enumerating on the collection, it is well possible that lookup may yield
@@ -148,8 +147,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <summary>
     /// Gets an <see cref="ICollection{T}"/> that contains the values of the dictionary.
     /// <para>
-    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-    /// enumeration. Current implementation returns
+    /// IMPLEMENTATION NOTES: Current implementation returns
     /// enumerator that creates a snapshot (thus, consuming space) on a partition.
     /// That said, if one is adding/removing elements concurrently, while
     /// enumerating on the collection, it is well possible that lookup may yield
@@ -200,8 +198,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <summary>
     /// Gets an enumerable collection that contains the keys of the dictionary.
     /// <para>
-    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-    /// enumeration. Current implementation returns
+    /// IMPLEMENTATION NOTES: Current implementation returns
     /// enumerator that creates a snapshot (thus, consuming space) on a partition.
     /// That said, if one is adding/removing elements concurrently, while
     /// enumerating on the collection, it is well possible that lookup may yield
@@ -214,8 +211,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <summary>
     /// Gets an enumerable collection that contains the values of the dictionary.
     /// <para>
-    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-    /// enumeration. Current implementation returns
+    /// IMPLEMENTATION NOTES: Current implementation returns
     /// enumerator that creates a snapshot (thus, consuming space) on a partition.
     /// That said, if one is adding/removing elements concurrently, while
     /// enumerating on the collection, it is well possible that lookup may yield
@@ -409,13 +405,13 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <summary>
     /// Gets an enumerable collection that contains the <see cref="KeyValuePair{TKey, TValue}"/> of the dictionary.
     /// <para>
-    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-    /// enumeration. Current implementation returns
+    /// IMPLEMENTATION NOTES: Current implementation returns
     /// enumerator that creates a snapshot (thus, consuming space) on a partition
     /// at a time. That said, if one is adding/removing elements concurrently, while
     /// enumerating on the collection, it is well possible that lookup may yield
     /// <see langword="false"/> or the element is NOT part of the enumerable.
     /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
     /// </summary>
     public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
     {
@@ -602,13 +598,13 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <summary>
     /// Gets an enumerable collection that contains the boxed <see cref="KeyValuePair{TKey, TValue}"/> of the dictionary.
     /// <para>
-    /// IMPLEMENTATION NOTES: Normally a dictionary is NOT a good choice for
-    /// enumeration. Current implementation returns
+    /// IMPLEMENTATION NOTES: Current implementation returns
     /// enumerator that creates a snapshot (thus, consuming space) on a partition
     /// at a time. That said, if one is adding/removing elements concurrently, while
     /// enumerating on the collection, it is well possible that lookup may yield
     /// <see langword="false"/> or the element is NOT part of the enumerable.
     /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
     /// </summary>
     IEnumerator IEnumerable.GetEnumerator()
     {
@@ -678,7 +674,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
 
     private static int GetConcurrencyHash(int concurrencyLevel)
     {
-        var currentPow2 = 2;
+        int currentPow2 = 2;
         while (concurrencyLevel > currentPow2 &&
             currentPow2 < FixedValues.FastDictionaryMaxConcurrencyLevel)
         {
