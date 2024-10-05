@@ -68,5 +68,28 @@ namespace DevFast.Net.Collection.Tests.Implementations.Concurrent
             That(roDico.Keys, Is.EquivalentTo(new[] { 0, 1 }));
             That(roDico.Values, Is.EquivalentTo(new[] { 2, 1 }));
         }
+
+        [Test]
+        public void FastDictionary_Add_Works_Fine()
+        {
+            FastDictionary<int, int> dico = new()
+            {
+                { 1, 2 },
+                new KeyValuePair<int, int>(0, 1)
+            };
+            That(dico.Count, Is.EqualTo(2));
+            That(dico.Keys, Is.EquivalentTo(new[] { 0, 1 }));
+            That(dico.Values, Is.EquivalentTo(new[] { 2, 1 }));
+        }
+
+        [Test]
+        public void FastDictionary_AddOrUpdate_Works_Fine()
+        {
+            FastDictionary<int, int> dico = new();
+            _ = dico.AddOrUpdate(0, 1, (_, __) => 1);
+            That(dico[0], Is.EqualTo(1));
+            _ = dico.AddOrUpdate(0, 1, (_, __) => 2);
+            That(dico[0], Is.EqualTo(2));
+        }
     }
 }
