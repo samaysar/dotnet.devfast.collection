@@ -90,6 +90,12 @@ namespace DevFast.Net.Collection.Tests.Implementations.Concurrent
             That(dico[0], Is.EqualTo(1));
             _ = dico.AddOrUpdate(0, 1, (_, __) => 2);
             That(dico[0], Is.EqualTo(2));
+            _ = dico.AddOrUpdate(0, 1, (_, __) =>
+            {
+                dico[0] = 5;
+                return 3;
+            });
+            That(dico[0], Is.EqualTo(3));
         }
     }
 }
