@@ -25,7 +25,7 @@ namespace DevFast.Net.Collection.Tests.Implementations.Concurrent
             {
                 dictionary[i] = 2;
             }
-            That(dictionary.Count, Is.EqualTo(totalElement));
+            That(dictionary, Has.Count.EqualTo(totalElement));
             using IEnumerator<int> de = dictionary.EnumerableOfKeys().GetEnumerator();
             int count = 0;
             while (de.MoveNext())

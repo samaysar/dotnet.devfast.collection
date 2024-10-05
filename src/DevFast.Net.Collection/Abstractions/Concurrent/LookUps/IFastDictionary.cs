@@ -13,6 +13,41 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRea
     /// </summary>
     int PartitionCount { get; }
 
+    /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}.this[TKey]" />
+    new TValue this[TKey key] { get; set; }
+
+    /// <summary>
+    /// Gets an enumerable collection that contains the keys of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
+    /// That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// </summary>
+    new IEnumerable<TKey> Keys { get; }
+
+    /// <summary>
+    /// Gets an enumerable collection that contains the values of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
+    /// That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// </summary>
+    new IEnumerable<TValue> Values { get; }
+
+    /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}.ContainsKey" />
+    new bool ContainsKey(TKey key);
+
+    /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}.TryGetValue" />
+    new bool TryGetValue(TKey key, out TValue value);
+
     /// <summary>
     /// Create a new <see cref="IEnumerable{T}"/> on the keys of the <see cref="Dictionary{TKey, TValue}"/>.
     /// <para>

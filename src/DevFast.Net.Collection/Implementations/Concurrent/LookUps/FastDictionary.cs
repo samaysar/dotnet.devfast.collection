@@ -138,7 +138,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// this implementation is HIGH due to the fact that all the partitions are visited almost immediately
     /// in order to create a copy of all the keys from all the partitions.
     /// <para>
-    /// In order to reduce space complexity, use either <see cref="IReadOnlyDictionary{TKey, TValue}.Keys"/>
+    /// In order to reduce space complexity, use either <see cref="IFastDictionary{TKey, TValue}.Keys"/>
     /// or <see cref="EnumerableOfKeys"/>.
     /// </para>
     /// </summary>
@@ -157,7 +157,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// this implementation is HIGH due to the fact that all the partitions are visited almost immediately
     /// in order to create a copy of all the keys from all the partitions.
     /// <para>
-    /// In order to reduce space complexity, use either <see cref="IReadOnlyDictionary{TKey, TValue}.Values"/>
+    /// In order to reduce space complexity, use either <see cref="IFastDictionary{TKey, TValue}.Values"/>
     /// or <see cref="EnumerableOfValues"/>.
     /// </para>
     /// </summary>
@@ -172,6 +172,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
             //this call will provide best-effort count.
             int totCount = 0;
             int i = _data.Length;
+#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
             for (; i > 0;)
             {
                 Dictionary<TKey, TValue> d = _data[--i];
@@ -185,6 +186,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
                     Monitor.Exit(d);
                 }
             }
+#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
             return totCount;
         }
     }
@@ -195,30 +197,16 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <inheritdoc />
     public int PartitionCount => _data.Length;
 
-    /// <summary>
-    /// Gets an enumerable collection that contains the keys of the dictionary.
-    /// <para>
-    /// IMPLEMENTATION NOTES: Current implementation returns
-    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
-    /// That said, if one is adding/removing elements concurrently, while
-    /// enumerating on the collection, it is well possible that lookup may yield
-    /// <see langword="false"/> or the element is NOT part of the enumerable.
-    /// </para>
-    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
-    /// </summary>
+    /// <inheritdoc cref="IFastDictionary{TKey, TValue}.Keys"/>
+    IEnumerable<TKey> IFastDictionary<TKey, TValue>.Keys => EnumerableOfKeys();
+
+    /// <inheritdoc cref="IFastDictionary{TKey, TValue}.Values"/>
+    IEnumerable<TValue> IFastDictionary<TKey, TValue>.Values => EnumerableOfValues();
+
+    /// <inheritdoc cref="IFastDictionary{TKey, TValue}.Keys"/>
     IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => EnumerableOfKeys();
 
-    /// <summary>
-    /// Gets an enumerable collection that contains the values of the dictionary.
-    /// <para>
-    /// IMPLEMENTATION NOTES: Current implementation returns
-    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
-    /// That said, if one is adding/removing elements concurrently, while
-    /// enumerating on the collection, it is well possible that lookup may yield
-    /// <see langword="false"/> or the element is NOT part of the enumerable.
-    /// </para>
-    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
-    /// </summary>
+    /// <inheritdoc cref="IFastDictionary{TKey, TValue}.Values"/>
     IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => EnumerableOfValues();
 
     /// <inheritdoc />
@@ -279,6 +267,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
         //We do not want to take all locks together
         //this call will provide best-effort clearing on whole collection.
         int i = _data.Length;
+#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
         for (; i > 0;)
         {
             Dictionary<TKey, TValue> d = _data[--i];
@@ -292,6 +281,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
                 Monitor.Exit(d);
             }
         }
+#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
     }
 
     /// <inheritdoc />
@@ -315,6 +305,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
         //We do not want to take all locks together
         //this call will provide best-effort clearing on whole collection.
         int i = _data.Length;
+#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
         for (; i > 0;)
         {
             Dictionary<TKey, TValue> d = _data[--i];
@@ -331,6 +322,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
                 Monitor.Exit(d);
             }
         }
+#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
     }
 
     /// <inheritdoc />
