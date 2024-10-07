@@ -4,7 +4,7 @@ namespace DevFast.Net.Collection.Implementations.Concurrent.LookUps;
 
 public sealed partial class FastDictionary<TKey, TValue>
 {
-    private class ValueEnumerable(FastDictionary<TKey, TValue> instance) : IEnumerable<TValue>
+    private sealed class ValueEnumerable(FastDictionary<TKey, TValue> instance) : IEnumerable<TValue>
     {
         private readonly FastDictionary<TKey, TValue> _instance = instance;
 
@@ -19,7 +19,7 @@ public sealed partial class FastDictionary<TKey, TValue>
         }
     }
 
-    private class ValueEnumerator : IEnumerator<TValue>
+    private sealed class ValueEnumerator : IEnumerator<TValue>
     {
         private readonly FastDictionary<TKey, TValue> _instance;
         private int _currentPosition;

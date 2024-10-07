@@ -123,6 +123,48 @@ Implements [Values](https://docs.microsoft.com/en-us/dotnet/api/System.Collectio
 [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
 ### Methods
 
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_)'></a>
+
+## IFastDictionary<TKey,TValue>.AddOrUpdate(TKey, TValue, Func<TKey,TValue,TValue>, IEqualityComparer<TValue>) Method
+
+Adds [key](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).key 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.AddOrUpdate(TKey, TValue, System.Func<TKey,TValue,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).key')/[addValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).addValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.AddOrUpdate(TKey, TValue, System.Func<TKey,TValue,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).addValue') pair to the collection
+if the [key](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).key 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.AddOrUpdate(TKey, TValue, System.Func<TKey,TValue,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).key') does not already exist,
+or updates [key](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).key 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.AddOrUpdate(TKey, TValue, System.Func<TKey,TValue,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).key')/value pair by using [updateValueFactory](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).updateValueFactory 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.AddOrUpdate(TKey, TValue, System.Func<TKey,TValue,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).updateValueFactory') lambda
+if the [key](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).key 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.AddOrUpdate(TKey, TValue, System.Func<TKey,TValue,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).key') already exists.
+
+```csharp
+TValue AddOrUpdate(TKey key, TValue addValue, System.Func<TKey,TValue,TValue> updateValueFactory, System.Collections.Generic.IEqualityComparer<TValue>? comparer=null);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).key'></a>
+
+`key` [TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')
+
+The key to be added or updated
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).addValue'></a>
+
+`addValue` [TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')
+
+The value to be added
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).updateValueFactory'></a>
+
+`updateValueFactory` [System.Func&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Func-3 'System.Func`3')[TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Func-3 'System.Func`3')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Func-3 'System.Func`3')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Func-3 'System.Func`3')
+
+Value generating lambda for an existing key and value
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).comparer'></a>
+
+`comparer` [System.Collections.Generic.IEqualityComparer&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')
+
+Value comparer. If not provided then default implementation will be used.
+
+#### Returns
+[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')  
+The new value for the key. This will be either be [addValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).addValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.AddOrUpdate(TKey, TValue, System.Func<TKey,TValue,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).addValue') (if the key was absent) or the result of [updateValueFactory](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.AddOrUpdate(TKey,TValue,System.Func_TKey,TValue,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).updateValueFactory 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.AddOrUpdate(TKey, TValue, System.Func<TKey,TValue,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).updateValueFactory') (if the key was present).
+
 <a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Clear(bool)'></a>
 
 ## IFastDictionary<TKey,TValue>.Clear(bool) Method
@@ -156,6 +198,34 @@ void Clear(int initialCapacity);
 `initialCapacity` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
 
 Initial capacity of the partitions to be re-created.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_)'></a>
+
+## IFastDictionary<TKey,TValue>.Contains(KeyValuePair<TKey,TValue>, IEqualityComparer<TValue>) Method
+
+Checks whether given key/value pair is part of current collection using provided [valueComparer](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).valueComparer 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.Contains(System.Collections.Generic.KeyValuePair<TKey,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).valueComparer').
+If [valueComparer](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).valueComparer 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.Contains(System.Collections.Generic.KeyValuePair<TKey,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).valueComparer') is [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null'), then [System.Collections.Generic.EqualityComparer&lt;&gt;.Default](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.EqualityComparer-1.Default 'System.Collections.Generic.EqualityComparer`1.Default')
+will be used.
+
+```csharp
+bool Contains(System.Collections.Generic.KeyValuePair<TKey,TValue> item, System.Collections.Generic.IEqualityComparer<TValue>? valueComparer);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).item'></a>
+
+`item` [System.Collections.Generic.KeyValuePair&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')
+
+Key value pair to check
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).valueComparer'></a>
+
+`valueComparer` [System.Collections.Generic.IEqualityComparer&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')
+
+Equality comparer for the value.
+
+#### Returns
+[System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')
 
 <a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.ContainsKey(TKey)'></a>
 
@@ -225,6 +295,118 @@ System.Collections.Generic.IEnumerable<TValue> EnumerableOfValues();
 #### Returns
 [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
 
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.GetOrAdd(TKey,System.Func_TKey,TValue_)'></a>
+
+## IFastDictionary<TKey,TValue>.GetOrAdd(TKey, Func<TKey,TValue>) Method
+
+Adds a key/value pair to the collection by using the specified function
+if the key does not already exist.
+Returns the new value, or the existing value if the key exists.
+
+```csharp
+TValue GetOrAdd(TKey key, System.Func<TKey,TValue> valueFactory);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.GetOrAdd(TKey,System.Func_TKey,TValue_).key'></a>
+
+`key` [TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')
+
+The key of the element to add.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.GetOrAdd(TKey,System.Func_TKey,TValue_).valueFactory'></a>
+
+`valueFactory` [System.Func&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Func-2 'System.Func`2')[TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Func-2 'System.Func`2')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Func-2 'System.Func`2')
+
+The function used to generate a value for the key.
+
+#### Returns
+[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')  
+The value for the key. This will be either the existing value for the key if the key is already in the dictionary, or the new value if the key was not in the dictionary.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.GetOrAdd(TKey,TValue)'></a>
+
+## IFastDictionary<TKey,TValue>.GetOrAdd(TKey, TValue) Method
+
+Adds a key/value pair to the collection if the key does not already exist.
+Returns the new value, or the existing value if the key exists.
+
+```csharp
+TValue GetOrAdd(TKey key, TValue value);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.GetOrAdd(TKey,TValue).key'></a>
+
+`key` [TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')
+
+Key value.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.GetOrAdd(TKey,TValue).value'></a>
+
+`value` [TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')
+
+Value.
+
+#### Returns
+[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')  
+The value for the key. This will be either the existing value for the key if the key is already in the dictionary, or the new value if the key was not in the dictionary.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Remove(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_)'></a>
+
+## IFastDictionary<TKey,TValue>.Remove(KeyValuePair<TKey,TValue>, IEqualityComparer<TValue>) Method
+
+Removes the given key/value pair from the collection using provided [valueComparer](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Remove(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).valueComparer 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.Remove(System.Collections.Generic.KeyValuePair<TKey,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).valueComparer').
+If [valueComparer](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Remove(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).valueComparer 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.Remove(System.Collections.Generic.KeyValuePair<TKey,TValue>, System.Collections.Generic.IEqualityComparer<TValue>).valueComparer') is [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null'), then [System.Collections.Generic.EqualityComparer&lt;&gt;.Default](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.EqualityComparer-1.Default 'System.Collections.Generic.EqualityComparer`1.Default')
+will be used.
+
+```csharp
+bool Remove(System.Collections.Generic.KeyValuePair<TKey,TValue> item, System.Collections.Generic.IEqualityComparer<TValue>? valueComparer);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Remove(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).item'></a>
+
+`item` [System.Collections.Generic.KeyValuePair&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')
+
+Key value pair to be removed.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.Remove(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_).valueComparer'></a>
+
+`valueComparer` [System.Collections.Generic.IEqualityComparer&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')
+
+Equality comparer for the value.
+
+#### Returns
+[System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryAdd(TKey,TValue)'></a>
+
+## IFastDictionary<TKey,TValue>.TryAdd(TKey, TValue) Method
+
+Attempts to add the specified key and value to the collection.
+
+```csharp
+bool TryAdd(TKey key, TValue value);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryAdd(TKey,TValue).key'></a>
+
+`key` [TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')
+
+The key of the element to add.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryAdd(TKey,TValue).value'></a>
+
+`value` [TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')
+
+The value of the element to add.
+
+#### Returns
+[System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')  
+[true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if the key/value pair was added successfully; [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if the key already exists.
+
 <a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryGetValue(TKey,TValue)'></a>
 
 ## IFastDictionary<TKey,TValue>.TryGetValue(TKey, TValue) Method
@@ -258,3 +440,70 @@ Implements [TryGetValue(TKey, TValue)](https://docs.microsoft.com/en-us/dotnet/a
 
 [System.ArgumentNullException](https://docs.microsoft.com/en-us/dotnet/api/System.ArgumentNullException 'System.ArgumentNullException')  
 [key](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryGetValue(TKey,TValue).key 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TryGetValue(TKey, TValue).key') is [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null').
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryRemove(TKey,TValue)'></a>
+
+## IFastDictionary<TKey,TValue>.TryRemove(TKey, TValue) Method
+
+Attempts to remove and return the value that has the specified key.
+
+```csharp
+bool TryRemove(TKey key, out TValue value);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryRemove(TKey,TValue).key'></a>
+
+`key` [TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')
+
+The key of the element to remove and return.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryRemove(TKey,TValue).value'></a>
+
+`value` [TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')
+
+When this method returns, contains the object removed from the collection, or the default value of the [TValue](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/TValue 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/TValue') type if [key](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryRemove(TKey,TValue).key 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TryRemove(TKey, TValue).key') does not exist.
+
+#### Returns
+[System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')  
+[true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if the object was removed successfully; otherwise, [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool').
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_)'></a>
+
+## IFastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, IEqualityComparer<TValue>) Method
+
+Updates the value associated with [key](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).key 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).key') to [newValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).newValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).newValue')
+if the existing value with [key](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).key 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).key') is equal to [comparisonValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).comparisonValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).comparisonValue').
+
+```csharp
+bool TryUpdate(TKey key, TValue newValue, TValue comparisonValue, System.Collections.Generic.IEqualityComparer<TValue>? comparer=null);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).key'></a>
+
+`key` [TKey](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TKey')
+
+key.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).newValue'></a>
+
+`newValue` [TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')
+
+Replacement value.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).comparisonValue'></a>
+
+`comparisonValue` [TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')
+
+Value to compare with the existing key value.
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).comparer'></a>
+
+`comparer` [System.Collections.Generic.IEqualityComparer&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')
+
+Value comparer. If not provided then default implementation will be used.
+
+#### Returns
+[System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')  
+[true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if the value with [key](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).key 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).key') was equal to [comparisonValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).comparisonValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).comparisonValue') and was replaced with [newValue](DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary_TKey,TValue_.TryUpdate(TKey,TValue,TValue,System.Collections.Generic.IEqualityComparer_TValue_).newValue 'DevFast.Net.Collection.Abstractions.Concurrent.LookUps.IFastDictionary<TKey,TValue>.TryUpdate(TKey, TValue, TValue, System.Collections.Generic.IEqualityComparer<TValue>).newValue'); otherwise, [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool').
