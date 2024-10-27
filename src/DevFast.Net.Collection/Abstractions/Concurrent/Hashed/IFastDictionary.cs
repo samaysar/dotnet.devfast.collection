@@ -1,4 +1,4 @@
-﻿namespace DevFast.Net.Collection.Abstractions.Concurrent.LookUps;
+﻿namespace DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 
 /// <summary>
 /// Interface for a thread-safe collection of key-value pairs that can be accessed by multiple threads concurrently.

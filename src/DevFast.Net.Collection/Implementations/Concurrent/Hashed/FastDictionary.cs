@@ -1,5 +1,5 @@
 ﻿using DevFast.Net.Collection.Abstractions;
-using DevFast.Net.Collection.Abstractions.Concurrent.LookUps;
+using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;

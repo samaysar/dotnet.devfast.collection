@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using DevFast.Net.Collection.Implementations.Concurrent.LookUps;
 
-namespace DevFast.Net.Collection.Tests.Implementations.Concurrent
+namespace DevFast.Net.Collection.Tests.Implementations.Concurrent.Hashed
 {
     [TestFixture]
     public class FastDictionaryValueEnumeratorTest
