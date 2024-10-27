@@ -1,3 +1,10 @@
+DevFast.Net.Collection 2.0.0
+
+ 1. New feature - namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed added, containing
+ 	A. Generic class FastDictionary implements IFastDictionary
+ 1. New feature - namespace DevFast.Net.Collection.Abstractions added, containing
+ 	A. Static class FixedValues - Holds constant values
+
 DevFast.Net.Collection 1.0.0
 
  1. New feature - namespace DevFast.Net.Collection.Implementations.Heaps.AbstractBase added, containing

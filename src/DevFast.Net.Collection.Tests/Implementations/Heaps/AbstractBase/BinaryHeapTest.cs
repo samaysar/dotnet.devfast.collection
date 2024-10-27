@@ -27,7 +27,7 @@ public class BinaryHeapTest
     {
         IHeapCollection<int> instance = For<BinaryHeap<int>>(capacity);
         That(instance, Is.Empty);
-        That(instance.Count, Is.EqualTo(0));
+        That(instance, Is.Empty);
         That(instance.Capacity, Is.EqualTo(capacity));
         That(instance.IsReadOnly, Is.False);
         if (capacity == 0)
@@ -165,7 +165,7 @@ public class BinaryHeapTest
     {
         TestAbstractBinaryHeap instance = new(10, (x, y) => x < y);
         That(instance.All().Count, Is.EqualTo(0));
-        That(instance.ToList().Count, Is.EqualTo(0));
+        That(instance.ToList(), Is.Empty);
         int[] items = new[] { 100, -58, 0, -52, 1, 10 };
         _ = instance.AddAll(items);
         HashSet<int> internalState = new(instance.All());
