@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace DevFast.Net.Collection.Implementations.Concurrent.LookUps;
+namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 
 public sealed partial class FastDictionary<TKey, TValue>
 {

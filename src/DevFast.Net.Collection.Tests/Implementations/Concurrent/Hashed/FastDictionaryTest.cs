@@ -1,6 +1,6 @@
 ﻿using DevFast.Net.Collection.Abstractions;
 using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
-using DevFast.Net.Collection.Implementations.Concurrent.LookUps;
+using DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 
 namespace DevFast.Net.Collection.Tests.Implementations.Concurrent.Hashed
 {

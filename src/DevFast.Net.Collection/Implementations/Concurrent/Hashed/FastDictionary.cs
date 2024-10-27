@@ -4,7 +4,7 @@ using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-namespace DevFast.Net.Collection.Implementations.Concurrent.LookUps;
+namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 
 /// <summary>
 /// Represents a thread-safe collection of key-value pairs that can be accessed by multiple threads concurrently.
