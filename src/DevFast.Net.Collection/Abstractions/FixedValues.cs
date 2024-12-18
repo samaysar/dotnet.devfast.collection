@@ -18,5 +18,16 @@ public static class FixedValues
     /// <summary>
     /// Maximum bound on concurrency level.
     /// </summary>
-    public const int FastDictionaryMaxConcurrencyLevel = 256;
+    public const int HashedCollectionMaxConcurrencyLevel = 256;
+
+    internal static int ToConcurrencyHash(this int concurrencyLevel)
+    {
+        int currentPow2 = 2;
+        while (concurrencyLevel > currentPow2 &&
+            currentPow2 < HashedCollectionMaxConcurrencyLevel)
+        {
+            currentPow2 <<= 1;
+        }
+        return currentPow2 - 1;
+    }
 }

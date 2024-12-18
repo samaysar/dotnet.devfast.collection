@@ -12,33 +12,33 @@ namespace DevFast.Net.Collection.Tests.Implementations.Concurrent.Hashed
         {
             That(new FastDictionary<int, int>().IsReadOnly, Is.False);
             That(new FastDictionary<int, int>().PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, Environment.ProcessorCount)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, Environment.ProcessorCount)));
             That(new FastDictionary<int, int>(0, int.MinValue).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
             That(new FastDictionary<int, int>(0, 0).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
             That(new FastDictionary<int, int>(0, 1).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
             That(new FastDictionary<int, int>(0, 2).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
             That(new FastDictionary<int, int>(0, 3).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 4)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 4)));
             That(new FastDictionary<int, int>(0, 63).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 64)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 64)));
             That(new FastDictionary<int, int>(0, 127).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 128)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 128)));
             That(new FastDictionary<int, int>(0, 128).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 128)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 128)));
             That(new FastDictionary<int, int>(0, 129).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
             That(new FastDictionary<int, int>(0, 255).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
             That(new FastDictionary<int, int>(0, 256).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
             That(new FastDictionary<int, int>(0, 257).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
             That(new FastDictionary<int, int>(0, int.MaxValue).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
         }
 
         [Test]

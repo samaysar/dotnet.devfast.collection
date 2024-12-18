@@ -52,7 +52,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// NOTE: Total expected memory allocation is bit more than <paramref name="initialCapacity"/> * <paramref name="concurrencyLevel"/>.
     /// </para>
     /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
-    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.FastDictionaryMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
     /// </summary>
     /// <param name="initialCapacity">Initial estimated capacity</param>
     /// <param name="concurrencyLevel">Concurrency level</param>
@@ -87,7 +87,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// NOTE: Total expected memory allocation is bit more than <paramref name="initialCapacity"/> * <paramref name="concurrencyLevel"/>.
     /// </para>
     /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
-    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.FastDictionaryMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
     /// </summary>
     /// <param name="initialCapacity">Initial estimated capacity</param>
     /// <param name="concurrencyLevel">Expected maximum concurrency</param>
@@ -97,7 +97,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
         IEqualityComparer<TKey>? comparer)
     {
         _comparer = comparer ?? EqualityComparer<TKey>.Default;
-        _concurrencyHash = GetConcurrencyHash(Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel));
+        _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToConcurrencyHash();
         _data = new Dictionary<TKey, TValue>[_concurrencyHash + 1];
         initialCapacity = Math.Max(FixedValues.MinInitialCapacity, initialCapacity);
         for (int i = 0; i < _concurrencyHash + 1; i++)
@@ -301,6 +301,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
             {
                 if (ReferenceEquals(_data[i], d))
                 {
+                    initialCapacity = Math.Max(FixedValues.MinInitialCapacity, initialCapacity);
                     _data[i] = new Dictionary<TKey, TValue>(initialCapacity, _comparer);
                 }
             }
@@ -616,16 +617,5 @@ public sealed partial class FastDictionary<TKey, TValue> :
     private ICollection<TValue> GetValueCollection()
     {
         return EnumerableOfValues().ToList();
-    }
-
-    private static int GetConcurrencyHash(int concurrencyLevel)
-    {
-        int currentPow2 = 2;
-        while (concurrencyLevel > currentPow2 &&
-            currentPow2 < FixedValues.FastDictionaryMaxConcurrencyLevel)
-        {
-            currentPow2 <<= 1;
-        }
-        return currentPow2 - 1;
     }
 }
