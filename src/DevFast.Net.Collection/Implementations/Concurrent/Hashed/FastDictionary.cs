@@ -94,7 +94,30 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <param name="comparer">Equality comparer for the key</param>
     public FastDictionary(int initialCapacity,
         int concurrencyLevel,
-        IEqualityComparer<TKey>? comparer)
+        IEqualityComparer<TKey>? comparer) : this(initialCapacity, concurrencyLevel, comparer, [])
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FastDictionary{TKey, TValue}" /> class that is empty
+    /// and has the given <paramref name="initialCapacity"/>, has given <paramref name="concurrencyLevel"/>
+    /// and uses the <paramref name="comparer"/> for the key type.
+    /// <para>
+    /// NOTE: Total expected memory allocation is bit more than <paramref name="initialCapacity"/> * <paramref name="concurrencyLevel"/>.
+    /// </para>
+    /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
+    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// </summary>
+    /// <param name="initialCapacity">Initial estimated capacity</param>
+    /// <param name="concurrencyLevel">Expected maximum concurrency</param>
+    /// <param name="comparer">Equality comparer for the key</param>
+    /// <param name="initialData">Data to initial the dictionary with</param>
+    /// <param name="ignoreDuplicates">When <see langword="true"/> all duplicate keys in the <paramref name="initialData"/> are ignored and arbitrary one of those is kept; otherwise exception is thrown when duplicate key is found.</param>
+    public FastDictionary(int initialCapacity,
+        int concurrencyLevel,
+        IEqualityComparer<TKey>? comparer,
+        IEnumerable<KeyValuePair<TKey, TValue>> initialData,
+        bool ignoreDuplicates = false)
     {
         _comparer = comparer ?? EqualityComparer<TKey>.Default;
         _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToConcurrencyHash();
@@ -104,6 +127,17 @@ public sealed partial class FastDictionary<TKey, TValue> :
         {
             _data[i] = new Dictionary<TKey, TValue>(initialCapacity, _comparer);
         }
+        _ = ignoreDuplicates
+            ? Parallel.ForEach(
+                initialData,
+                new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount },
+                x => this[x.Key] = x.Value
+            )
+            : Parallel.ForEach(
+                initialData,
+                new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount },
+                Add
+            );
     }
 
     /// <inheritdoc cref="IDictionary{TKey,TValue}.this" />

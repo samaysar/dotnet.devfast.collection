@@ -22,6 +22,9 @@ public interface IFastSet<T> : ISet<T>
 
     /// <summary>
     /// Removes all items from all the partitions.
+    /// <para>
+    /// NOTE: <paramref name="initialCapacity"/> is IGNORED for NETSTANDARD2_0 OR LOWER.
+    /// </para>
     /// </summary>
     /// <param name="initialCapacity">Initial capacity of the partitions to be re-created.</param>
     void Clear(int initialCapacity);

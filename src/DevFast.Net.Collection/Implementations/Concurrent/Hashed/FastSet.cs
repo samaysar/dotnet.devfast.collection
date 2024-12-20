@@ -1,6 +1,7 @@
 ﻿using DevFast.Net.Collection.Abstractions;
 using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed;
@@ -12,7 +13,7 @@ public sealed partial class FastSet<T> : IFastSet<T>
     where T : notnull
 {
     private readonly IEqualityComparer<T> _comparer;
-    private readonly HashSet<T>[] _data;
+    private HashSet<T>[] _data;
     private readonly int _concurrencyHash;
 
     /// <summary>
@@ -46,6 +47,9 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// NOTE: Total expected memory allocation is bit more than <paramref name="initialCapacity"/> * <paramref name="concurrencyLevel"/>.
     /// </para>
     /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
+    /// <para>
+    /// NOTE: <paramref name="initialCapacity"/> is IGNORED for NETSTANDARD2_0 OR LOWER.
+    /// </para>
     /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
     /// </summary>
     /// <param name="initialCapacity">Initial estimated capacity</param>
@@ -63,6 +67,9 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// NOTE: Total expected memory allocation is bit more than <paramref name="initialCapacity"/> * default_concurrency_level.
     /// </para>
     /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/>.
+    /// <para>
+    /// NOTE: <paramref name="initialCapacity"/> is IGNORED for NETSTANDARD2_0 OR LOWER.
+    /// </para>
     /// </summary>
     /// <param name="initialCapacity">Initial estimated capacity</param>
     /// <param name="comparer">Equality comparer for the key</param>
@@ -82,26 +89,50 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// </para>
     /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
     /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// <para>
+    /// NOTE: <paramref name="initialCapacity"/> is IGNORED for NETSTANDARD2_0 OR LOWER.
+    /// </para>
     /// </summary>
     /// <param name="initialCapacity">Initial estimated capacity</param>
     /// <param name="concurrencyLevel">Expected maximum concurrency</param>
     /// <param name="comparer">Equality comparer for the key</param>
     public FastSet(int initialCapacity,
         int concurrencyLevel,
-        IEqualityComparer<T>? comparer)
+        IEqualityComparer<T>? comparer) : this(initialCapacity, concurrencyLevel, comparer, [])
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FastSet{T}" /> class that initially contains
+    /// items of the <paramref name="initialData"/>,
+    /// has the given <paramref name="initialCapacity"/>, has given <paramref name="concurrencyLevel"/>
+    /// and uses the <paramref name="comparer"/> for the key type.
+    /// <para>
+    /// NOTE: Total expected memory allocation is bit more than <paramref name="initialCapacity"/> * <paramref name="concurrencyLevel"/>.
+    /// </para>
+    /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
+    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// <para>
+    /// NOTE: <paramref name="initialCapacity"/> is IGNORED for NETSTANDARD2_0 OR LOWER.
+    /// </para>
+    /// </summary>
+    /// <param name="initialCapacity">Initial estimated capacity</param>
+    /// <param name="concurrencyLevel">Expected maximum concurrency</param>
+    /// <param name="comparer">Equality comparer for the key</param>
+    /// <param name="initialData">Initial dataset of the set</param>
+    public FastSet(int initialCapacity,
+        int concurrencyLevel,
+        IEqualityComparer<T>? comparer,
+        IEnumerable<T> initialData)
     {
         _comparer = comparer ?? EqualityComparer<T>.Default;
         _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToConcurrencyHash();
-        _data = new HashSet<T>[_concurrencyHash + 1];
-        for (int i = 0; i < _concurrencyHash + 1; i++)
-        {
-#if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
-            initialCapacity = Math.Max(FixedValues.MinInitialCapacity, initialCapacity);
-            _data[i] = new HashSet<T>(initialCapacity, _comparer);
-#else
-            _data[i] = new HashSet<T>(_comparer);
-#endif
-        }
+        _data = CreateDataSet(initialCapacity, _concurrencyHash + 1, comparer);
+        _ = Parallel.ForEach(
+            initialData,
+            new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount },
+            x => Add(x)
+        );
     }
 
     /// <inheritdoc/>
@@ -194,32 +225,7 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// <inheritdoc/>
     public void Clear(int initialCapacity)
     {
-        //We do not want to take all locks together
-        //this call will provide best-effort clearing on whole collection.
-        int i = _data.Length;
-#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
-        for (; i > 0;)
-        {
-            HashSet<T> h = _data[--i];
-            Monitor.Enter(h);
-            try
-            {
-                if (ReferenceEquals(_data[i], h))
-                {
-#if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
-                    initialCapacity = Math.Max(FixedValues.MinInitialCapacity, initialCapacity);
-                    _data[i] = new HashSet<T>(initialCapacity, _comparer);
-#else
-                    _data[i] = new HashSet<T>(_comparer);
-#endif
-                }
-            }
-            finally
-            {
-                Monitor.Exit(h);
-            }
-        }
-#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
+        _ = Interlocked.Exchange(ref _data, CreateDataSet(initialCapacity, PartitionCount, _comparer));
     }
 
     /// <inheritdoc/>
@@ -275,13 +281,35 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// <inheritdoc/>
     public IEnumerator<T> GetEnumerator()
     {
-        throw new NotImplementedException();
+        return new Enumerator(this);
     }
 
     /// <inheritdoc/>
     public void IntersectWith(IEnumerable<T> other)
     {
-        throw new NotImplementedException();
+        if (ReferenceEquals(this, other) ||
+            Count.Equals(0))
+        {
+            return;
+        }
+        if (other is ICollection<T> coll &&
+            coll.Count.Equals(0))
+        {
+            Clear();
+            return;
+        }
+        if (other is IReadOnlyCollection<T> ro &&
+            ro.Count.Equals(0))
+        {
+            Clear();
+            return;
+        }
+        if (other is HashSet<T> hs &&
+            _comparer.Equals(hs.Comparer))
+        {
+            _ = CreateDataSet(Math.Min(hs.Count, Count), PartitionCount, _comparer);
+
+        }
     }
     /// <inheritdoc/>
 
@@ -357,5 +385,40 @@ public sealed partial class FastSet<T> : IFastSet<T>
     private HashSet<T> GetPartition(T key)
     {
         return _data[key.GetHashCode() & _concurrencyHash];
+    }
+
+    private bool TryGetPartition(int position, [NotNullWhen(true)] out HashSet<T>? partition)
+    {
+        if (position >= 0 && position < PartitionCount)
+        {
+            partition = _data[position];
+            return true;
+        }
+        partition = default;
+        return false;
+    }
+
+    private static HashSet<T>[] CreateDataSet(
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+#pragma warning disable S1172 // Unused method parameters should be removed
+        int initialCapacity,
+#pragma warning restore S1172 // Unused method parameters should be removed
+#pragma warning restore IDE0079 // Remove unnecessary suppression
+        int totalPartition,
+        IEqualityComparer<T>? comparer)
+    {
+        HashSet<T>[] data = new HashSet<T>[totalPartition];
+#if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+        initialCapacity = Math.Max(FixedValues.MinInitialCapacity, initialCapacity / totalPartition);
+#endif
+        for (int i = 0; i < totalPartition; i++)
+        {
+#if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+            data[i] = new HashSet<T>(initialCapacity, comparer);
+#else
+            data[i] = new HashSet<T>(comparer);
+#endif
+        }
+        return data;
     }
 }
