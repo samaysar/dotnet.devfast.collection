@@ -310,52 +310,24 @@ public sealed partial class FastSet<T> : IFastSet<T>
             Clear();
             return;
         }
-        if (other is FastSet<T> fs)
-        {
-            FastSet<T> newInstance = new(Math.Min(fs.Count, Count), PartitionCount, _comparer);
-            (FastSet<T> first, FastSet<T> second) = fs.PartitionCount > PartitionCount ? (fs, this) : (this, fs);
-            _ = Parallel.For(
-                0,
-                first.PartitionCount,
-                new ParallelOptions
+
+        FastSet<T> newInstance = new(0, PartitionCount, _comparer);
+        _ = Parallel.ForEach(
+            other,
+            new ParallelOptions
+            {
+                CancellationToken = token,
+                MaxDegreeOfParallelism = Math.Max(FixedValues.MinConcurrencyLevel, maxConcurrency)
+            },
+            item =>
+            {
+                if (Contains(item))
                 {
-                    CancellationToken = token,
-                    MaxDegreeOfParallelism = Math.Max(FixedValues.MinConcurrencyLevel, maxConcurrency)
-                },
-                i =>
-                {
-                    using HashSet<T>.Enumerator fe = first._data[i].GetEnumerator();
-                    while (fe.MoveNext())
-                    {
-                        if (second.Contains(fe.Current))
-                        {
-                            _ = newInstance.Add(fe.Current);
-                        }
-                    }
+                    _ = newInstance.Add(item);
                 }
-            );
-            _ = Interlocked.Exchange(ref _data, newInstance._data);
-        }
-        else
-        {
-            FastSet<T> newInstance = new(0, PartitionCount, _comparer);
-            _ = Parallel.ForEach(
-                other,
-                new ParallelOptions
-                {
-                    CancellationToken = token,
-                    MaxDegreeOfParallelism = Math.Max(FixedValues.MinConcurrencyLevel, maxConcurrency)
-                },
-                item =>
-                {
-                    if (Contains(item))
-                    {
-                        _ = newInstance.Add(item);
-                    }
-                }
-            );
-            _ = Interlocked.Exchange(ref _data, newInstance._data);
-        }
+            }
+        );
+        _ = Interlocked.Exchange(ref _data, newInstance._data);
     }
 
     /// <inheritdoc/>
@@ -392,7 +364,16 @@ public sealed partial class FastSet<T> : IFastSet<T>
 
     public bool Remove(T item)
     {
-        throw new NotImplementedException();
+        HashSet<T> h = GetPartition(item);
+        Monitor.Enter(h);
+        try
+        {
+            return h.Remove(item);
+        }
+        finally
+        {
+            Monitor.Exit(h);
+        }
     }
     /// <inheritdoc/>
 
@@ -415,12 +396,12 @@ public sealed partial class FastSet<T> : IFastSet<T>
 
     void ICollection<T>.Add(T item)
     {
-        throw new NotImplementedException();
+        _ = Add(item);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-        throw new NotImplementedException();
+        return GetEnumerator();
     }
 
 
