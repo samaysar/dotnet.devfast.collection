@@ -331,13 +331,129 @@ public sealed partial class FastSet<T> : IFastSet<T>
     }
 
     /// <inheritdoc/>
-
     public bool IsProperSubsetOf(IEnumerable<T> other)
     {
-        throw new NotImplementedException();
+        return IsProperSubsetOf(other, Token.None, Environment.ProcessorCount);
     }
-    /// <inheritdoc/>
 
+    /// <inheritdoc/>
+    public bool IsProperSubsetOf(IEnumerable<T> other, Token token, int maxConcurrency)
+    {
+        if (ReferenceEquals(this, other))
+        {
+            return false;
+        }
+        if (other is ICollection<T> coll)
+        {
+            if (Count >= coll.Count)
+            {
+                return false;
+            }
+            if (Count == 0)
+            {
+                return coll.Count > 0;
+            }
+        }
+        if (other is IReadOnlyCollection<T> ro)
+        {
+            if (Count >= ro.Count)
+            {
+                return false;
+            }
+            if (Count == 0)
+            {
+                return ro.Count > 0;
+            }
+        }
+        if (other is ISet<T>)
+        {
+            int totalMatch = Count;
+            _ = Parallel.ForEach(
+                other,
+                new ParallelOptions
+                {
+                    CancellationToken = token,
+                    MaxDegreeOfParallelism = Math.Max(FixedValues.MinConcurrencyLevel, maxConcurrency)
+                },
+                () => 0,
+                (x, s, l) =>
+                {
+                    if (s.IsStopped)
+                    {
+                        return l;
+                    }
+                    if (Contains(x))
+                    {
+                        l++;
+                        if (totalMatch <= l)
+                        {
+                            s.Stop();
+                        }
+                    }
+                    return l;
+                },
+                l => Interlocked.Add(ref totalMatch, -l)
+            );
+            //it may go less than 0 if collection is mutated concurrently
+            //but the comment on the method warns about it,
+            //so we do NOT throw exception NOR we check for STRICT 0 equality.
+            return totalMatch <= 0;
+        }
+        else
+        {
+            int mdop = Math.Max(FixedValues.MinConcurrencyLevel, maxConcurrency);
+            FastSet<T> dataClone = new(Count, mdop + 1, _comparer, this);
+            if (dataClone.Count == 0)
+            {
+                using IEnumerator<T> oe = other.GetEnumerator();
+                return oe.MoveNext();
+            }
+            int set1ForUnmatch = 0;
+            int set1ForAllMatch = 0;
+            _ = Parallel.ForEach(
+                other,
+                new ParallelOptions
+                {
+                    CancellationToken = token,
+                    MaxDegreeOfParallelism = mdop
+                },
+                () => 0,
+                (x, s, l) =>
+                {
+                    if (s.IsStopped)
+                    {
+                        return l;
+                    }
+                    if (!Contains(x))
+                    {
+                        if (!set1ForAllMatch.Equals(0))
+                        {
+                            //all conditions are met no need to continue enumerating
+                            s.Stop();
+                        }
+                        return 1;
+                    }
+                    else if (dataClone.Remove(x, out int pCount) &&
+                            pCount == 0 &&
+                            dataClone.Count == 0)
+                    {
+                        _ = Interlocked.CompareExchange(ref set1ForAllMatch, 1, 0);
+                        if (l > 0 ||
+                            set1ForUnmatch > 0)
+                        {
+                            //all conditions are met no need to continue enumerating
+                            s.Stop();
+                        }
+                    }
+                    return l;
+                },
+                l => Interlocked.CompareExchange(ref set1ForUnmatch, l, 0)
+            );
+            return set1ForAllMatch > 0 && set1ForUnmatch > 0;
+        }
+    }
+
+    /// <inheritdoc/>
     public bool IsProperSupersetOf(IEnumerable<T> other)
     {
         throw new NotImplementedException();
@@ -404,6 +520,21 @@ public sealed partial class FastSet<T> : IFastSet<T>
         return GetEnumerator();
     }
 
+    private bool Remove(T item, out int countInPartition)
+    {
+        HashSet<T> h = GetPartition(item);
+        Monitor.Enter(h);
+        try
+        {
+            bool result = h.Remove(item);
+            countInPartition = h.Count;
+            return result;
+        }
+        finally
+        {
+            Monitor.Exit(h);
+        }
+    }
 
 #if NETCOREAPP3_0_OR_GREATER
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
@@ -448,5 +579,10 @@ public sealed partial class FastSet<T> : IFastSet<T>
 #endif
         }
         return data;
+    }
+
+    public bool IsProperSupersetOf(IEnumerable<T> other, Token token, int maxConcurrency)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -45,23 +45,79 @@ public interface IFastSet<T> : ISet<T>
     /// <param name="maxConcurrency">Maximum parallelism to be employed (Min bound is <see cref="FixedValues.MinConcurrencyLevel"/>)</param>
     void IntersectWith(IEnumerable<T> other, Token token, int maxConcurrency);
 
-#if NET5_0_OR_GREATER
-    /// <inheritdoc cref="IReadOnlySet{T}.IsProperSubsetOf(IEnumerable{T})"/>
+    /// <summary>
+    /// Concurrently determines whether the current set is a proper subset of a specified collection.
+    /// <para>
+    /// IMPLEMENTATION NOTES:
+    /// </para>
+    /// 1. Whenever possible comparison is done WITHOUT taking the snapshot of the current state,
+    /// thus, in order to obtain consistent results, do NOT mutate collection (e.g. add, remove etc) concurrently.
+    /// <para>
+    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast. But,
+    /// in any case, concurrently mutating a set and comparing with another collection makes no sense.
+    /// </para>
+    /// </summary>
+    /// <param name="other">The collection to compare with</param>
     new bool IsProperSubsetOf(IEnumerable<T> other);
 
-    /// <inheritdoc cref="IReadOnlySet{T}.IsProperSupersetOf(IEnumerable{T})"/>
+    /// <summary>
+    /// Concurrently determines whether the current set is a proper subset of a specified collection.
+    /// <para>
+    /// IMPLEMENTATION NOTES:
+    /// </para>
+    /// 1. Whenever possible comparison is done WITHOUT taking the snapshot of the current state,
+    /// thus, in order to obtain consistent results, do NOT mutate collection (e.g. add, remove etc) concurrently.
+    /// <para>
+    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast. But,
+    /// in any case, concurrently mutating a set and comparing with another collection makes no sense.
+    /// </para>
+    /// </summary>
+    /// <param name="other">The collection to compare with</param>
+    /// <param name="token">Cancellation token to observe</param>
+    /// <param name="maxConcurrency">Maximum parallelism to be employed (Min bound is <see cref="FixedValues.MinConcurrencyLevel"/>)</param>
+    bool IsProperSubsetOf(IEnumerable<T> other, Token token, int maxConcurrency);
+
+    /// <summary>
+    /// Concurrently determines whether the current set is a proper superset of a specified collection.
+    /// <para>
+    /// IMPLEMENTATION NOTES:
+    /// </para>
+    /// 1. Whenever possible comparison is done WITHOUT taking the snapshot of the current state,
+    /// thus, in order to obtain consistent results, do NOT mutate collection (e.g. add, remove etc) concurrently.
+    /// <para>
+    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast. But,
+    /// in any case, concurrently mutating a set and comparing with another collection makes no sense.
+    /// </para>
+    /// </summary>
+    /// <param name="other">The collection to compare with</param>
     new bool IsProperSupersetOf(IEnumerable<T> other);
 
-    /// <inheritdoc cref="IReadOnlySet{T}.IsSubsetOf(IEnumerable{T})"/>
+    /// <summary>
+    /// Concurrently determines whether the current set is a proper superset of a specified collection.
+    /// <para>
+    /// IMPLEMENTATION NOTES:
+    /// </para>
+    /// 1. Whenever possible comparison is done WITHOUT taking the snapshot of the current state,
+    /// thus, in order to obtain consistent results, do NOT mutate collection (e.g. add, remove etc) concurrently.
+    /// <para>
+    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast. But,
+    /// in any case, concurrently mutating a set and comparing with another collection makes no sense.
+    /// </para>
+    /// </summary>
+    /// <param name="other">The collection to compare with</param>
+    /// <param name="token">Cancellation token to observe</param>
+    /// <param name="maxConcurrency">Maximum parallelism to be employed (Min bound is <see cref="FixedValues.MinConcurrencyLevel"/>)</param>
+    bool IsProperSupersetOf(IEnumerable<T> other, Token token, int maxConcurrency);
+
+    /// <inheritdoc cref="ISet{T}.IsSubsetOf(IEnumerable{T})"/>
     new bool IsSubsetOf(IEnumerable<T> other);
 
-    /// <inheritdoc cref="IReadOnlySet{T}.IsSupersetOf(IEnumerable{T})"/>
+    /// <inheritdoc cref="ISet{T}.IsSupersetOf(IEnumerable{T})"/>
     new bool IsSupersetOf(IEnumerable<T> other);
 
-    /// <inheritdoc cref="IReadOnlySet{T}.Overlaps(IEnumerable{T})"/>
+    /// <inheritdoc cref="ISet{T}.Overlaps(IEnumerable{T})"/>
     new bool Overlaps(IEnumerable<T> other);
 
-    /// <inheritdoc cref="IReadOnlySet{T}.SetEquals(IEnumerable{T})"/>
+    /// <inheritdoc cref="ISet{T}.SetEquals(IEnumerable{T})"/>
     new bool SetEquals(IEnumerable<T> other);
-#endif
 }
