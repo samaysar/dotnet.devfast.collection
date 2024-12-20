@@ -20,7 +20,7 @@ public static class FixedValues
     /// </summary>
     public const int HashedCollectionMaxConcurrencyLevel = 256;
 
-    internal static int ToConcurrencyHash(this int concurrencyLevel)
+    internal static int ToPow2HashMask(this int concurrencyLevel)
     {
         int currentPow2 = 2;
         while (concurrencyLevel > currentPow2 &&

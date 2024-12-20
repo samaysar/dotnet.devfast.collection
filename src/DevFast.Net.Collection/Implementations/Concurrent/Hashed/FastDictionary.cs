@@ -120,7 +120,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
         bool ignoreDuplicates = false)
     {
         _comparer = comparer ?? EqualityComparer<TKey>.Default;
-        _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToConcurrencyHash();
+        _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToPow2HashMask();
         _data = new Dictionary<TKey, TValue>[_concurrencyHash + 1];
         initialCapacity = Math.Max(FixedValues.MinInitialCapacity, initialCapacity);
         for (int i = 0; i < _concurrencyHash + 1; i++)

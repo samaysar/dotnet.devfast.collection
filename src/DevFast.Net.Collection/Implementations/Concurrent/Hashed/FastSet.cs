@@ -126,7 +126,7 @@ public sealed partial class FastSet<T> : IFastSet<T>
         IEnumerable<T> initialData)
     {
         _comparer = comparer ?? EqualityComparer<T>.Default;
-        _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToConcurrencyHash();
+        _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToPow2HashMask();
         _data = CreateDataSet(initialCapacity, _concurrencyHash + 1, comparer);
         _ = Parallel.ForEach(
             initialData,
@@ -287,6 +287,12 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// <inheritdoc/>
     public void IntersectWith(IEnumerable<T> other)
     {
+        IntersectWith(other, Token.None, Environment.ProcessorCount);
+    }
+
+    /// <inheritdoc/>
+    public void IntersectWith(IEnumerable<T> other, Token token, int maxConcurrency)
+    {
         if (ReferenceEquals(this, other) ||
             Count.Equals(0))
         {
@@ -304,13 +310,54 @@ public sealed partial class FastSet<T> : IFastSet<T>
             Clear();
             return;
         }
-        if (other is HashSet<T> hs &&
-            _comparer.Equals(hs.Comparer))
+        if (other is FastSet<T> fs)
         {
-            _ = CreateDataSet(Math.Min(hs.Count, Count), PartitionCount, _comparer);
-
+            FastSet<T> newInstance = new(Math.Min(fs.Count, Count), PartitionCount, _comparer);
+            (FastSet<T> first, FastSet<T> second) = fs.PartitionCount > PartitionCount ? (fs, this) : (this, fs);
+            _ = Parallel.For(
+                0,
+                first.PartitionCount,
+                new ParallelOptions
+                {
+                    CancellationToken = token,
+                    MaxDegreeOfParallelism = Math.Max(FixedValues.MinConcurrencyLevel, maxConcurrency)
+                },
+                i =>
+                {
+                    using HashSet<T>.Enumerator fe = first._data[i].GetEnumerator();
+                    while (fe.MoveNext())
+                    {
+                        if (second.Contains(fe.Current))
+                        {
+                            _ = newInstance.Add(fe.Current);
+                        }
+                    }
+                }
+            );
+            _ = Interlocked.Exchange(ref _data, newInstance._data);
+        }
+        else
+        {
+            FastSet<T> newInstance = new(0, PartitionCount, _comparer);
+            _ = Parallel.ForEach(
+                other,
+                new ParallelOptions
+                {
+                    CancellationToken = token,
+                    MaxDegreeOfParallelism = Math.Max(FixedValues.MinConcurrencyLevel, maxConcurrency)
+                },
+                item =>
+                {
+                    if (Contains(item))
+                    {
+                        _ = newInstance.Add(item);
+                    }
+                }
+            );
+            _ = Interlocked.Exchange(ref _data, newInstance._data);
         }
     }
+
     /// <inheritdoc/>
 
     public bool IsProperSubsetOf(IEnumerable<T> other)
