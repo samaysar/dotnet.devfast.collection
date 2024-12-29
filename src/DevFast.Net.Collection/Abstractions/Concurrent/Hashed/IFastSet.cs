@@ -30,7 +30,7 @@ public interface IFastSet<T> : ISet<T>
     void Clear(int initialCapacity);
 
     /// <summary>
-    /// Concurrently removes all elements of the <paramref name="other"/> collection from current instance.
+    /// Removes all elements of the <paramref name="other"/> collection from current instance.
     /// </summary>
     /// <param name="other">Collection to compare with current instance</param>
     /// <param name="token">Cancellation token to observe</param>
@@ -38,7 +38,7 @@ public interface IFastSet<T> : ISet<T>
     void ExceptWith(IEnumerable<T> other, Token token, int maxConcurrency);
 
     /// <summary>
-    /// Concurrently modifies the current set so that it contains only elements that are also in a specified collection.
+    /// Modifies the current set so that it contains elements that are also in <paramref name="other"/> collection.
     /// </summary>
     /// <param name="other">The collection to compare with</param>
     /// <param name="token">Cancellation token to observe</param>
@@ -46,31 +46,31 @@ public interface IFastSet<T> : ISet<T>
     void IntersectWith(IEnumerable<T> other, Token token, int maxConcurrency);
 
     /// <summary>
-    /// Concurrently determines whether the current set is a proper subset of a specified collection.
+    /// Determines whether the current set is a proper subset of <paramref name="other"/> collection.
     /// <para>
     /// IMPLEMENTATION NOTES:
     /// </para>
     /// 1. Whenever possible comparison is done WITHOUT taking the snapshot of the current state,
     /// thus, in order to obtain consistent results, do NOT mutate collection (e.g. add, remove etc) concurrently.
     /// <para>
-    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast. But,
-    /// in any case, concurrently mutating a set and comparing with another collection makes no sense.
+    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast.
     /// </para>
+    /// In all cases, concurrently mutating a set and comparing with another collection does NOT make much sense.
     /// </summary>
     /// <param name="other">The collection to compare with</param>
     new bool IsProperSubsetOf(IEnumerable<T> other);
 
     /// <summary>
-    /// Concurrently determines whether the current set is a proper subset of a specified collection.
+    /// Determines whether the current set is a proper subset of <paramref name="other"/> collection.
     /// <para>
     /// IMPLEMENTATION NOTES:
     /// </para>
     /// 1. Whenever possible comparison is done WITHOUT taking the snapshot of the current state,
     /// thus, in order to obtain consistent results, do NOT mutate collection (e.g. add, remove etc) concurrently.
     /// <para>
-    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast. But,
-    /// in any case, concurrently mutating a set and comparing with another collection makes no sense.
+    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast.
     /// </para>
+    /// In all cases, concurrently mutating a set and comparing with another collection does NOT make much sense.
     /// </summary>
     /// <param name="other">The collection to compare with</param>
     /// <param name="token">Cancellation token to observe</param>
@@ -78,22 +78,22 @@ public interface IFastSet<T> : ISet<T>
     bool IsProperSubsetOf(IEnumerable<T> other, Token token, int maxConcurrency);
 
     /// <summary>
-    /// Concurrently determines whether the current set is a proper superset of a specified collection.
+    /// Determines whether the current set is a proper superset of <paramref name="other"/> collection.
     /// <para>
     /// IMPLEMENTATION NOTES:
     /// </para>
     /// 1. Whenever possible comparison is done WITHOUT taking the snapshot of the current state,
     /// thus, in order to obtain consistent results, do NOT mutate collection (e.g. add, remove etc) concurrently.
     /// <para>
-    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast. But,
-    /// in any case, concurrently mutating a set and comparing with another collection makes no sense.
+    /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast.
     /// </para>
+    /// In all cases, concurrently mutating a set and comparing with another collection does NOT make much sense.
     /// </summary>
     /// <param name="other">The collection to compare with</param>
     new bool IsProperSupersetOf(IEnumerable<T> other);
 
     /// <summary>
-    /// Concurrently determines whether the current set is a proper superset of a specified collection.
+    /// Determines whether the current set is a proper superset of <paramref name="other"/> collection.
     /// <para>
     /// IMPLEMENTATION NOTES:
     /// </para>
@@ -101,7 +101,7 @@ public interface IFastSet<T> : ISet<T>
     /// thus, in order to obtain consistent results, do NOT mutate collection (e.g. add, remove etc) concurrently.
     /// <para>
     /// 2. Snapshot is taken when <paramref name="other"/> is enumerated as it-is without cast. But,
-    /// in any case, concurrently mutating a set and comparing with another collection makes no sense.
+    /// in any case, concurrently mutating a set and comparing with another collection does NOT make much sense.
     /// </para>
     /// </summary>
     /// <param name="other">The collection to compare with</param>

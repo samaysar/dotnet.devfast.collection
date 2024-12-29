@@ -294,18 +294,18 @@ public sealed partial class FastSet<T> : IFastSet<T>
     public void IntersectWith(IEnumerable<T> other, Token token, int maxConcurrency)
     {
         if (ReferenceEquals(this, other) ||
-            Count.Equals(0))
+            Count == 0)
         {
             return;
         }
         if (other is ICollection<T> coll &&
-            coll.Count.Equals(0))
+            coll.Count == 0)
         {
             Clear();
             return;
         }
         if (other is IReadOnlyCollection<T> ro &&
-            ro.Count.Equals(0))
+            ro.Count == 0)
         {
             Clear();
             return;
@@ -367,7 +367,7 @@ public sealed partial class FastSet<T> : IFastSet<T>
         }
         if (other is ISet<T>)
         {
-            int totalMatch = Count;
+            int totalUnMatch = Count;
             _ = Parallel.ForEach(
                 other,
                 new ParallelOptions
@@ -382,22 +382,19 @@ public sealed partial class FastSet<T> : IFastSet<T>
                     {
                         return l;
                     }
-                    if (Contains(x))
+                    if (Contains(x) &&
+                        totalUnMatch <= ++l)
                     {
-                        l++;
-                        if (totalMatch <= l)
-                        {
-                            s.Stop();
-                        }
+                        s.Stop();
                     }
                     return l;
                 },
-                l => Interlocked.Add(ref totalMatch, -l)
+                l => Interlocked.Add(ref totalUnMatch, -l)
             );
             //it may go less than 0 if collection is mutated concurrently
             //but the comment on the method warns about it,
             //so we do NOT throw exception NOR we check for STRICT 0 equality.
-            return totalMatch <= 0;
+            return totalUnMatch <= 0;
         }
         else
         {
@@ -424,26 +421,27 @@ public sealed partial class FastSet<T> : IFastSet<T>
                     {
                         return l;
                     }
-                    if (!Contains(x))
+                    if (dataClone.Remove(x, out int pCount))
                     {
-                        if (!set1ForAllMatch.Equals(0))
+                        if (pCount == 0 && dataClone.Count == 0)
+                        {
+                            _ = Interlocked.CompareExchange(ref set1ForAllMatch, 1, 0);
+                            if (l > 0 ||
+                                set1ForUnmatch > 0)
+                            {
+                                //all conditions are met no need to continue enumerating
+                                s.Stop();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (set1ForAllMatch > 0)
                         {
                             //all conditions are met no need to continue enumerating
                             s.Stop();
                         }
                         return 1;
-                    }
-                    else if (dataClone.Remove(x, out int pCount) &&
-                            pCount == 0 &&
-                            dataClone.Count == 0)
-                    {
-                        _ = Interlocked.CompareExchange(ref set1ForAllMatch, 1, 0);
-                        if (l > 0 ||
-                            set1ForUnmatch > 0)
-                        {
-                            //all conditions are met no need to continue enumerating
-                            s.Stop();
-                        }
                     }
                     return l;
                 },
@@ -456,10 +454,70 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// <inheritdoc/>
     public bool IsProperSupersetOf(IEnumerable<T> other)
     {
-        throw new NotImplementedException();
+        return IsProperSupersetOf(other, Token.None, Environment.ProcessorCount);
     }
-    /// <inheritdoc/>
 
+    /// <inheritdoc/>
+    public bool IsProperSupersetOf(IEnumerable<T> other, Token token, int maxConcurrency)
+    {
+        if (ReferenceEquals(this, other) ||
+            Count == 0)
+        {
+            return false;
+        }
+        if (other is ICollection<T> coll && coll.Count == 0)
+        {
+            return true;
+        }
+        if (other is IReadOnlyCollection<T> ro && ro.Count == 0)
+        {
+            return true;
+        }
+
+        if (other is ISet<T> os)
+        {
+            if (Count <= os.Count)
+            {
+                return false;
+            }
+            int totalUnMatch = Count;
+            _ = Parallel.ForEach(
+                other,
+                new ParallelOptions
+                {
+                    CancellationToken = token,
+                    MaxDegreeOfParallelism = Math.Max(FixedValues.MinConcurrencyLevel, maxConcurrency)
+                },
+                () => 0,
+                (x, s, l) =>
+                {
+                    if (s.IsStopped)
+                    {
+                        return l;
+                    }
+                    if (Contains(x) &&
+                        totalUnMatch <= ++l)
+                    {
+                        s.Stop();
+                    }
+                    return l;
+                },
+                l => Interlocked.Add(ref totalUnMatch, -l)
+            );
+            //it may go less than 0 if collection is mutated concurrently
+            //but the comment on the method warns about it,
+            //so we do NOT throw exception NOR we check for STRICT 0 equality.
+            return totalUnMatch <= 0;
+        }
+        else
+        {
+
+        }
+
+        return false;
+    }
+
+    /// <inheritdoc/>
     public bool IsSubsetOf(IEnumerable<T> other)
     {
         throw new NotImplementedException();
@@ -579,10 +637,5 @@ public sealed partial class FastSet<T> : IFastSet<T>
 #endif
         }
         return data;
-    }
-
-    public bool IsProperSupersetOf(IEnumerable<T> other, Token token, int maxConcurrency)
-    {
-        throw new NotImplementedException();
     }
 }
