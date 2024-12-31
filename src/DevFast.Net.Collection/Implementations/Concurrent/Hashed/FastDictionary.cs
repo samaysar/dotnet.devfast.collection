@@ -405,10 +405,49 @@ public sealed partial class FastDictionary<TKey, TValue> :
     }
 
     /// <inheritdoc />
+    public IEnumerable<TKey> EnumerableOfKeysOnPartition(int partitionIndex)
+    {
+        Dictionary<TKey, TValue> d = _data[partitionIndex];
+        Monitor.Enter(d);
+        try
+        {
+            using Dictionary<TKey, TValue>.KeyCollection.Enumerator de = d.Keys.GetEnumerator();
+            while (de.MoveNext())
+            {
+                yield return de.Current;
+            }
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
+    }
+
+    /// <inheritdoc />
     public IEnumerable<TValue> EnumerableOfValues()
     {
         return new ValueEnumerable(this);
     }
+
+    /// <inheritdoc />
+    public IEnumerable<TValue> EnumerableOfValuesOnPartition(int partitionIndex)
+    {
+        Dictionary<TKey, TValue> d = _data[partitionIndex];
+        Monitor.Enter(d);
+        try
+        {
+            using Dictionary<TKey, TValue>.ValueCollection.Enumerator de = d.Values.GetEnumerator();
+            while (de.MoveNext())
+            {
+                yield return de.Current;
+            }
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
+    }
+
 
     /// <summary>
     /// Gets an enumerable collection that contains the <see cref="KeyValuePair{TKey, TValue}"/> of the dictionary.
@@ -651,5 +690,10 @@ public sealed partial class FastDictionary<TKey, TValue> :
     private ICollection<TValue> GetValueCollection()
     {
         return EnumerableOfValues().ToList();
+    }
+
+    public IEnumerable<KeyValuePair<TKey, TValue>> EnumerableOfPartition(int partitionIndex)
+    {
+        throw new NotImplementedException();
     }
 }
