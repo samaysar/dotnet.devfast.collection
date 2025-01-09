@@ -102,8 +102,8 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRea
     IEnumerable<TKey> EnumerableOfKeys();
 
     /// <summary>
-    /// Create a new <see cref="IEnumerable{T}"/> on the keys of the <see cref="Dictionary{TKey, TValue}"/>
-    /// on a partition identified with <paramref name="partitionIndex"/> where Partition index is 0-based
+    /// Create a new <see cref="IEnumerable{T}"/> on the keys of
+    /// a partition identified with <paramref name="partitionIndex"/>; where Partition index is 0-based
     /// (i.e. 0 to <see cref="PartitionCount"/> - 1).
     /// <para>
     /// IMPLEMENTATION NOTES: This implementation is preferable over other <see cref="IEnumerable{T}"/> implementations
@@ -123,10 +123,10 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRea
     /// );
     /// </code>
     /// </para>
-    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from 
-    /// different threads (e.g. add/remove) will be blocked. Also, enumeration and modification of the 
-    /// dictionary (e.g. removing entries) from the same thread is an anti-pattern and should be avoided 
-    /// (e.g. case of re-entrancy).
+    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+    /// different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+    /// (e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+    /// (e.g. case of re-entrancy); this MAY lead to unexpected outcome.
     /// </summary>
     /// <param name="partitionIndex">Index of the parition on which to create enumeration</param>
     IEnumerable<TKey> EnumerableOfKeysOnPartition(int partitionIndex);
@@ -147,8 +147,8 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRea
     IEnumerable<TValue> EnumerableOfValues();
 
     /// <summary>
-    /// Create a new <see cref="IEnumerable{T}"/> on the values of the <see cref="Dictionary{TKey, TValue}"/>
-    /// on a partition identified with <paramref name="partitionIndex"/> where Partition index is 0-based
+    /// Create a new <see cref="IEnumerable{T}"/> on the values
+    /// of a partition identified with <paramref name="partitionIndex"/>; where Partition index is 0-based
     /// (i.e. 0 to <see cref="PartitionCount"/> - 1).
     /// <para>
     /// IMPLEMENTATION NOTES: This implementation is preferable over other <see cref="IEnumerable{T}"/> implementations
@@ -168,29 +168,29 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRea
     /// );
     /// </code>
     /// </para>
-    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from 
-    /// different threads (e.g. add/remove) will be blocked. Also, enumeration and modification of the 
-    /// dictionary (e.g. removing entries) from the same thread is an anti-pattern and should be avoided 
-    /// (e.g. case of re-entrancy).
+    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+    /// different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+    /// (e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+    /// (e.g. case of re-entrancy); this MAY lead to unexpected outcome.
     /// </summary>
     /// <param name="partitionIndex">Index of the parition on which to create enumeration</param>
     IEnumerable<TValue> EnumerableOfValuesOnPartition(int partitionIndex);
 
     /// <summary>
-    /// Create a new <see cref="IEnumerable{T}"/> on the key-values pairs of the <see cref="Dictionary{TKey, TValue}"/>
-    /// on a partition identified with <paramref name="partitionIndex"/> where Partition index is 0-based
+    /// Create a new <see cref="IEnumerable{T}"/> on the key-values pairs
+    /// of a partition identified with <paramref name="partitionIndex"/>; where Partition index is 0-based
     /// (i.e. 0 to <see cref="PartitionCount"/> - 1).
     /// <para>
     /// IMPLEMENTATION NOTES: This implementation is preferable over other <see cref="IEnumerable{T}"/> implementations
     /// as it creates a snapshot on the partition without consuming space. This implementation is very
-    /// interesting to traverse values concurrently on different partitions from separate thread; for an example:
+    /// interesting to traverse key-value pairs concurrently on different partitions from separate thread; for an example:
     /// <code>
     /// Parallel.For(
     ///     0,
     ///     instance.PartitionCount,
     ///     i =>
     ///     {
-    ///         foreach(var value in instance.EnumerableOfValuesOnPartition(i))
+    ///         foreach(var pair in instance.EnumerableOnPartition(i))
     ///         {
     ///             ...YOUR CODE...
     ///         }
@@ -198,13 +198,13 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRea
     /// );
     /// </code>
     /// </para>
-    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from 
-    /// different threads (e.g. add/remove) will be blocked. Also, enumeration and modification of the 
-    /// dictionary (e.g. removing entries) from the same thread is an anti-pattern and should be avoided 
-    /// (e.g. case of re-entrancy).
+    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+    /// different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+    /// (e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+    /// (e.g. case of re-entrancy); this MAY lead to unexpected outcome.
     /// </summary>
     /// <param name="partitionIndex">Index of the parition on which to create enumeration</param>
-    IEnumerable<KeyValuePair<TKey, TValue>> EnumerableOfPartition(int partitionIndex);
+    IEnumerable<KeyValuePair<TKey, TValue>> EnumerableOnPartition(int partitionIndex);
 
     /// <summary>
     /// Adds a key/value pair to the collection by using the specified function

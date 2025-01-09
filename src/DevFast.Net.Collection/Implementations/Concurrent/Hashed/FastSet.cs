@@ -75,7 +75,7 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// <param name="comparer">Equality comparer for the key</param>
     public FastSet(int initialCapacity,
         IEqualityComparer<T>? comparer) : this(initialCapacity,
-        Environment.ProcessorCount,
+        FixedValues.ProcessorCountWithMinBound,
         comparer)
     {
     }
@@ -123,16 +123,25 @@ public sealed partial class FastSet<T> : IFastSet<T>
     public FastSet(int initialCapacity,
         int concurrencyLevel,
         IEqualityComparer<T>? comparer,
-        IEnumerable<T> initialData)
+        IEnumerable<T> initialData) : this(comparer, initialCapacity, concurrencyLevel)
+    {
+        if (initialData is IFastSet<T> fs)
+        {
+            InitializeEntries(x => Add(x), fs);
+        }
+        else
+        {
+            InitializeEntries(x => Add(x), initialData);
+        }
+    }
+
+    private FastSet(IEqualityComparer<T>? comparer,
+        int initialCapacity,
+        int concurrencyLevel)
     {
         _comparer = comparer ?? EqualityComparer<T>.Default;
         _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToPow2HashMask();
         _data = CreateDataSet(initialCapacity, _concurrencyHash + 1, comparer);
-        _ = Parallel.ForEach(
-            initialData,
-            new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount },
-            x => Add(x)
-        );
     }
 
     /// <inheritdoc/>
@@ -255,7 +264,7 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// <inheritdoc/>
     public void ExceptWith(IEnumerable<T> other)
     {
-        ExceptWith(other, Token.None, Environment.ProcessorCount);
+        ExceptWith(other, Token.None, FixedValues.ProcessorCountWithMinBound);
     }
 
     /// <inheritdoc/>
@@ -287,7 +296,7 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// <inheritdoc/>
     public void IntersectWith(IEnumerable<T> other)
     {
-        IntersectWith(other, Token.None, Environment.ProcessorCount);
+        IntersectWith(other, Token.None, FixedValues.ProcessorCountWithMinBound);
     }
 
     /// <inheritdoc/>
@@ -333,7 +342,7 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// <inheritdoc/>
     public bool IsProperSubsetOf(IEnumerable<T> other)
     {
-        return IsProperSubsetOf(other, Token.None, Environment.ProcessorCount);
+        return IsProperSubsetOf(other, Token.None, FixedValues.ProcessorCountWithMinBound);
     }
 
     /// <inheritdoc/>
@@ -454,7 +463,7 @@ public sealed partial class FastSet<T> : IFastSet<T>
     /// <inheritdoc/>
     public bool IsProperSupersetOf(IEnumerable<T> other)
     {
-        return IsProperSupersetOf(other, Token.None, Environment.ProcessorCount);
+        return IsProperSupersetOf(other, Token.None, FixedValues.ProcessorCountWithMinBound);
     }
 
     /// <inheritdoc/>
@@ -509,10 +518,6 @@ public sealed partial class FastSet<T> : IFastSet<T>
             //so we do NOT throw exception NOR we check for STRICT 0 equality.
             return totalUnMatch <= 0;
         }
-        else
-        {
-
-        }
 
         return false;
     }
@@ -522,20 +527,20 @@ public sealed partial class FastSet<T> : IFastSet<T>
     {
         throw new NotImplementedException();
     }
-    /// <inheritdoc/>
 
+    /// <inheritdoc/>
     public bool IsSupersetOf(IEnumerable<T> other)
     {
         throw new NotImplementedException();
     }
-    /// <inheritdoc/>
 
+    /// <inheritdoc/>
     public bool Overlaps(IEnumerable<T> other)
     {
         throw new NotImplementedException();
     }
-    /// <inheritdoc/>
 
+    /// <inheritdoc/>
     public bool Remove(T item)
     {
         HashSet<T> h = GetPartition(item);
@@ -549,20 +554,20 @@ public sealed partial class FastSet<T> : IFastSet<T>
             Monitor.Exit(h);
         }
     }
-    /// <inheritdoc/>
 
+    /// <inheritdoc/>
     public bool SetEquals(IEnumerable<T> other)
     {
         throw new NotImplementedException();
     }
-    /// <inheritdoc/>
 
+    /// <inheritdoc/>
     public void SymmetricExceptWith(IEnumerable<T> other)
     {
         throw new NotImplementedException();
     }
-    /// <inheritdoc/>
 
+    /// <inheritdoc/>
     public void UnionWith(IEnumerable<T> other)
     {
         throw new NotImplementedException();
@@ -637,5 +642,38 @@ public sealed partial class FastSet<T> : IFastSet<T>
 #endif
         }
         return data;
+    }
+
+    private static void InitializeEntries(Action<T> lambda,
+        IEnumerable<T> initialData)
+    {
+        _ = Parallel.ForEach(
+                initialData,
+                new ParallelOptions { MaxDegreeOfParallelism = FixedValues.ProcessorCountWithMinBound },
+                lambda
+            );
+    }
+
+    private static void InitializeEntries(Action<T> lambda,
+        IFastSet<T> src)
+    {
+        _ = Parallel.For(
+                0,
+                src.PartitionCount,
+                new ParallelOptions { MaxDegreeOfParallelism = FixedValues.ProcessorCountWithMinBound },
+                i =>
+                {
+                    foreach (T val in src.EnumerableOnPartition(i))
+                    {
+                        lambda(val);
+                    }
+                }
+            );
+    }
+    /// <inheritdoc/>
+
+    public IEnumerable<T> EnumerableOnPartition(int partitionIndex)
+    {
+        throw new NotImplementedException();
     }
 }

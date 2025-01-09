@@ -30,6 +30,36 @@ public interface IFastSet<T> : ISet<T>
     void Clear(int initialCapacity);
 
     /// <summary>
+    /// Create a new <see cref="IEnumerable{T}"/> on the values of
+    /// a partition identified with <paramref name="partitionIndex"/>; where Partition index is 0-based
+    /// (i.e. 0 to <see cref="PartitionCount"/> - 1).
+    /// <para>
+    /// IMPLEMENTATION NOTES: This implementation is preferable over other <see cref="IEnumerable{T}"/> implementations
+    /// as it creates a snapshot on the partition without consuming space. This implementation is very
+    /// interesting to traverse values concurrently on different partitions from separate thread; for an example:
+    /// <code>
+    /// Parallel.For(
+    ///     0,
+    ///     instance.PartitionCount,
+    ///     i =>
+    ///     {
+    ///         foreach(var val in instance.EnumerableOnPartition(i))
+    ///         {
+    ///             ...YOUR CODE...
+    ///         }
+    ///     }
+    /// );
+    /// </code>
+    /// </para>
+    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+    /// different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+    /// (e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+    /// (e.g. case of re-entrancy); this MAY lead to unexpected outcome.
+    /// </summary>
+    /// <param name="partitionIndex">Index of the parition on which to create enumeration</param>
+    IEnumerable<T> EnumerableOnPartition(int partitionIndex);
+
+    /// <summary>
     /// Removes all elements of the <paramref name="other"/> collection from current instance.
     /// </summary>
     /// <param name="other">Collection to compare with current instance</param>

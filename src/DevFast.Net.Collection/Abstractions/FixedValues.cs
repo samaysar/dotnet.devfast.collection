@@ -20,6 +20,11 @@ public static class FixedValues
     /// </summary>
     public const int HashedCollectionMaxConcurrencyLevel = 256;
 
+    /// <summary>
+    /// Runtime environment processor count with minimum bound set to <see cref="MinConcurrencyLevel"/>.
+    /// </summary>
+    public static int ProcessorCountWithMinBound => Math.Max(MinConcurrencyLevel, Environment.ProcessorCount);
+
     internal static int ToPow2HashMask(this int concurrencyLevel)
     {
         int currentPow2 = 2;

@@ -20,6 +20,8 @@ System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyVal
   - **[FastDictionary()](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary() 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary()')**
   - **[FastDictionary(int, int)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int)')**
   - **[FastDictionary(int, int, IEqualityComparer&lt;TKey&gt;)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>)')**
+  - **[FastDictionary(int, int, IEqualityComparer&lt;TKey&gt;, IEnumerable&lt;KeyValuePair&lt;TKey,TValue&gt;&gt;, bool)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool)')**
+  - **[FastDictionary(int, int, IEqualityComparer&lt;TKey&gt;, IReadOnlyDictionary&lt;TKey,TValue&gt;)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>)')**
   - **[FastDictionary(int, IEqualityComparer&lt;TKey&gt;)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,System.Collections.Generic.IEqualityComparer_TKey_) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, System.Collections.Generic.IEqualityComparer<TKey>)')**
   - **[FastDictionary(IEqualityComparer&lt;TKey&gt;)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(System.Collections.Generic.IEqualityComparer_TKey_) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(System.Collections.Generic.IEqualityComparer<TKey>)')**
 - *Properties*
@@ -38,7 +40,10 @@ System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyVal
   - **[Contains(KeyValuePair&lt;TKey,TValue&gt;, IEqualityComparer&lt;TValue&gt;)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.Contains(System.Collections.Generic.KeyValuePair<TKey,TValue>, System.Collections.Generic.IEqualityComparer<TValue>)')**
   - **[ContainsKey(TKey)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.ContainsKey(TKey) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.ContainsKey(TKey)')**
   - **[EnumerableOfKeys()](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfKeys() 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.EnumerableOfKeys()')**
+  - **[EnumerableOfKeysOnPartition(int)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfKeysOnPartition(int) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.EnumerableOfKeysOnPartition(int)')**
   - **[EnumerableOfValues()](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfValues() 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.EnumerableOfValues()')**
+  - **[EnumerableOfValuesOnPartition(int)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfValuesOnPartition(int) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.EnumerableOfValuesOnPartition(int)')**
+  - **[EnumerableOnPartition(int)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOnPartition(int) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.EnumerableOnPartition(int)')**
   - **[GetEnumerator()](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.GetEnumerator() 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.GetEnumerator()')**
   - **[GetOrAdd(TKey, Func&lt;TKey,TValue&gt;)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.GetOrAdd(TKey,System.Func_TKey,TValue_) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.GetOrAdd(TKey, System.Func<TKey,TValue>)')**
   - **[GetOrAdd(TKey, TValue)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.GetOrAdd(TKey,TValue) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.GetOrAdd(TKey, TValue)')**
@@ -113,7 +118,7 @@ and uses default Equality comparer for the key.
 
 NOTE: Total expected memory allocation is bit more than [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int).initialCapacity') * [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int).concurrencyLevel').
 NOTE: [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int).initialCapacity') has internal lower bound=[MinInitialCapacity](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity 'DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity') and [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int).concurrencyLevel') has internal lower bound=[MinConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel').
-[concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int).concurrencyLevel') has internal upper bound=[FastDictionaryMaxConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.FastDictionaryMaxConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.FastDictionaryMaxConcurrencyLevel') and always adjusted to the nearest higher power of 2.
+[concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int).concurrencyLevel') has internal upper bound=[HashedCollectionMaxConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel') and always adjusted to the nearest higher power of 2.
 
 ```csharp
 public FastDictionary(int initialCapacity, int concurrencyLevel);
@@ -142,7 +147,7 @@ and uses the [comparer](DevFast.Net.Collection.Implementations.Concurrent.Hashed
 
 NOTE: Total expected memory allocation is bit more than [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>).initialCapacity') * [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>).concurrencyLevel').
 NOTE: [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>).initialCapacity') has internal lower bound=[MinInitialCapacity](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity 'DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity') and [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>).concurrencyLevel') has internal lower bound=[MinConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel').
-[concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>).concurrencyLevel') has internal upper bound=[FastDictionaryMaxConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.FastDictionaryMaxConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.FastDictionaryMaxConcurrencyLevel') and always adjusted to the nearest higher power of 2.
+[concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>).concurrencyLevel') has internal upper bound=[HashedCollectionMaxConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel') and always adjusted to the nearest higher power of 2.
 
 ```csharp
 public FastDictionary(int initialCapacity, int concurrencyLevel, System.Collections.Generic.IEqualityComparer<TKey>? comparer);
@@ -166,6 +171,94 @@ Expected maximum concurrency
 `comparer` [System.Collections.Generic.IEqualityComparer&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')[TKey](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TKey')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')
 
 Equality comparer for the key
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool)'></a>
+
+## FastDictionary(int, int, IEqualityComparer<TKey>, IEnumerable<KeyValuePair<TKey,TValue>>, bool) Constructor
+
+Initializes a new instance of the [FastDictionary&lt;TKey,TValue&gt;](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>') class that is empty
+and has the given [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool).initialCapacity'), has given [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool).concurrencyLevel')
+and uses the [comparer](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).comparer 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool).comparer') for the key type.
+
+NOTE: Total expected memory allocation is bit more than [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool).initialCapacity') * [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool).concurrencyLevel').
+NOTE: [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool).initialCapacity') has internal lower bound=[MinInitialCapacity](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity 'DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity') and [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool).concurrencyLevel') has internal lower bound=[MinConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel').
+[concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool).concurrencyLevel') has internal upper bound=[HashedCollectionMaxConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel') and always adjusted to the nearest higher power of 2.
+
+```csharp
+public FastDictionary(int initialCapacity, int concurrencyLevel, System.Collections.Generic.IEqualityComparer<TKey>? comparer, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>> initialData, bool ignoreDuplicates);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).initialCapacity'></a>
+
+`initialCapacity` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
+
+Initial estimated capacity
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).concurrencyLevel'></a>
+
+`concurrencyLevel` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
+
+Expected maximum concurrency
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).comparer'></a>
+
+`comparer` [System.Collections.Generic.IEqualityComparer&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')[TKey](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TKey')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')
+
+Equality comparer for the key
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).initialData'></a>
+
+`initialData` [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[System.Collections.Generic.KeyValuePair&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TKey](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TValue](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
+
+Data to initial the dictionary with
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).ignoreDuplicates'></a>
+
+`ignoreDuplicates` [System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')
+
+When [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') all duplicate keys in the [initialData](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IEnumerable_System.Collections.Generic.KeyValuePair_TKey,TValue__,bool).initialData 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>>, bool).initialData') are ignored and arbitrary one of those is kept; otherwise exception is thrown when duplicate key is found.
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_)'></a>
+
+## FastDictionary(int, int, IEqualityComparer<TKey>, IReadOnlyDictionary<TKey,TValue>) Constructor
+
+Initializes a new instance of the [FastDictionary&lt;TKey,TValue&gt;](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>') class that is empty
+and has the given [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>).initialCapacity'), has given [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>).concurrencyLevel')
+and uses the [comparer](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).comparer 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>).comparer') for the key type.
+
+NOTE: Total expected memory allocation is bit more than [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>).initialCapacity') * [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>).concurrencyLevel').
+NOTE: [initialCapacity](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).initialCapacity 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>).initialCapacity') has internal lower bound=[MinInitialCapacity](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity 'DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity') and [concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>).concurrencyLevel') has internal lower bound=[MinConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel').
+[concurrencyLevel](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).concurrencyLevel 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.FastDictionary(int, int, System.Collections.Generic.IEqualityComparer<TKey>, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>).concurrencyLevel') has internal upper bound=[HashedCollectionMaxConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel') and always adjusted to the nearest higher power of 2.
+
+```csharp
+public FastDictionary(int initialCapacity, int concurrencyLevel, System.Collections.Generic.IEqualityComparer<TKey>? comparer, System.Collections.Generic.IReadOnlyDictionary<TKey,TValue> source);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).initialCapacity'></a>
+
+`initialCapacity` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
+
+Initial estimated capacity
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).concurrencyLevel'></a>
+
+`concurrencyLevel` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
+
+Expected maximum concurrency
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).comparer'></a>
+
+`comparer` [System.Collections.Generic.IEqualityComparer&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')[TKey](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TKey')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEqualityComparer-1 'System.Collections.Generic.IEqualityComparer`1')
+
+Equality comparer for the key
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,int,System.Collections.Generic.IEqualityComparer_TKey_,System.Collections.Generic.IReadOnlyDictionary_TKey,TValue_).source'></a>
+
+`source` [System.Collections.Generic.IReadOnlyDictionary&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyDictionary-2 'System.Collections.Generic.IReadOnlyDictionary`2')[TKey](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyDictionary-2 'System.Collections.Generic.IReadOnlyDictionary`2')[TValue](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IReadOnlyDictionary-2 'System.Collections.Generic.IReadOnlyDictionary`2')
+
+Data to initial the dictionary with
 
 <a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.FastDictionary(int,System.Collections.Generic.IEqualityComparer_TKey_)'></a>
 
@@ -555,12 +648,60 @@ at a time. That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
 [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
 In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+You may consider using [EnumerableOfKeysOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOfKeysOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOfKeysOnPartition(int)') if the dictionary is NOT
+being modified concurrently.
 
 ```csharp
 public System.Collections.Generic.IEnumerable<TKey> EnumerableOfKeys();
 ```
 
 Implements [EnumerableOfKeys()](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOfKeys() 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOfKeys()')
+
+#### Returns
+[System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TKey](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TKey')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfKeysOnPartition(int)'></a>
+
+## FastDictionary<TKey,TValue>.EnumerableOfKeysOnPartition(int) Method
+
+Create a new [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') on the keys of
+a partition identified with [partitionIndex](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfKeysOnPartition(int).partitionIndex 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.EnumerableOfKeysOnPartition(int).partitionIndex'); where Partition index is 0-based
+(i.e. 0 to [PartitionCount](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.PartitionCount 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.PartitionCount') - 1).
+
+IMPLEMENTATION NOTES: This implementation is preferable over other [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') implementations
+as it creates a snapshot on the partition without consuming space. This implementation is very
+interesting to traverse keys concurrently on different partitions from separate thread; for an example:
+
+```csharp
+Parallel.For(
+    0,
+    instance.PartitionCount,
+    i =>
+    {
+        foreach(var key in instance.KeysEnumerableOnPartition(i))
+        {
+            ...YOUR CODE...
+        }
+    }
+);
+```
+NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+(e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+(e.g. case of re-entrancy); this MAY lead to unexpected outcome.
+
+```csharp
+public System.Collections.Generic.IEnumerable<TKey> EnumerableOfKeysOnPartition(int partitionIndex);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfKeysOnPartition(int).partitionIndex'></a>
+
+`partitionIndex` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
+
+Index of the parition on which to create enumeration
+
+Implements [EnumerableOfKeysOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOfKeysOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOfKeysOnPartition(int)')
 
 #### Returns
 [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TKey](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TKey')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
@@ -577,6 +718,8 @@ at a time. That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
 [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
 In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+You may consider using [EnumerableOfValuesOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOfValuesOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOfValuesOnPartition(int)') if the dictionary is NOT
+being modified concurrently.
 
 ```csharp
 public System.Collections.Generic.IEnumerable<TValue> EnumerableOfValues();
@@ -586,6 +729,98 @@ Implements [EnumerableOfValues()](DevFast.Net.Collection.Abstractions.Concurrent
 
 #### Returns
 [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TValue](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfValuesOnPartition(int)'></a>
+
+## FastDictionary<TKey,TValue>.EnumerableOfValuesOnPartition(int) Method
+
+Create a new [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') on the values
+of a partition identified with [partitionIndex](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfValuesOnPartition(int).partitionIndex 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.EnumerableOfValuesOnPartition(int).partitionIndex'); where Partition index is 0-based
+(i.e. 0 to [PartitionCount](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.PartitionCount 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.PartitionCount') - 1).
+
+IMPLEMENTATION NOTES: This implementation is preferable over other [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') implementations
+as it creates a snapshot on the partition without consuming space. This implementation is very
+interesting to traverse values concurrently on different partitions from separate thread; for an example:
+
+```csharp
+Parallel.For(
+    0,
+    instance.PartitionCount,
+    i =>
+    {
+        foreach(var value in instance.EnumerableOfValuesOnPartition(i))
+        {
+            ...YOUR CODE...
+        }
+    }
+);
+```
+NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+(e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+(e.g. case of re-entrancy); this MAY lead to unexpected outcome.
+
+```csharp
+public System.Collections.Generic.IEnumerable<TValue> EnumerableOfValuesOnPartition(int partitionIndex);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOfValuesOnPartition(int).partitionIndex'></a>
+
+`partitionIndex` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
+
+Index of the parition on which to create enumeration
+
+Implements [EnumerableOfValuesOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOfValuesOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOfValuesOnPartition(int)')
+
+#### Returns
+[System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TValue](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOnPartition(int)'></a>
+
+## FastDictionary<TKey,TValue>.EnumerableOnPartition(int) Method
+
+Create a new [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') on the key-values pairs
+of a partition identified with [partitionIndex](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOnPartition(int).partitionIndex 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.EnumerableOnPartition(int).partitionIndex'); where Partition index is 0-based
+(i.e. 0 to [PartitionCount](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.PartitionCount 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.PartitionCount') - 1).
+
+IMPLEMENTATION NOTES: This implementation is preferable over other [System.Collections.Generic.IEnumerable&lt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1') implementations
+as it creates a snapshot on the partition without consuming space. This implementation is very
+interesting to traverse key-value pairs concurrently on different partitions from separate thread; for an example:
+
+```csharp
+Parallel.For(
+    0,
+    instance.PartitionCount,
+    i =>
+    {
+        foreach(var pair in instance.EnumerableOnPartition(i))
+        {
+            ...YOUR CODE...
+        }
+    }
+);
+```
+NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+(e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+(e.g. case of re-entrancy); this MAY lead to unexpected outcome.
+
+```csharp
+public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey,TValue>> EnumerableOnPartition(int partitionIndex);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.EnumerableOnPartition(int).partitionIndex'></a>
+
+`partitionIndex` [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
+
+Index of the parition on which to create enumeration
+
+Implements [EnumerableOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOnPartition(int)')
+
+#### Returns
+[System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[System.Collections.Generic.KeyValuePair&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TKey](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TValue](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
 
 <a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.GetEnumerator()'></a>
 
@@ -878,6 +1113,8 @@ That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
 [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
 In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+You may consider using [EnumerableOfKeysOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOfKeysOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOfKeysOnPartition(int)') if the dictionary is NOT
+being modified concurrently.
 
 ```csharp
 System.Collections.Generic.IEnumerable<TKey> DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.Keys { get; }
@@ -897,6 +1134,8 @@ That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
 [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
 In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+You may consider using [EnumerableOfValuesOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOfValuesOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOfValuesOnPartition(int)') if the dictionary is NOT
+being modified concurrently.
 
 ```csharp
 System.Collections.Generic.IEnumerable<TValue> DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.Values { get; }
@@ -916,6 +1155,8 @@ That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
 [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
 In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+You may consider using [EnumerableOfKeysOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOfKeysOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOfKeysOnPartition(int)') if the dictionary is NOT
+being modified concurrently.
 
 ```csharp
 System.Collections.Generic.IEnumerable<TKey> System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>.Keys { get; }
@@ -935,6 +1176,8 @@ That said, if one is adding/removing elements concurrently, while
 enumerating on the collection, it is well possible that lookup may yield
 [false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
 In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+You may consider using [EnumerableOfValuesOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.EnumerableOfValuesOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.EnumerableOfValuesOnPartition(int)') if the dictionary is NOT
+being modified concurrently.
 
 ```csharp
 System.Collections.Generic.IEnumerable<TValue> System.Collections.Generic.IReadOnlyDictionary<TKey,TValue>.Values { get; }

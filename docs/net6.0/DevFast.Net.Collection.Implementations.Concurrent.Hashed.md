@@ -7,3 +7,4 @@
 | Classes | |
 | :--- | :--- |
 | [FastDictionary&lt;TKey,TValue&gt;](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary_TKey,TValue_.md 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastDictionary<TKey,TValue>') | Represents a thread-safe collection of key-value pairs that can be accessed by multiple threads concurrently. |
+| [FastSet&lt;T&gt;](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastSet_T_.md 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastSet<T>') | Implementation of thread-safe set. |
