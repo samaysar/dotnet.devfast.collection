@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using DevFast.Net.Collection.Abstractions.Heaps;
+using DevFast.Net.Extensions.Etc;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using DevFast.Net.Collection.Abstractions.Heaps;
-using DevFast.Net.Extensions.Etc;
 
 namespace DevFast.Net.Collection.Implementations.Heaps.AbstractBase;
 
@@ -77,11 +77,7 @@ public abstract class BinaryHeap<T> : IHeapCollection<T>
     }
 
     /// <inheritdoc />
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public virtual bool TryPop([NotNullWhen(true)] out T? item)
     {
         if (IsEmpty)
@@ -102,11 +98,7 @@ public abstract class BinaryHeap<T> : IHeapCollection<T>
     }
 
     /// <inheritdoc />
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     public virtual bool TryAdd(T item)
     {
         return AddCore(item.ThrowArgumentExceptionForNull(nameof(item)));
@@ -232,21 +224,13 @@ public abstract class BinaryHeap<T> : IHeapCollection<T>
     /// </summary>
     /// <param name="left">Left element</param>
     /// <param name="right">Right element</param>
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected abstract bool LeftPrecedes(T left, T right);
 
     /// <summary>
     /// Ensures that there is a capacity to add an element.
     /// </summary>
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     protected virtual bool EnsureCapacity()
     {
         return !IsFull;
@@ -279,21 +263,13 @@ public abstract class BinaryHeap<T> : IHeapCollection<T>
         return true;
     }
 
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     private static int LeftChildIndex(int elementIndex)
     {
         return (elementIndex << 1) + 1;
     }
 
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     private static int ParentIndex(int elementIndex)
     {
         return (elementIndex - 1) >> 1;
@@ -335,11 +311,7 @@ public abstract class BinaryHeap<T> : IHeapCollection<T>
         }
     }
 
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     private int SwapNReturnLastParam(int firstIndex, int secondIndex)
     {
         (_heapData[secondIndex], _heapData[firstIndex]) = (_heapData[firstIndex], _heapData[secondIndex]);
