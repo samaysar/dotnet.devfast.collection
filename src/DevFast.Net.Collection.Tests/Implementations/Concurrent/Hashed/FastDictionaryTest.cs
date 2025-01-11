@@ -1,4 +1,5 @@
-﻿using DevFast.Net.Collection.Abstractions;
+﻿using System.Collections.Concurrent;
+using DevFast.Net.Collection.Abstractions;
 using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 using DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 
@@ -12,33 +13,113 @@ namespace DevFast.Net.Collection.Tests.Implementations.Concurrent.Hashed
         {
             That(new FastDictionary<int, int>().IsReadOnly, Is.False);
             That(new FastDictionary<int, int>().PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, Environment.ProcessorCount)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, Environment.ProcessorCount)));
             That(new FastDictionary<int, int>(0, int.MinValue).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
             That(new FastDictionary<int, int>(0, 0).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
             That(new FastDictionary<int, int>(0, 1).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
             That(new FastDictionary<int, int>(0, 2).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, FixedValues.MinConcurrencyLevel)));
             That(new FastDictionary<int, int>(0, 3).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 4)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 4)));
             That(new FastDictionary<int, int>(0, 63).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 64)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 64)));
             That(new FastDictionary<int, int>(0, 127).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 128)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 128)));
             That(new FastDictionary<int, int>(0, 128).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 128)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 128)));
             That(new FastDictionary<int, int>(0, 129).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
             That(new FastDictionary<int, int>(0, 255).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
             That(new FastDictionary<int, int>(0, 256).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
             That(new FastDictionary<int, int>(0, 257).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
             That(new FastDictionary<int, int>(0, int.MaxValue).PartitionCount,
-                Is.EqualTo(Math.Min(FixedValues.FastDictionaryMaxConcurrencyLevel, 256)));
+                Is.EqualTo(Math.Min(FixedValues.HashedCollectionMaxConcurrencyLevel, 256)));
+        }
+
+        [Test]
+        public void FastDictionary_PrePopulation_Works_Using_Normal_Dictionary()
+        {
+            ConcurrentDictionary<int, int> normalDico = new();
+            _ = normalDico.TryAdd(0, 1);
+            _ = normalDico.TryAdd(1, 1);
+            _ = normalDico.TryAdd(2, 1);
+            FastDictionary<int, int> dico = new(3, 2, EqualityComparer<int>.Default, normalDico);
+            That(dico.Count, Is.EqualTo(3));
+            _ = Parallel.For(0, dico.PartitionCount, i =>
+            {
+                foreach (KeyValuePair<int, int> kvp in dico.EnumerableOnPartition(i))
+                {
+                    That(normalDico.TryRemove(kvp.Key, out int value), Is.True);
+                    That(value, Is.EqualTo(1));
+                }
+            });
+            That(normalDico, Is.Empty);
+            FastDictionary<int, int> copyDico = dico;
+            dico = new(3, 2, EqualityComparer<int>.Default, copyDico);
+            That(dico.Count, Is.EqualTo(3));
+            _ = Parallel.For(0, dico.PartitionCount, i =>
+            {
+                foreach (KeyValuePair<int, int> kvp in dico.EnumerableOnPartition(i))
+                {
+                    That(copyDico.TryRemove(kvp.Key, out int value), Is.True);
+                    That(value, Is.EqualTo(1));
+                }
+            });
+            That(copyDico, Is.Empty);
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(10)]
+        [TestCase(100)]
+        [TestCase(1023)]
+        [TestCase(9735)]
+        public void FastDictionary_CountInPartition_Is_Consistent(int totalElements)
+        {
+            FastDictionary<int, int> dico = new(totalElements,
+                Environment.ProcessorCount,
+                EqualityComparer<int>.Default);
+            _ = Parallel.For(0, totalElements, i => dico.Add(i, i));
+            int dicoCount = dico.Count;
+            That(dicoCount, Is.EqualTo(totalElements));
+            _ = Parallel.For(0, dico.PartitionCount, i =>
+            {
+                _ = Interlocked.Add(ref dicoCount, -dico.CountInPartition(i));
+            });
+            That(dicoCount, Is.Zero);
+        }
+
+        [Test]
+        public void FastDictionary_PrePopulation_Works_Using_Kvp_Collection()
+        {
+            FastDictionary<int, int> dico = new(3, 2, EqualityComparer<int>.Default, new[] {
+                    new KeyValuePair<int, int>(0,1),
+                    new KeyValuePair<int, int>(1,1),
+                    new KeyValuePair<int, int>(2,1),
+                    new KeyValuePair<int, int>(2,2)
+            }, true);
+            That(dico.Count, Is.EqualTo(3));
+            That(dico.Contains(new KeyValuePair<int, int>(0, 1)), Is.True);
+            That(dico.Contains(new KeyValuePair<int, int>(1, 1)), Is.True);
+            That(
+                dico.Contains(new KeyValuePair<int, int>(2, 1)) ||
+                dico.Contains(new KeyValuePair<int, int>(2, 2)),
+                Is.True
+            );
+
+            AggregateException? ex = Throws<AggregateException>(() => new FastDictionary<int, int>(3, 2, EqualityComparer<int>.Default, new[] {
+                    new KeyValuePair<int, int>(0,1),
+                    new KeyValuePair<int, int>(1,1),
+                    new KeyValuePair<int, int>(2,1),
+                    new KeyValuePair<int, int>(2,2)
+            }, false));
+            That(ex, Is.Not.Null);
         }
 
         [Test]
@@ -201,6 +282,65 @@ namespace DevFast.Net.Collection.Tests.Implementations.Concurrent.Hashed
             That(dico.GetOrAdd(2, 3), Is.EqualTo(3));
             That(dico.GetOrAdd(2, _ => 4), Is.EqualTo(3));
             That(dico.GetOrAdd(3, _ => 4), Is.EqualTo(4));
+        }
+
+        [Test]
+        public void FastDictionary_EnumerableOfKeysOnPartition_Provides_All_Keys()
+        {
+            FastDictionary<int, int> dico = new()
+            {
+                { int.MaxValue, 2 },
+                { int.MinValue, 2 },
+                { 255, 2 },
+                { 256, 2 },
+                { 0, 2 },
+                { 1, 2 },
+                new KeyValuePair<int, int>(17, 1)
+            };
+            ConcurrentBag<int> dataBag = new();
+            _ = Parallel.For(0, dico.PartitionCount, i =>
+            {
+                foreach (int k in dico.EnumerableOfKeysOnPartition(i))
+                {
+                    dataBag.Add(k);
+                }
+            });
+            That(dataBag.Count, Is.EqualTo(7));
+            That(dataBag.Contains(int.MinValue), Is.True);
+            That(dataBag.Contains(int.MaxValue), Is.True);
+            That(dataBag.Contains(255), Is.True);
+            That(dataBag.Contains(255), Is.True);
+            That(dataBag.Contains(0), Is.True);
+            That(dataBag.Contains(1), Is.True);
+            That(dataBag.Contains(17), Is.True);
+        }
+
+        [Test]
+        public void FastDictionary_EnumerableOfValuesOnPartition_Provides_All_Keys()
+        {
+            FastDictionary<int, int> dico = new()
+            {
+                { int.MaxValue, -1 },
+                { int.MinValue, 2 },
+                { 255, 2 },
+                { 256, 0 },
+                { 0, 2 },
+                { 1, 2 },
+                new KeyValuePair<int, int>(17, 1)
+            };
+            ConcurrentBag<int> dataBag = new();
+            _ = Parallel.For(0, dico.PartitionCount, i =>
+            {
+                foreach (int k in dico.EnumerableOfValuesOnPartition(i))
+                {
+                    dataBag.Add(k);
+                }
+            });
+            That(dataBag.Count, Is.EqualTo(7));
+            That(dataBag.Count(x => x == -1), Is.EqualTo(1));
+            That(dataBag.Count(x => x == 2), Is.EqualTo(4));
+            That(dataBag.Count(x => x == 0), Is.EqualTo(1));
+            That(dataBag.Count(x => x == 1), Is.EqualTo(1));
         }
 
         [Test]

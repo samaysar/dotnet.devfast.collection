@@ -9,9 +9,11 @@ A wrapper class holding constant values.
 public static class FixedValues
 ```
 - *Fields*
-  - **[FastDictionaryMaxConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.FastDictionaryMaxConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.FastDictionaryMaxConcurrencyLevel')**
+  - **[HashedCollectionMaxConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel')**
   - **[MinConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel')**
   - **[MinInitialCapacity](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity 'DevFast.Net.Collection.Abstractions.FixedValues.MinInitialCapacity')**
+- *Properties*
+  - **[ProcessorCountWithMinBound](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.ProcessorCountWithMinBound 'DevFast.Net.Collection.Abstractions.FixedValues.ProcessorCountWithMinBound')**
 
 ## FixedValues Class
 
@@ -24,14 +26,14 @@ public static class FixedValues
 Inheritance [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.Object 'System.Object') &#129106; FixedValues
 ### Fields
 
-<a name='DevFast.Net.Collection.Abstractions.FixedValues.FastDictionaryMaxConcurrencyLevel'></a>
+<a name='DevFast.Net.Collection.Abstractions.FixedValues.HashedCollectionMaxConcurrencyLevel'></a>
 
-## FixedValues.FastDictionaryMaxConcurrencyLevel Field
+## FixedValues.HashedCollectionMaxConcurrencyLevel Field
 
 Maximum bound on concurrency level.
 
 ```csharp
-public const int FastDictionaryMaxConcurrencyLevel = 256;
+public const int HashedCollectionMaxConcurrencyLevel = 256;
 ```
 
 #### Field Value
@@ -61,4 +63,18 @@ public const int MinInitialCapacity = 0;
 ```
 
 #### Field Value
+[System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')
+### Properties
+
+<a name='DevFast.Net.Collection.Abstractions.FixedValues.ProcessorCountWithMinBound'></a>
+
+## FixedValues.ProcessorCountWithMinBound Property
+
+Runtime environment processor count with minimum bound set to [MinConcurrencyLevel](DevFast.Net.Collection.Abstractions.FixedValues.md#DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel 'DevFast.Net.Collection.Abstractions.FixedValues.MinConcurrencyLevel').
+
+```csharp
+public static int ProcessorCountWithMinBound { get; }
+```
+
+#### Property Value
 [System.Int32](https://docs.microsoft.com/en-us/dotnet/api/System.Int32 'System.Int32')

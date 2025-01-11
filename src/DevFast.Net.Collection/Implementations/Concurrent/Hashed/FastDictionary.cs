@@ -1,8 +1,8 @@
-﻿using DevFast.Net.Collection.Abstractions;
-using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
-using System.Collections;
+﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using DevFast.Net.Collection.Abstractions;
+using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 
 namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 
@@ -16,16 +16,13 @@ public sealed partial class FastDictionary<TKey, TValue> :
         where TKey : notnull
 {
     private readonly IEqualityComparer<TKey> _comparer;
-    private readonly Dictionary<TKey, TValue>[] _data;
+    private Dictionary<TKey, TValue>[] _data;
     private readonly int _concurrencyHash;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="FastDictionary{TKey, TValue}" /> class that is empty and
     /// has the default initial capacity, has default concurrency level,
     /// and uses default Equality comparer for the key.
-    /// <para>
-    /// NOTE: Total expected memory allocation is bit more than default_initial_capacity * default_concurrency_level.
-    /// </para>
     /// </summary>
     public FastDictionary() : this(EqualityComparer<TKey>.Default)
     {
@@ -35,9 +32,6 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// Initializes a new instance of the <see cref="FastDictionary{TKey, TValue}" /> class that is empty and
     /// has the default initial capacity, has default concurrency level,
     /// and uses the <paramref name="comparer"/> for the key type.
-    /// <para>
-    /// NOTE: Total expected memory allocation is bit more than default_initial_capacity * default_concurrency_level.
-    /// </para>
     /// </summary>
     /// <param name="comparer">Equality comparer for the key</param>
     public FastDictionary(IEqualityComparer<TKey>? comparer) : this(0, comparer)
@@ -49,10 +43,9 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// and has the given <paramref name="initialCapacity"/>, has given <paramref name="concurrencyLevel"/>
     /// and uses default Equality comparer for the key.
     /// <para>
-    /// NOTE: Total expected memory allocation is bit more than <paramref name="initialCapacity"/> * <paramref name="concurrencyLevel"/>.
-    /// </para>
     /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
-    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.FastDictionaryMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// </para>
     /// </summary>
     /// <param name="initialCapacity">Initial estimated capacity</param>
     /// <param name="concurrencyLevel">Concurrency level</param>
@@ -66,15 +59,14 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// and has the given <paramref name="initialCapacity"/>, has default concurrency level,
     /// and uses the <paramref name="comparer"/> for the key type.
     /// <para>
-    /// NOTE: Total expected memory allocation is bit more than <paramref name="initialCapacity"/> * default_concurrency_level.
-    /// </para>
     /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/>.
+    /// </para>
     /// </summary>
     /// <param name="initialCapacity">Initial estimated capacity</param>
     /// <param name="comparer">Equality comparer for the key</param>
     public FastDictionary(int initialCapacity,
         IEqualityComparer<TKey>? comparer) : this(initialCapacity,
-        Environment.ProcessorCount,
+        FixedValues.ProcessorCountWithMinBound,
         comparer)
     {
     }
@@ -84,26 +76,80 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// and has the given <paramref name="initialCapacity"/>, has given <paramref name="concurrencyLevel"/>
     /// and uses the <paramref name="comparer"/> for the key type.
     /// <para>
-    /// NOTE: Total expected memory allocation is bit more than <paramref name="initialCapacity"/> * <paramref name="concurrencyLevel"/>.
-    /// </para>
     /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
-    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.FastDictionaryMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// </para>
     /// </summary>
     /// <param name="initialCapacity">Initial estimated capacity</param>
     /// <param name="concurrencyLevel">Expected maximum concurrency</param>
     /// <param name="comparer">Equality comparer for the key</param>
     public FastDictionary(int initialCapacity,
         int concurrencyLevel,
-        IEqualityComparer<TKey>? comparer)
+        IEqualityComparer<TKey>? comparer) : this(initialCapacity, concurrencyLevel, comparer, [], true)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FastDictionary{TKey, TValue}" /> class that is empty
+    /// and has the given <paramref name="initialCapacity"/>, has given <paramref name="concurrencyLevel"/>
+    /// and uses the <paramref name="comparer"/> for the key type.
+    /// <para>
+    /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
+    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// </para>
+    /// </summary>
+    /// <param name="initialCapacity">Initial estimated capacity</param>
+    /// <param name="concurrencyLevel">Expected maximum concurrency</param>
+    /// <param name="comparer">Equality comparer for the key</param>
+    /// <param name="source">Data to initial the dictionary with</param>
+    public FastDictionary(int initialCapacity,
+        int concurrencyLevel,
+        IEqualityComparer<TKey>? comparer,
+        IReadOnlyDictionary<TKey, TValue> source) : this(comparer, initialCapacity, concurrencyLevel)
+    {
+        if (source is IFastReadOnlyDictionary<TKey, TValue> fd)
+        {
+            InitializeEntries(fd, Add);
+        }
+        else
+        {
+            InitializeEntries(Add, source);
+        }
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FastDictionary{TKey, TValue}" /> class that is empty
+    /// and has the given <paramref name="initialCapacity"/>, has given <paramref name="concurrencyLevel"/>
+    /// and uses the <paramref name="comparer"/> for the key type.
+    /// <para>
+    /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
+    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
+    /// </para>
+    /// </summary>
+    /// <param name="initialCapacity">Initial estimated capacity</param>
+    /// <param name="concurrencyLevel">Expected maximum concurrency</param>
+    /// <param name="initialData">Data to initial the dictionary with</param>
+    /// <param name="comparer">Equality comparer for the key</param>
+    /// <param name="ignoreDuplicates">When <see langword="true"/> all duplicate keys in the <paramref name="initialData"/> are ignored and arbitrary one of those is kept; otherwise exception is thrown when duplicate key is found.</param>
+    public FastDictionary(int initialCapacity,
+        int concurrencyLevel,
+        IEqualityComparer<TKey>? comparer,
+        IEnumerable<KeyValuePair<TKey, TValue>> initialData,
+        bool ignoreDuplicates) : this(comparer, initialCapacity, concurrencyLevel)
+    {
+        Action<KeyValuePair<TKey, TValue>> lambda = ignoreDuplicates
+            ? (pair => this[pair.Key] = pair.Value)
+            : (pair => Add(pair));
+        InitializeEntries(lambda, initialData);
+    }
+
+    private FastDictionary(IEqualityComparer<TKey>? comparer,
+        int initialCapacity,
+        int concurrencyLevel)
     {
         _comparer = comparer ?? EqualityComparer<TKey>.Default;
-        _concurrencyHash = GetConcurrencyHash(Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel));
-        _data = new Dictionary<TKey, TValue>[_concurrencyHash + 1];
-        initialCapacity = Math.Max(FixedValues.MinInitialCapacity, initialCapacity);
-        for (int i = 0; i < _concurrencyHash + 1; i++)
-        {
-            _data[i] = new Dictionary<TKey, TValue>(initialCapacity, _comparer);
-        }
+        _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToPow2HashMask();
+        _data = CreateDataSet(initialCapacity, _concurrencyHash + 1, comparer);
     }
 
     /// <inheritdoc cref="IDictionary{TKey,TValue}.this" />
@@ -172,7 +218,6 @@ public sealed partial class FastDictionary<TKey, TValue> :
             //this call will provide best-effort count.
             int totCount = 0;
             int i = _data.Length;
-#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
             for (; i > 0;)
             {
                 Dictionary<TKey, TValue> d = _data[--i];
@@ -186,7 +231,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
                     Monitor.Exit(d);
                 }
             }
-#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
+
             return totCount;
         }
     }
@@ -254,7 +299,6 @@ public sealed partial class FastDictionary<TKey, TValue> :
         //We do not want to take all locks together
         //this call will provide best-effort clearing on whole collection.
         int i = _data.Length;
-#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
         for (; i > 0;)
         {
             Dictionary<TKey, TValue> d = _data[--i];
@@ -268,7 +312,6 @@ public sealed partial class FastDictionary<TKey, TValue> :
                 Monitor.Exit(d);
             }
         }
-#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
     }
 
     /// <inheritdoc />
@@ -289,27 +332,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <inheritdoc />
     public void Clear(int initialCapacity)
     {
-        //We do not want to take all locks together
-        //this call will provide best-effort clearing on whole collection.
-        int i = _data.Length;
-#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
-        for (; i > 0;)
-        {
-            Dictionary<TKey, TValue> d = _data[--i];
-            Monitor.Enter(d);
-            try
-            {
-                if (ReferenceEquals(_data[i], d))
-                {
-                    _data[i] = new Dictionary<TKey, TValue>(initialCapacity, _comparer);
-                }
-            }
-            finally
-            {
-                Monitor.Exit(d);
-            }
-        }
-#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
+        _ = Interlocked.Exchange(ref _data, CreateDataSet(initialCapacity, PartitionCount, _comparer));
     }
 
     /// <inheritdoc />
@@ -364,15 +387,87 @@ public sealed partial class FastDictionary<TKey, TValue> :
     }
 
     /// <inheritdoc />
+    public int CountInPartition(int partitionIndex)
+    {
+        Dictionary<TKey, TValue> d = _data[partitionIndex];
+        Monitor.Enter(d);
+        try
+        {
+            return d.Count;
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
+    }
+
+    /// <inheritdoc />
     public IEnumerable<TKey> EnumerableOfKeys()
     {
         return new KeyEnumerable(this);
     }
 
     /// <inheritdoc />
+    public IEnumerable<TKey> EnumerableOfKeysOnPartition(int partitionIndex)
+    {
+        Dictionary<TKey, TValue> d = _data[partitionIndex];
+        Monitor.Enter(d);
+        try
+        {
+            using Dictionary<TKey, TValue>.Enumerator de = d.GetEnumerator();
+            while (de.MoveNext())
+            {
+                yield return de.Current.Key;
+            }
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
+    }
+
+    /// <inheritdoc />
     public IEnumerable<TValue> EnumerableOfValues()
     {
         return new ValueEnumerable(this);
+    }
+
+    /// <inheritdoc />
+    public IEnumerable<TValue> EnumerableOfValuesOnPartition(int partitionIndex)
+    {
+        Dictionary<TKey, TValue> d = _data[partitionIndex];
+        Monitor.Enter(d);
+        try
+        {
+            using Dictionary<TKey, TValue>.Enumerator de = d.GetEnumerator();
+            while (de.MoveNext())
+            {
+                yield return de.Current.Value;
+            }
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
+    }
+
+    /// <inheritdoc/>
+    public IEnumerable<KeyValuePair<TKey, TValue>> EnumerableOnPartition(int partitionIndex)
+    {
+        Dictionary<TKey, TValue> d = _data[partitionIndex];
+        Monitor.Enter(d);
+        try
+        {
+            using Dictionary<TKey, TValue>.Enumerator de = d.GetEnumerator();
+            while (de.MoveNext())
+            {
+                yield return de.Current;
+            }
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
     }
 
     /// <summary>
@@ -618,14 +713,44 @@ public sealed partial class FastDictionary<TKey, TValue> :
         return EnumerableOfValues().ToList();
     }
 
-    private static int GetConcurrencyHash(int concurrencyLevel)
+    private static Dictionary<TKey, TValue>[] CreateDataSet(int initialCapacity,
+        int totalPartition,
+        IEqualityComparer<TKey>? comparer)
     {
-        int currentPow2 = 2;
-        while (concurrencyLevel > currentPow2 &&
-            currentPow2 < FixedValues.FastDictionaryMaxConcurrencyLevel)
+        Dictionary<TKey, TValue>[] data = new Dictionary<TKey, TValue>[totalPartition];
+        initialCapacity = Math.Max(FixedValues.MinInitialCapacity, initialCapacity / totalPartition);
+        for (int i = 0; i < totalPartition; i++)
         {
-            currentPow2 <<= 1;
+            data[i] = new Dictionary<TKey, TValue>(initialCapacity, comparer);
         }
-        return currentPow2 - 1;
+        return data;
+    }
+
+    private static void InitializeEntries(Action<KeyValuePair<TKey, TValue>> lambda,
+        IEnumerable<KeyValuePair<TKey, TValue>> initialData)
+    {
+        _ = Parallel.ForEach(
+                initialData,
+                new ParallelOptions { MaxDegreeOfParallelism = FixedValues.ProcessorCountWithMinBound },
+                lambda
+            );
+    }
+
+    private static void InitializeEntries(
+        IFastReadOnlyDictionary<TKey, TValue> src,
+        Action<KeyValuePair<TKey, TValue>> lambda)
+    {
+        _ = Parallel.For(
+                0,
+                src.PartitionCount,
+                new ParallelOptions { MaxDegreeOfParallelism = FixedValues.ProcessorCountWithMinBound },
+                i =>
+                {
+                    foreach (KeyValuePair<TKey, TValue> pair in src.EnumerableOnPartition(i))
+                    {
+                        lambda(pair);
+                    }
+                }
+            );
     }
 }

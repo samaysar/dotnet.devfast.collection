@@ -8,8 +8,8 @@ jobs:
   buildAndTestFull:
     strategy:
       matrix:
-        dotnet-version: ['6.x.x','8.x.x']
-    runs-on: ubuntu-latest
+        dotnet-version: ['8.x.x']
+    runs-on: windows-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4

@@ -10,7 +10,7 @@ namespace DevFast.Net.Collection.Tests.Abstractions
         {
             That(FixedValues.MinInitialCapacity, Is.EqualTo(0));
             That(FixedValues.MinConcurrencyLevel, Is.EqualTo(2));
-            That(FixedValues.FastDictionaryMaxConcurrencyLevel, Is.EqualTo(256));
+            That(FixedValues.HashedCollectionMaxConcurrencyLevel, Is.EqualTo(256));
         }
     }
 }

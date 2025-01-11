@@ -5,15 +5,10 @@
 /// </summary>
 /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>
+public interface IFastDictionary<TKey, TValue> : IFastReadOnlyDictionary<TKey, TValue>, IDictionary<TKey, TValue>
     where TKey : notnull
 {
-    /// <summary>
-    /// Gets the number of Partitions contained in the <see cref="IFastDictionary{TKey, TValue}"/>.
-    /// </summary>
-    int PartitionCount { get; }
-
-    /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}.this[TKey]" />
+    /// <inheritdoc cref="IDictionary{TKey,TValue}.this[TKey]" />
     new TValue this[TKey key] { get; set; }
 
     /// <summary>
@@ -26,6 +21,8 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRea
     /// <see langword="false"/> or the element is NOT part of the enumerable.
     /// </para>
     /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// You may consider using <see cref="IFastReadOnlyDictionary{TKey, TValue}.EnumerableOfKeysOnPartition"/> if the dictionary is NOT
+    /// being modified concurrently.
     /// </summary>
     new IEnumerable<TKey> Keys { get; }
 
@@ -39,6 +36,8 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRea
     /// <see langword="false"/> or the element is NOT part of the enumerable.
     /// </para>
     /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// You may consider using <see cref="IFastReadOnlyDictionary{TKey, TValue}.EnumerableOfValuesOnPartition"/> if the dictionary is NOT
+    /// being modified concurrently.
     /// </summary>
     new IEnumerable<TValue> Values { get; }
 
@@ -58,43 +57,8 @@ public interface IFastDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRea
         Func<TKey, TValue, TValue> updateValueFactory,
         IEqualityComparer<TValue>? comparer = null);
 
-    /// <summary>
-    /// Checks whether given key/value pair is part of current collection using provided <paramref name="valueComparer"/>.
-    /// If <paramref name="valueComparer"/> is <see langword="null" />, then <see cref="EqualityComparer{TValue}.Default"/>
-    /// will be used.
-    /// </summary>
-    /// <param name="item">Key value pair to check</param>
-    /// <param name="valueComparer">Equality comparer for the value.</param>
-    bool Contains(KeyValuePair<TKey, TValue> item, IEqualityComparer<TValue>? valueComparer);
-
     /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}.ContainsKey" />
     new bool ContainsKey(TKey key);
-
-    /// <summary>
-    /// Create a new <see cref="IEnumerable{T}"/> on the keys of the <see cref="Dictionary{TKey, TValue}"/>.
-    /// <para>
-    /// IMPLEMENTATION NOTES: Current implementation returns
-    /// enumerator that creates a snapshot (thus, consuming space) on a partition
-    /// at a time. That said, if one is adding/removing elements concurrently, while
-    /// enumerating on the collection, it is well possible that lookup may yield
-    /// <see langword="false"/> or the element is NOT part of the enumerable.
-    /// </para>
-    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
-    /// </summary>
-    IEnumerable<TKey> EnumerableOfKeys();
-
-    /// <summary>
-    /// Create a new <see cref="IEnumerable{T}"/> on the values of the <see cref="Dictionary{TKey, TValue}"/>.
-    /// <para>
-    /// IMPLEMENTATION NOTES: Current implementation returns
-    /// enumerator that creates a snapshot (thus, consuming space) on a partition
-    /// at a time. That said, if one is adding/removing elements concurrently, while
-    /// enumerating on the collection, it is well possible that lookup may yield
-    /// <see langword="false"/> or the element is NOT part of the enumerable.
-    /// </para>
-    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
-    /// </summary>
-    IEnumerable<TValue> EnumerableOfValues();
 
     /// <summary>
     /// Removes all items from all the partitions.
