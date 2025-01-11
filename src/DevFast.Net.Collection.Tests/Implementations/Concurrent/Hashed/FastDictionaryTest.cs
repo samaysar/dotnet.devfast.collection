@@ -1,7 +1,7 @@
-﻿using DevFast.Net.Collection.Abstractions;
+﻿using System.Collections.Concurrent;
+using DevFast.Net.Collection.Abstractions;
 using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 using DevFast.Net.Collection.Implementations.Concurrent.Hashed;
-using System.Collections.Concurrent;
 
 namespace DevFast.Net.Collection.Tests.Implementations.Concurrent.Hashed
 {
@@ -72,6 +72,27 @@ namespace DevFast.Net.Collection.Tests.Implementations.Concurrent.Hashed
                 }
             });
             That(copyDico, Is.Empty);
+        }
+
+        [Test]
+        [TestCase(1)]
+        [TestCase(10)]
+        [TestCase(100)]
+        [TestCase(1023)]
+        [TestCase(9735)]
+        public void FastDictionary_CountInPartition_Is_Consistent(int totalElements)
+        {
+            FastDictionary<int, int> dico = new(totalElements,
+                Environment.ProcessorCount,
+                EqualityComparer<int>.Default);
+            _ = Parallel.For(0, totalElements, i => dico.Add(i, i));
+            int dicoCount = dico.Count;
+            That(dicoCount, Is.EqualTo(totalElements));
+            _ = Parallel.For(0, dico.PartitionCount, i =>
+            {
+                _ = Interlocked.Add(ref dicoCount, -dico.CountInPartition(i));
+            });
+            That(dicoCount, Is.Zero);
         }
 
         [Test]
