@@ -1,8 +1,21 @@
+DevFast.Net.Collection 2.1.0
+
+ 1. New feature - in the namespace DevFast.Net.Collection.Abstractions.Concurrent.Hashed
+ 	A. new interface IFastReadOnlyDictionary is added
+	B. IFastDictionary now inherit from IFastReadOnlyDictionary
+	C. interface IFastReadOnlyDictionary declares:
+		  i. int CountInPartition(int)
+		 ii. IEnumerable<TKey> EnumerableOfKeysOnPartition(int)
+		iii. IEnumerable<TValue> EnumerableOfValuesOnPartition(int)
+		 iv. IEnumerable<KeyValuePair<TKey, TValue>> EnumerableOnPartition(int)
+ 2. New feature - in the namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed
+	A. FastDictionary fully implements IFastDictionary
+
 DevFast.Net.Collection 2.0.0
 
  1. New feature - namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed added, containing
  	A. Generic class FastDictionary implements IFastDictionary
- 1. New feature - namespace DevFast.Net.Collection.Abstractions added, containing
+ 2. New feature - namespace DevFast.Net.Collection.Abstractions added, containing
  	A. Static class FixedValues - Holds constant values
 
 DevFast.Net.Collection 1.0.0
