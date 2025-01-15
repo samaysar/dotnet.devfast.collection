@@ -338,19 +338,6 @@ public sealed partial class FastDictionary<TKey, TValue> :
     }
 
     /// <inheritdoc />
-    public IFastReadOnlyDictionary<TKey, TValue> CreateReadOnly()
-    {
-        return new FastReadOnlyDictionary<TKey, TValue>(0, PartitionCount, _comparer, this, false);
-    }
-
-    /// <inheritdoc />
-    public IFastReadOnlyDictionary<TKey, TValue> CreateReadOnlyAndClear()
-    {
-        Dictionary<TKey, TValue>[] oldData = Interlocked.Exchange(ref _data, CreateDataSet(0, PartitionCount, _comparer));
-        return new FastReadOnlyDictionary<TKey, TValue>(oldData);
-    }
-
-    /// <inheritdoc />
     public bool Contains(KeyValuePair<TKey, TValue> item)
     {
         return Contains(item, null);
@@ -672,6 +659,19 @@ public sealed partial class FastDictionary<TKey, TValue> :
         {
             Monitor.Exit(d);
         }
+    }
+
+    /// <inheritdoc />
+    public IFastReadOnlyDictionary<TKey, TValue> ToReadOnly()
+    {
+        return new FastReadOnlyDictionary<TKey, TValue>(0, PartitionCount, _comparer, this, false);
+    }
+
+    /// <inheritdoc />
+    public IFastReadOnlyDictionary<TKey, TValue> ToReadOnlyAndClear()
+    {
+        Dictionary<TKey, TValue>[] oldData = Interlocked.Exchange(ref _data, CreateDataSet(0, PartitionCount, _comparer));
+        return new FastReadOnlyDictionary<TKey, TValue>(oldData);
     }
 
     /// <inheritdoc />

@@ -277,8 +277,8 @@ public class FastDictionaryTest
             { 1, 2 },
             new KeyValuePair<int, int>(0, 1)
         };
-        Span<KeyValuePair<int, int>> newArr = (new KeyValuePair<int, int>[2]).AsSpan();
-        dico.CopyTo(newArr);
+        KeyValuePair<int, int>[] newArr = new KeyValuePair<int, int>[2];
+        dico.CopyTo(newArr.AsSpan());
         if (newArr[0].Key.Equals(1))
         {
             That(newArr[1].Key, Is.EqualTo(0));
@@ -425,5 +425,36 @@ public class FastDictionaryTest
         That(dico.TryGetValue(1, out int v), Is.True);
         That(v, Is.EqualTo(2));
         That(dico, Has.Count.EqualTo(1));
+    }
+
+    [Test]
+    public void FastDictionary_ToReadOnly_Returns_An_Instance_Of_FastReadOnlyDictionary_With_Same_Contents()
+    {
+        FastDictionary<int, int> dico = new();
+        That(dico.TryAdd(1, 0), Is.True);
+        That(dico.TryAdd(1, 1), Is.False);
+        IFastReadOnlyDictionary<int, int> roDico = dico.ToReadOnly();
+        That(roDico.Count, Is.EqualTo(dico.Count));
+        That(roDico is FastReadOnlyDictionary<int, int>, Is.True);
+        foreach (int key in roDico.Keys)
+        {
+            That(dico.Remove(key), Is.True);
+        }
+        That(dico, Is.Empty);
+    }
+
+    [Test]
+    public void FastDictionary_ToReadOnlyAndClear_Returns_FastReadOnlyDictionary_With_Same_Contents_And_Becomes_Empty()
+    {
+        FastDictionary<int, int> dico = new();
+        That(dico.TryAdd(1, 0), Is.True);
+        That(dico.TryAdd(1, 1), Is.False);
+        IFastReadOnlyDictionary<int, int> roDico = dico.ToReadOnlyAndClear();
+        That(roDico is FastReadOnlyDictionary<int, int>, Is.True);
+        foreach (int key in roDico.Keys)
+        {
+            That(dico.Remove(key), Is.False);
+        }
+        That(dico, Is.Empty);
     }
 }

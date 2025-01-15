@@ -177,8 +177,8 @@ public class FastReadOnlyDictionaryTest
             new KeyValuePair<int, int>(1, 2),
             new KeyValuePair<int, int>(0, 1)
         }, true);
-        Span<KeyValuePair<int, int>> newArr = (new KeyValuePair<int, int>[2]).AsSpan();
-        dico.CopyTo(newArr);
+        KeyValuePair<int, int>[] newArr = new KeyValuePair<int, int>[2];
+        dico.CopyTo(newArr.AsSpan());
         if (newArr[0].Key.Equals(1))
         {
             That(newArr[1].Key, Is.EqualTo(0));
@@ -197,7 +197,7 @@ public class FastReadOnlyDictionaryTest
     [Test]
     public void FastDictionary_EnumerableOfKeysOnPartition_Provides_All_Keys()
     {
-        FastDictionary<int, int> dico = new()
+        IFastReadOnlyDictionary<int, int> dico = new FastDictionary<int, int>()
         {
             { int.MaxValue, 2 },
             { int.MinValue, 2 },
@@ -206,7 +206,7 @@ public class FastReadOnlyDictionaryTest
             { 0, 2 },
             { 1, 2 },
             new KeyValuePair<int, int>(17, 1)
-        };
+        }.ToReadOnlyAndClear();
         ConcurrentBag<int> dataBag = new();
         _ = Parallel.For(0, dico.PartitionCount, i =>
         {
@@ -228,7 +228,7 @@ public class FastReadOnlyDictionaryTest
     [Test]
     public void FastDictionary_EnumerableOfValuesOnPartition_Provides_All_Keys()
     {
-        FastDictionary<int, int> dico = new()
+        IFastReadOnlyDictionary<int, int> dico = new FastDictionary<int, int>()
         {
             { int.MaxValue, -1 },
             { int.MinValue, 2 },
@@ -237,7 +237,7 @@ public class FastReadOnlyDictionaryTest
             { 0, 2 },
             { 1, 2 },
             new KeyValuePair<int, int>(17, 1)
-        };
+        }.ToReadOnlyAndClear();
         ConcurrentBag<int> dataBag = new();
         _ = Parallel.For(0, dico.PartitionCount, i =>
         {
@@ -251,5 +251,23 @@ public class FastReadOnlyDictionaryTest
         That(dataBag.Count(x => x == 2), Is.EqualTo(4));
         That(dataBag.Count(x => x == 0), Is.EqualTo(1));
         That(dataBag.Count(x => x == 1), Is.EqualTo(1));
+    }
+
+    [Test]
+    public void FastDictionary_TryGetValue_Works_Fine()
+    {
+        IFastReadOnlyDictionary<int, int> dico = new FastDictionary<int, int>()
+        {
+            { int.MaxValue, -1 },
+            { int.MinValue, 2 },
+            { 255, 2 },
+            { 256, 0 },
+            { 0, 2 },
+            { 1, 2 },
+            new KeyValuePair<int, int>(17, 1)
+        }.ToReadOnlyAndClear();
+        That(dico.TryGetValue(1, out int v), Is.True);
+        That(v, Is.EqualTo(2));
+        That(dico, Has.Count.EqualTo(7));
     }
 }

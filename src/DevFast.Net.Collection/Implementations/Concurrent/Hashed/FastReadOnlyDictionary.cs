@@ -17,12 +17,6 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue> :
     private readonly Dictionary<TKey, TValue>[] _data;
     private readonly int _concurrencyHash;
 
-    internal FastReadOnlyDictionary(Dictionary<TKey, TValue>[] data)
-    {
-        _data = data;
-        _concurrencyHash = data.Length - 1;
-    }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="FastReadOnlyDictionary{TKey, TValue}" /> class that
     /// contains given <paramref name="items"/>, has the default initial capacity, has default concurrency level,
@@ -126,6 +120,13 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue> :
             Action<KeyValuePair<TKey, TValue>> lambda = ignoreDuplicates ? IndexerAdd : Add;
             InitializeEntries(lambda, items);
         }
+        Count = _data.Sum(static x => x.Count);
+    }
+
+    internal FastReadOnlyDictionary(Dictionary<TKey, TValue>[] data)
+    {
+        _data = data;
+        _concurrencyHash = data.Length - 1;
         Count = _data.Sum(static x => x.Count);
     }
 

@@ -61,9 +61,9 @@ public interface IFastDictionary<TKey, TValue> : IFastReadOnlyDictionary<TKey, T
     /// The purpose of this method to be able to created multiple
     /// instances of read-only dictionary based on the snapshot state
     /// of the dictionary contents.
-    /// Also, <see cref="CreateReadOnlyAndClear()"/>.
+    /// Also, <see cref="ToReadOnlyAndClear()"/>.
     /// </summary>
-    IFastReadOnlyDictionary<TKey, TValue> CreateReadOnly();
+    IFastReadOnlyDictionary<TKey, TValue> ToReadOnly();
 
     /// <summary>
     /// Creates and returns a new instance of a Read-Only dictionary version
@@ -77,9 +77,9 @@ public interface IFastDictionary<TKey, TValue> : IFastReadOnlyDictionary<TKey, T
     /// </para>
     /// As the internal state will be cleared, some implementation may
     /// take the advantage of such fact and provide some optimization in order to
-    /// make this method call cheaper compared to <see cref="CreateReadOnly"/>.
+    /// make this method call cheaper compared to <see cref="ToReadOnly"/>.
     /// </summary>
-    IFastReadOnlyDictionary<TKey, TValue> CreateReadOnlyAndClear();
+    IFastReadOnlyDictionary<TKey, TValue> ToReadOnlyAndClear();
 
     /// <summary>
     /// Adds a key/value pair to the collection by using the specified function
