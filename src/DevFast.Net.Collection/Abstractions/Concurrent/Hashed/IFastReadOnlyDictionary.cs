@@ -14,6 +14,12 @@ public interface IFastReadOnlyDictionary<TKey, TValue> : IReadOnlyDictionary<TKe
     int PartitionCount { get; }
 
     /// <summary>
+    /// Checks whether given key/value pair is part of current collection using default value comparer.
+    /// </summary>
+    /// <param name="item">Key value pair to check</param>
+    bool Contains(KeyValuePair<TKey, TValue> item);
+
+    /// <summary>
     /// Checks whether given key/value pair is part of current collection using provided <paramref name="valueComparer"/>.
     /// If <paramref name="valueComparer"/> is <see langword="null" />, then <see cref="EqualityComparer{TValue}.Default"/>
     /// will be used.

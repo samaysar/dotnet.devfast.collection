@@ -28,6 +28,7 @@ System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyVal
   - **[this[TKey]](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.this[TKey] 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary<TKey,TValue>.this[TKey]')**
   - **[Values](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.Values 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary<TKey,TValue>.Values')**
 - *Methods*
+  - **[Contains(KeyValuePair&lt;TKey,TValue&gt;)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary<TKey,TValue>.Contains(System.Collections.Generic.KeyValuePair<TKey,TValue>)')**
   - **[Contains(KeyValuePair&lt;TKey,TValue&gt;, IEqualityComparer&lt;TValue&gt;)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary<TKey,TValue>.Contains(System.Collections.Generic.KeyValuePair<TKey,TValue>, System.Collections.Generic.IEqualityComparer<TValue>)')**
   - **[ContainsKey(TKey)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.ContainsKey(TKey) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary<TKey,TValue>.ContainsKey(TKey)')**
   - **[CopyTo(Span&lt;KeyValuePair&lt;TKey,TValue&gt;&gt;)](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.CopyTo(System.Span_System.Collections.Generic.KeyValuePair_TKey,TValue__) 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary<TKey,TValue>.CopyTo(System.Span<System.Collections.Generic.KeyValuePair<TKey,TValue>>)')**
@@ -341,6 +342,28 @@ Implements [Values](https://docs.microsoft.com/en-us/dotnet/api/System.Collectio
 #### Property Value
 [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[TValue](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
 ### Methods
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_)'></a>
+
+## FastReadOnlyDictionary<TKey,TValue>.Contains(KeyValuePair<TKey,TValue>) Method
+
+Checks whether given key/value pair is part of current collection using default value comparer.
+
+```csharp
+public bool Contains(System.Collections.Generic.KeyValuePair<TKey,TValue> item);
+```
+#### Parameters
+
+<a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_).item'></a>
+
+`item` [System.Collections.Generic.KeyValuePair&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TKey](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary<TKey,TValue>.TKey')[,](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')[TValue](DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary<TKey,TValue>.TValue')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.KeyValuePair-2 'System.Collections.Generic.KeyValuePair`2')
+
+Key value pair to check
+
+Implements [Contains(KeyValuePair&lt;TKey,TValue&gt;)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue>.Contains(System.Collections.Generic.KeyValuePair<TKey,TValue>)')
+
+#### Returns
+[System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')
 
 <a name='DevFast.Net.Collection.Implementations.Concurrent.Hashed.FastReadOnlyDictionary_TKey,TValue_.Contains(System.Collections.Generic.KeyValuePair_TKey,TValue_,System.Collections.Generic.IEqualityComparer_TValue_)'></a>
 

@@ -227,7 +227,7 @@ public class FastDictionaryTest
             new KeyValuePair<int, int>(0, 1)
         };
         That(dico.Contains(new KeyValuePair<int, int>(1, 2)), Is.True);
-        That(!dico.Contains(new KeyValuePair<int, int>(0, 2)), Is.True);
+        That(dico.Contains(new KeyValuePair<int, int>(0, 2)), Is.False);
         That(dico.Contains(new KeyValuePair<int, int>(0, 1)), Is.True);
     }
 
@@ -254,6 +254,31 @@ public class FastDictionaryTest
         };
         KeyValuePair<int, int>[] newArr = new KeyValuePair<int, int>[2];
         dico.CopyTo(newArr, 0);
+        if (newArr[0].Key.Equals(1))
+        {
+            That(newArr[1].Key, Is.EqualTo(0));
+            That(newArr[1].Value, Is.EqualTo(1));
+            That(newArr[0].Value, Is.EqualTo(2));
+        }
+        else
+        {
+            That(newArr[1].Key, Is.EqualTo(1));
+            That(newArr[1].Value, Is.EqualTo(2));
+            That(newArr[0].Key, Is.EqualTo(0));
+            That(newArr[0].Value, Is.EqualTo(1));
+        }
+    }
+
+    [Test]
+    public void FastDictionary_CopyTo_Span_Works_Fine()
+    {
+        FastDictionary<int, int> dico = new()
+        {
+            { 1, 2 },
+            new KeyValuePair<int, int>(0, 1)
+        };
+        Span<KeyValuePair<int, int>> newArr = (new KeyValuePair<int, int>[2]).AsSpan();
+        dico.CopyTo(newArr);
         if (newArr[0].Key.Equals(1))
         {
             That(newArr[1].Key, Is.EqualTo(0));

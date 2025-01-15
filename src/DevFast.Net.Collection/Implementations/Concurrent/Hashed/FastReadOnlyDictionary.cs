@@ -145,6 +145,12 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue> :
     public int Count { get; }
 
     /// <inheritdoc />
+    public bool Contains(KeyValuePair<TKey, TValue> item)
+    {
+        return Contains(item, null);
+    }
+
+    /// <inheritdoc />
     public bool Contains(KeyValuePair<TKey, TValue> item, IEqualityComparer<TValue>? valueComparer)
     {
         return GetPartition(item.Key).TryGetValue(item.Key, out TValue? v) &&

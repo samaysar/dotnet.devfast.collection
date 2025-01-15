@@ -1,4 +1,5 @@
 ﻿using DevFast.Net.Collection.Abstractions;
+using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 using DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 using System.Collections.Concurrent;
 
@@ -119,5 +120,136 @@ public class FastReadOnlyDictionaryTest
                 new KeyValuePair<int, int>(2,2)
         }, false));
         That(ex, Is.Not.Null);
+    }
+
+    [Test]
+    public void FastReadOnlyDictionary_Indexer_Works_Fine()
+    {
+        FastReadOnlyDictionary<int, int> dico = new(new FastDictionary<int, int> { { 0, 1 }, { 1, 0 } }, false);
+        KeyNotFoundException? ex = Throws<KeyNotFoundException>(() => _ = dico[2]);
+        That(ex, Is.Not.Null);
+        That(dico[0], Is.EqualTo(1));
+        That(dico[1], Is.EqualTo(0));
+        That(dico, Has.Count.EqualTo(2));
+    }
+
+    [Test]
+    public void FastReadOnlyDictionary_Key_N_Value_Enumerable_Works_Fine()
+    {
+        IFastReadOnlyDictionary<int, int> dico = new FastReadOnlyDictionary<int, int>(new FastDictionary<int, int> { { 0, 1 }, { 1, 2 } }, false);
+        That(dico.Keys.Count(), Is.EqualTo(2));
+        That(dico.Values.Count(), Is.EqualTo(2));
+        That(dico.Keys, Is.EquivalentTo(new[] { 0, 1 }));
+        That(dico.Values, Is.EquivalentTo(new[] { 1, 2 }));
+    }
+
+    [Test]
+    public void FastReadOnlyDictionary_Contains_Works_Fine()
+    {
+        FastReadOnlyDictionary<int, int> dico = new(
+        new[] {
+            new KeyValuePair<int, int>(1, 2),
+            new KeyValuePair<int, int>(0, 1)
+        }, true);
+        That(dico.Contains(new KeyValuePair<int, int>(1, 2)), Is.True);
+        That(dico.Contains(new KeyValuePair<int, int>(0, 2)), Is.False);
+        That(dico.Contains(new KeyValuePair<int, int>(0, 1)), Is.True);
+    }
+
+    [Test]
+    public void FastReadOnlyDictionary_ContainsKey_Works_Fine()
+    {
+        FastReadOnlyDictionary<int, int> dico = new(
+        new[] {
+            new KeyValuePair<int, int>(1, 2),
+            new KeyValuePair<int, int>(0, 1)
+        }, true);
+        That(dico.ContainsKey(1), Is.True);
+        That(dico.ContainsKey(2), Is.False);
+        That(dico.ContainsKey(0), Is.True);
+    }
+
+    [Test]
+    public void FastReadOnlyDictionary_CopyTo_Works_Fine()
+    {
+        FastReadOnlyDictionary<int, int> dico = new(
+        new[] {
+            new KeyValuePair<int, int>(1, 2),
+            new KeyValuePair<int, int>(0, 1)
+        }, true);
+        Span<KeyValuePair<int, int>> newArr = (new KeyValuePair<int, int>[2]).AsSpan();
+        dico.CopyTo(newArr);
+        if (newArr[0].Key.Equals(1))
+        {
+            That(newArr[1].Key, Is.EqualTo(0));
+            That(newArr[1].Value, Is.EqualTo(1));
+            That(newArr[0].Value, Is.EqualTo(2));
+        }
+        else
+        {
+            That(newArr[1].Key, Is.EqualTo(1));
+            That(newArr[1].Value, Is.EqualTo(2));
+            That(newArr[0].Key, Is.EqualTo(0));
+            That(newArr[0].Value, Is.EqualTo(1));
+        }
+    }
+
+    [Test]
+    public void FastDictionary_EnumerableOfKeysOnPartition_Provides_All_Keys()
+    {
+        FastDictionary<int, int> dico = new()
+        {
+            { int.MaxValue, 2 },
+            { int.MinValue, 2 },
+            { 255, 2 },
+            { 256, 2 },
+            { 0, 2 },
+            { 1, 2 },
+            new KeyValuePair<int, int>(17, 1)
+        };
+        ConcurrentBag<int> dataBag = new();
+        _ = Parallel.For(0, dico.PartitionCount, i =>
+        {
+            foreach (int k in dico.EnumerableOfKeysOnPartition(i))
+            {
+                dataBag.Add(k);
+            }
+        });
+        That(dataBag.Count, Is.EqualTo(7));
+        That(dataBag.Contains(int.MinValue), Is.True);
+        That(dataBag.Contains(int.MaxValue), Is.True);
+        That(dataBag.Contains(255), Is.True);
+        That(dataBag.Contains(255), Is.True);
+        That(dataBag.Contains(0), Is.True);
+        That(dataBag.Contains(1), Is.True);
+        That(dataBag.Contains(17), Is.True);
+    }
+
+    [Test]
+    public void FastDictionary_EnumerableOfValuesOnPartition_Provides_All_Keys()
+    {
+        FastDictionary<int, int> dico = new()
+        {
+            { int.MaxValue, -1 },
+            { int.MinValue, 2 },
+            { 255, 2 },
+            { 256, 0 },
+            { 0, 2 },
+            { 1, 2 },
+            new KeyValuePair<int, int>(17, 1)
+        };
+        ConcurrentBag<int> dataBag = new();
+        _ = Parallel.For(0, dico.PartitionCount, i =>
+        {
+            foreach (int k in dico.EnumerableOfValuesOnPartition(i))
+            {
+                dataBag.Add(k);
+            }
+        });
+        That(dataBag.Count, Is.EqualTo(7));
+        That(dataBag.Count(x => x == -1), Is.EqualTo(1));
+        That(dataBag.Count(x => x == 2), Is.EqualTo(4));
+        That(dataBag.Count(x => x == 0), Is.EqualTo(1));
+        That(dataBag.Count(x => x == 1), Is.EqualTo(1));
     }
 }
