@@ -11,34 +11,10 @@ public interface IFastDictionary<TKey, TValue> : IFastReadOnlyDictionary<TKey, T
     /// <inheritdoc cref="IDictionary{TKey,TValue}.this[TKey]" />
     new TValue this[TKey key] { get; set; }
 
-    /// <summary>
-    /// Gets an enumerable collection that contains the keys of the dictionary.
-    /// <para>
-    /// IMPLEMENTATION NOTES: Current implementation returns
-    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
-    /// That said, if one is adding/removing elements concurrently, while
-    /// enumerating on the collection, it is well possible that lookup may yield
-    /// <see langword="false"/> or the element is NOT part of the enumerable.
-    /// </para>
-    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
-    /// You may consider using <see cref="IFastReadOnlyDictionary{TKey, TValue}.EnumerableOfKeysOnPartition"/> if the dictionary is NOT
-    /// being modified concurrently.
-    /// </summary>
+    /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}.Keys" />
     new IEnumerable<TKey> Keys { get; }
 
-    /// <summary>
-    /// Gets an enumerable collection that contains the values of the dictionary.
-    /// <para>
-    /// IMPLEMENTATION NOTES: Current implementation returns
-    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
-    /// That said, if one is adding/removing elements concurrently, while
-    /// enumerating on the collection, it is well possible that lookup may yield
-    /// <see langword="false"/> or the element is NOT part of the enumerable.
-    /// </para>
-    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
-    /// You may consider using <see cref="IFastReadOnlyDictionary{TKey, TValue}.EnumerableOfValuesOnPartition"/> if the dictionary is NOT
-    /// being modified concurrently.
-    /// </summary>
+    /// <inheritdoc cref="IReadOnlyDictionary{TKey,TValue}.Values" />
     new IEnumerable<TValue> Values { get; }
 
     /// <summary>
@@ -71,6 +47,39 @@ public interface IFastDictionary<TKey, TValue> : IFastReadOnlyDictionary<TKey, T
     /// </summary>
     /// <param name="initialCapacity">Initial capacity of the partitions to be re-created.</param>
     void Clear(int initialCapacity);
+
+    /// <summary>
+    /// Creates and returns a new instance of a Read-Only dictionary version
+    /// which contains all the elements of the current instance.
+    /// Based on actual implementation, such read-only dictionary version can be optimized for
+    /// lookup and enumeration.
+    /// <para>
+    /// Actual implementation may requires re-allocating memory and may requires memory
+    /// intensive operations. Depending on the size of current collection, calling this
+    /// method may take some time before returning.
+    /// </para>
+    /// The purpose of this method to be able to created multiple
+    /// instances of read-only dictionary based on the snapshot state
+    /// of the dictionary contents.
+    /// Also, <see cref="ToReadOnlyAndClear()"/>.
+    /// </summary>
+    IFastReadOnlyDictionary<TKey, TValue> ToReadOnly();
+
+    /// <summary>
+    /// Creates and returns a new instance of a Read-Only dictionary version
+    /// which contains all the elements of the current instance.
+    /// Based on actual implementation, such read-only dictionary version can be optimized for
+    /// lookup and enumeration.
+    /// Before returning the instance of read-only dictionary, it clears internal collections.
+    /// <para>
+    /// The purpose of this method is to create 1 last instance of read-only
+    /// dictionary before clearing the contents.
+    /// </para>
+    /// As the internal state will be cleared, some implementation may
+    /// take the advantage of such fact and provide some optimization in order to
+    /// make this method call cheaper compared to <see cref="ToReadOnly"/>.
+    /// </summary>
+    IFastReadOnlyDictionary<TKey, TValue> ToReadOnlyAndClear();
 
     /// <summary>
     /// Adds a key/value pair to the collection by using the specified function

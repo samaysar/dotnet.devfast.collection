@@ -92,7 +92,7 @@ public sealed partial class FastDictionary<TKey, TValue>
                 Monitor.Enter(d);
                 try
                 {
-                    _currentEnumerator = d.Values.ToList().GetEnumerator();
+                    _currentEnumerator = new List<TValue>(d.Values).GetEnumerator();
                 }
                 finally
                 {

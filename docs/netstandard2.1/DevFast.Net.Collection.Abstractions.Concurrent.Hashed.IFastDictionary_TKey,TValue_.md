@@ -40,16 +40,7 @@ Implements [DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyD
 
 ## IFastDictionary<TKey,TValue>.Keys Property
 
-Gets an enumerable collection that contains the keys of the dictionary.
-
-IMPLEMENTATION NOTES: Current implementation returns
-enumerator that creates a snapshot (thus, consuming space) on a partition.
-That said, if one is adding/removing elements concurrently, while
-enumerating on the collection, it is well possible that lookup may yield
-[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
-In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
-You may consider using [EnumerableOfKeysOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.EnumerableOfKeysOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue>.EnumerableOfKeysOnPartition(int)') if the dictionary is NOT
-being modified concurrently.
+Gets an enumerable collection that contains the keys in the read-only dictionary.
 
 ```csharp
 System.Collections.Generic.IEnumerable<TKey> Keys { get; }
@@ -97,16 +88,7 @@ The property is set and the [System.Collections.Generic.IDictionary&lt;&gt;](htt
 
 ## IFastDictionary<TKey,TValue>.Values Property
 
-Gets an enumerable collection that contains the values of the dictionary.
-
-IMPLEMENTATION NOTES: Current implementation returns
-enumerator that creates a snapshot (thus, consuming space) on a partition.
-That said, if one is adding/removing elements concurrently, while
-enumerating on the collection, it is well possible that lookup may yield
-[false](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') or the element is NOT part of the enumerable.
-In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
-You may consider using [EnumerableOfValuesOnPartition(int)](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.EnumerableOfValuesOnPartition(int) 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue>.EnumerableOfValuesOnPartition(int)') if the dictionary is NOT
-being modified concurrently.
+Gets an enumerable collection that contains the values in the read-only dictionary.
 
 ```csharp
 System.Collections.Generic.IEnumerable<TValue> Values { get; }
@@ -306,6 +288,53 @@ Equality comparer for the value.
 
 #### Returns
 [System.Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean 'System.Boolean')
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.ToReadOnly()'></a>
+
+## IFastDictionary<TKey,TValue>.ToReadOnly() Method
+
+Creates and returns a new instance of a Read-Only dictionary version
+which contains all the elements of the current instance.
+Based on actual implementation, such read-only dictionary version can be optimized for
+lookup and enumeration.
+
+Actual implementation may requires re-allocating memory and may requires memory
+intensive operations. Depending on the size of current collection, calling this
+method may take some time before returning.
+The purpose of this method to be able to created multiple
+instances of read-only dictionary based on the snapshot state
+of the dictionary contents.
+Also, [ToReadOnlyAndClear()](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.ToReadOnlyAndClear() 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.ToReadOnlyAndClear()').
+
+```csharp
+DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue> ToReadOnly();
+```
+
+#### Returns
+[DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary&lt;](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.md 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue>')[TKey](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.TKey')[,](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.md 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue>')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.TValue')[&gt;](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.md 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue>')
+
+<a name='DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.ToReadOnlyAndClear()'></a>
+
+## IFastDictionary<TKey,TValue>.ToReadOnlyAndClear() Method
+
+Creates and returns a new instance of a Read-Only dictionary version
+which contains all the elements of the current instance.
+Based on actual implementation, such read-only dictionary version can be optimized for
+lookup and enumeration.
+Before returning the instance of read-only dictionary, it clears internal collections.
+
+The purpose of this method is to create 1 last instance of read-only
+dictionary before clearing the contents.
+As the internal state will be cleared, some implementation may
+take the advantage of such fact and provide some optimization in order to
+make this method call cheaper compared to [ToReadOnly()](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.ToReadOnly() 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.ToReadOnly()').
+
+```csharp
+DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue> ToReadOnlyAndClear();
+```
+
+#### Returns
+[DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary&lt;](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.md 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue>')[TKey](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.TKey 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.TKey')[,](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.md 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue>')[TValue](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.md#DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.TValue 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary<TKey,TValue>.TValue')[&gt;](DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary_TKey,TValue_.md 'DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastReadOnlyDictionary<TKey,TValue>')
 
 <a name='DevFast.Net.Collection.Abstractions.Concurrent.Hashed.IFastDictionary_TKey,TValue_.TryAdd(TKey,TValue)'></a>
 

@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using DevFast.Net.Collection.Abstractions;
+using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using DevFast.Net.Collection.Abstractions;
-using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 
 namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 
@@ -90,35 +90,8 @@ public sealed partial class FastDictionary<TKey, TValue> :
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FastDictionary{TKey, TValue}" /> class that is empty
-    /// and has the given <paramref name="initialCapacity"/>, has given <paramref name="concurrencyLevel"/>
-    /// and uses the <paramref name="comparer"/> for the key type.
-    /// <para>
-    /// NOTE: <paramref name="initialCapacity"/> has internal lower bound=<see cref="FixedValues.MinInitialCapacity"/> and <paramref name="concurrencyLevel"/> has internal lower bound=<see cref="FixedValues.MinConcurrencyLevel"/>.
-    /// <paramref name="concurrencyLevel"/> has internal upper bound=<see cref="FixedValues.HashedCollectionMaxConcurrencyLevel"/> and always adjusted to the nearest higher power of 2.
-    /// </para>
-    /// </summary>
-    /// <param name="initialCapacity">Initial estimated capacity</param>
-    /// <param name="concurrencyLevel">Expected maximum concurrency</param>
-    /// <param name="comparer">Equality comparer for the key</param>
-    /// <param name="source">Data to initial the dictionary with</param>
-    public FastDictionary(int initialCapacity,
-        int concurrencyLevel,
-        IEqualityComparer<TKey>? comparer,
-        IReadOnlyDictionary<TKey, TValue> source) : this(comparer, initialCapacity, concurrencyLevel)
-    {
-        if (source is IFastReadOnlyDictionary<TKey, TValue> fd)
-        {
-            InitializeEntries(fd, Add);
-        }
-        else
-        {
-            InitializeEntries(Add, source);
-        }
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="FastDictionary{TKey, TValue}" /> class that is empty
+    /// Initializes a new instance of the <see cref="FastDictionary{TKey, TValue}" /> class that
+    /// contains elements of the given <paramref name="initialData"/>
     /// and has the given <paramref name="initialCapacity"/>, has given <paramref name="concurrencyLevel"/>
     /// and uses the <paramref name="comparer"/> for the key type.
     /// <para>
@@ -135,21 +108,22 @@ public sealed partial class FastDictionary<TKey, TValue> :
         int concurrencyLevel,
         IEqualityComparer<TKey>? comparer,
         IEnumerable<KeyValuePair<TKey, TValue>> initialData,
-        bool ignoreDuplicates) : this(comparer, initialCapacity, concurrencyLevel)
-    {
-        Action<KeyValuePair<TKey, TValue>> lambda = ignoreDuplicates
-            ? (pair => this[pair.Key] = pair.Value)
-            : (pair => Add(pair));
-        InitializeEntries(lambda, initialData);
-    }
-
-    private FastDictionary(IEqualityComparer<TKey>? comparer,
-        int initialCapacity,
-        int concurrencyLevel)
+        bool ignoreDuplicates)
     {
         _comparer = comparer ?? EqualityComparer<TKey>.Default;
         _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToPow2HashMask();
         _data = CreateDataSet(initialCapacity, _concurrencyHash + 1, comparer);
+        if (initialData is IFastReadOnlyDictionary<TKey, TValue> fd)
+        {
+            InitializeEntries(fd, Add);
+        }
+        else
+        {
+            Action<KeyValuePair<TKey, TValue>> lambda = ignoreDuplicates
+                ? (pair => this[pair.Key] = pair.Value)
+                : Add;
+            InitializeEntries(lambda, initialData);
+        }
     }
 
     /// <inheritdoc cref="IDictionary{TKey,TValue}.this" />
@@ -218,6 +192,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
             //this call will provide best-effort count.
             int totCount = 0;
             int i = _data.Length;
+#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
             for (; i > 0;)
             {
                 Dictionary<TKey, TValue> d = _data[--i];
@@ -231,6 +206,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
                     Monitor.Exit(d);
                 }
             }
+#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
 
             return totCount;
         }
@@ -242,10 +218,34 @@ public sealed partial class FastDictionary<TKey, TValue> :
     /// <inheritdoc />
     public int PartitionCount => _data.Length;
 
-    /// <inheritdoc cref="IFastDictionary{TKey, TValue}.Keys"/>
+    /// <summary>
+    /// Gets an enumerable collection that contains the keys of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
+    /// That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// You may consider using <see cref="IFastReadOnlyDictionary{TKey, TValue}.EnumerableOfKeysOnPartition"/> if the dictionary is NOT
+    /// being modified concurrently.
+    /// </summary>
     IEnumerable<TKey> IFastDictionary<TKey, TValue>.Keys => EnumerableOfKeys();
 
-    /// <inheritdoc cref="IFastDictionary{TKey, TValue}.Values"/>
+    /// <summary>
+    /// Gets an enumerable collection that contains the values of the dictionary.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition.
+    /// That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// You may consider using <see cref="IFastReadOnlyDictionary{TKey, TValue}.EnumerableOfValuesOnPartition"/> if the dictionary is NOT
+    /// being modified concurrently.
+    /// </summary>
     IEnumerable<TValue> IFastDictionary<TKey, TValue>.Values => EnumerableOfValues();
 
     /// <inheritdoc cref="IFastDictionary{TKey, TValue}.Keys"/>
@@ -299,6 +299,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
         //We do not want to take all locks together
         //this call will provide best-effort clearing on whole collection.
         int i = _data.Length;
+#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
         for (; i > 0;)
         {
             Dictionary<TKey, TValue> d = _data[--i];
@@ -312,6 +313,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
                 Monitor.Exit(d);
             }
         }
+#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
     }
 
     /// <inheritdoc />
@@ -387,6 +389,16 @@ public sealed partial class FastDictionary<TKey, TValue> :
     }
 
     /// <inheritdoc />
+    public void CopyTo(Span<KeyValuePair<TKey, TValue>> target)
+    {
+        int idx = 0;
+        foreach (KeyValuePair<TKey, TValue> pair in this)
+        {
+            target[idx++] = pair;
+        }
+    }
+
+    /// <inheritdoc />
     public int CountInPartition(int partitionIndex)
     {
         Dictionary<TKey, TValue> d = _data[partitionIndex];
@@ -401,13 +413,52 @@ public sealed partial class FastDictionary<TKey, TValue> :
         }
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Create a new <see cref="IEnumerable{T}"/> on the keys of the <see cref="Dictionary{TKey, TValue}"/>.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition
+    /// at a time. That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// You may consider using <see cref="EnumerableOfKeysOnPartition"/> if the dictionary is NOT
+    /// being modified concurrently.
+    /// </summary>
     public IEnumerable<TKey> EnumerableOfKeys()
     {
         return new KeyEnumerable(this);
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Create a new <see cref="IEnumerable{T}"/> on the keys of
+    /// a partition identified with <paramref name="partitionIndex"/>; where Partition index is 0-based
+    /// (i.e. 0 to <see cref="PartitionCount"/> - 1).
+    /// <para>
+    /// IMPLEMENTATION NOTES: This implementation is preferable over other <see cref="IEnumerable{T}"/> implementations
+    /// as it creates a snapshot on the partition without consuming space. This implementation is very
+    /// interesting to traverse keys concurrently on different partitions from separate thread; for an example:
+    /// <code>
+    /// Parallel.For(
+    ///     0,
+    ///     instance.PartitionCount,
+    ///     i =>
+    ///     {
+    ///         foreach(var key in instance.KeysEnumerableOnPartition(i))
+    ///         {
+    ///             ...YOUR CODE...
+    ///         }
+    ///     }
+    /// );
+    /// </code>
+    /// </para>
+    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+    /// different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+    /// (e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+    /// (e.g. case of re-entrancy); this MAY lead to unexpected outcome.
+    /// </summary>
+    /// <param name="partitionIndex">Index of the parition on which to create enumeration</param>
     public IEnumerable<TKey> EnumerableOfKeysOnPartition(int partitionIndex)
     {
         Dictionary<TKey, TValue> d = _data[partitionIndex];
@@ -426,13 +477,52 @@ public sealed partial class FastDictionary<TKey, TValue> :
         }
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Create a new <see cref="IEnumerable{T}"/> on the values of the <see cref="Dictionary{TKey, TValue}"/>.
+    /// <para>
+    /// IMPLEMENTATION NOTES: Current implementation returns
+    /// enumerator that creates a snapshot (thus, consuming space) on a partition
+    /// at a time. That said, if one is adding/removing elements concurrently, while
+    /// enumerating on the collection, it is well possible that lookup may yield
+    /// <see langword="false"/> or the element is NOT part of the enumerable.
+    /// </para>
+    /// In order to reduce space complexity, Partition snapshots are created as enumerable visits those.
+    /// You may consider using <see cref="EnumerableOfValuesOnPartition"/> if the dictionary is NOT
+    /// being modified concurrently.
+    /// </summary>
     public IEnumerable<TValue> EnumerableOfValues()
     {
         return new ValueEnumerable(this);
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Create a new <see cref="IEnumerable{T}"/> on the values
+    /// of a partition identified with <paramref name="partitionIndex"/>; where Partition index is 0-based
+    /// (i.e. 0 to <see cref="PartitionCount"/> - 1).
+    /// <para>
+    /// IMPLEMENTATION NOTES: This implementation is preferable over other <see cref="IEnumerable{T}"/> implementations
+    /// as it creates a snapshot on the partition without consuming space. This implementation is very
+    /// interesting to traverse values concurrently on different partitions from separate thread; for an example:
+    /// <code>
+    /// Parallel.For(
+    ///     0,
+    ///     instance.PartitionCount,
+    ///     i =>
+    ///     {
+    ///         foreach(var value in instance.EnumerableOfValuesOnPartition(i))
+    ///         {
+    ///             ...YOUR CODE...
+    ///         }
+    ///     }
+    /// );
+    /// </code>
+    /// </para>
+    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+    /// different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+    /// (e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+    /// (e.g. case of re-entrancy); this MAY lead to unexpected outcome.
+    /// </summary>
+    /// <param name="partitionIndex">Index of the parition on which to create enumeration</param>
     public IEnumerable<TValue> EnumerableOfValuesOnPartition(int partitionIndex)
     {
         Dictionary<TKey, TValue> d = _data[partitionIndex];
@@ -451,7 +541,34 @@ public sealed partial class FastDictionary<TKey, TValue> :
         }
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Create a new <see cref="IEnumerable{T}"/> on the key-values pairs
+    /// of a partition identified with <paramref name="partitionIndex"/>; where Partition index is 0-based
+    /// (i.e. 0 to <see cref="PartitionCount"/> - 1).
+    /// <para>
+    /// IMPLEMENTATION NOTES: This implementation is preferable over other <see cref="IEnumerable{T}"/> implementations
+    /// as it creates a snapshot on the partition without consuming space. This implementation is very
+    /// interesting to traverse key-value pairs concurrently on different partitions from separate thread; for an example:
+    /// <code>
+    /// Parallel.For(
+    ///     0,
+    ///     instance.PartitionCount,
+    ///     i =>
+    ///     {
+    ///         foreach(var pair in instance.EnumerableOnPartition(i))
+    ///         {
+    ///             ...YOUR CODE...
+    ///         }
+    ///     }
+    /// );
+    /// </code>
+    /// </para>
+    /// NOTE: During the enumeration the partition is locked, i.e. concurrent operations done from
+    /// different threads (e.g. add/remove) will be blocked. Modifying the collection while enumerating
+    /// (e.g. removing entries) from the same thread is an anti-pattern and should be avoided
+    /// (e.g. case of re-entrancy); this MAY lead to unexpected outcome.
+    /// </summary>
+    /// <param name="partitionIndex">Index of the parition on which to create enumeration</param>
     public IEnumerable<KeyValuePair<TKey, TValue>> EnumerableOnPartition(int partitionIndex)
     {
         Dictionary<TKey, TValue> d = _data[partitionIndex];
@@ -542,6 +659,19 @@ public sealed partial class FastDictionary<TKey, TValue> :
         {
             Monitor.Exit(d);
         }
+    }
+
+    /// <inheritdoc />
+    public IFastReadOnlyDictionary<TKey, TValue> ToReadOnly()
+    {
+        return new FastReadOnlyDictionary<TKey, TValue>(0, PartitionCount, _comparer, this, false);
+    }
+
+    /// <inheritdoc />
+    public IFastReadOnlyDictionary<TKey, TValue> ToReadOnlyAndClear()
+    {
+        Dictionary<TKey, TValue>[] oldData = Interlocked.Exchange(ref _data, CreateDataSet(0, PartitionCount, _comparer));
+        return new FastReadOnlyDictionary<TKey, TValue>(oldData);
     }
 
     /// <inheritdoc />
@@ -652,11 +782,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
         return GetEnumerator();
     }
 
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     private bool TryAddCore(TKey key,
         TValue newValue,
         out TValue existingValue)
@@ -682,11 +808,7 @@ public sealed partial class FastDictionary<TKey, TValue> :
         }
     }
 
-#if NETCOREAPP3_0_OR_GREATER
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-#else
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
     private Dictionary<TKey, TValue> GetPartition(TKey key)
     {
         return _data[key.GetHashCode() & _concurrencyHash];

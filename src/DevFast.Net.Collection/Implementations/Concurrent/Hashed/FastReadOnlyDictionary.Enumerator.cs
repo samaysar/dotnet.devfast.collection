@@ -2,15 +2,15 @@
 
 namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 
-public sealed partial class FastDictionary<TKey, TValue>
+public sealed partial class FastReadOnlyDictionary<TKey, TValue>
 {
     private sealed class Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>
     {
-        private readonly FastDictionary<TKey, TValue> _instance;
+        private readonly FastReadOnlyDictionary<TKey, TValue> _instance;
         private int _currentPosition;
         private IEnumerator<KeyValuePair<TKey, TValue>>? _currentEnumerator;
 
-        public Enumerator(FastDictionary<TKey, TValue> instance)
+        public Enumerator(FastReadOnlyDictionary<TKey, TValue> instance)
         {
             _instance = instance;
             Reset();
@@ -64,17 +64,9 @@ public sealed partial class FastDictionary<TKey, TValue>
         private bool AcquireNextEnumerator()
         {
             _currentEnumerator!.Dispose();
-            if (_instance.TryGetPartition(_currentPosition++, out Dictionary<TKey, TValue>? d))
+            if (_instance.TryGetEnumerator(_currentPosition++, out IEnumerator<KeyValuePair<TKey, TValue>>? enumerator))
             {
-                Monitor.Enter(d);
-                try
-                {
-                    _currentEnumerator = new List<KeyValuePair<TKey, TValue>>(d).GetEnumerator();
-                }
-                finally
-                {
-                    Monitor.Exit(d);
-                }
+                _currentEnumerator = enumerator;
                 return true;
             }
             else

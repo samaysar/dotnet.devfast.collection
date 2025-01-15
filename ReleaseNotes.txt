@@ -1,3 +1,17 @@
+DevFast.Net.Collection 2.2.0
+
+ 1. New feature - in the namespace DevFast.Net.Collection.Abstractions.Concurrent.Hashed
+ 	A. added following method to IFastDictionary
+		  i. IFastReadOnlyDictionary<TKey, TValue> ToReadOnly()
+		 ii. IFastReadOnlyDictionary<TKey, TValue> ToReadOnlyAndClear()
+	C. added following method to IFastReadOnlyDictionary:
+		  i. void CopyTo(Span<KeyValuePair<TKey, TValue>>)
+		 ii. int CountInPartition(int)
+		iii. bool Contains(KeyValuePair<TKey, TValue>)
+ 2. New feature - in the namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed
+	A. FastDictionary fully implements IFastDictionary
+	B. Added FastReadOnlyDictionary that fully implements IFastReadOnlyDictionary
+
 DevFast.Net.Collection 2.1.0
 
  1. New feature - in the namespace DevFast.Net.Collection.Abstractions.Concurrent.Hashed
