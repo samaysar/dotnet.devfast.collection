@@ -113,28 +113,20 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue> :
         int concurrencyLevel,
         IEqualityComparer<TKey>? comparer,
         IEnumerable<KeyValuePair<TKey, TValue>> items,
-        bool ignoreDuplicates) : this(comparer, initialCapacity, concurrencyLevel)
-    {
-        if (items is IFastReadOnlyDictionary<TKey, TValue> fd)
-        {
-            InitializeEntries(fd, pair => GetPartition(pair.Key).Add(pair.Key, pair.Value));
-        }
-        else
-        {
-            Action<KeyValuePair<TKey, TValue>> lambda = ignoreDuplicates
-                ? (pair => GetPartition(pair.Key)[pair.Key] = pair.Value)
-                : (pair => GetPartition(pair.Key).Add(pair.Key, pair.Value));
-            InitializeEntries(lambda, items);
-        }
-        Count = _data.Sum(static x => x.Count);
-    }
-
-    private FastReadOnlyDictionary(IEqualityComparer<TKey>? comparer,
-        int initialCapacity,
-        int concurrencyLevel)
+        bool ignoreDuplicates)
     {
         _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToPow2HashMask();
         _data = CreateDataSet(initialCapacity, _concurrencyHash + 1, comparer ?? EqualityComparer<TKey>.Default);
+        if (items is IFastReadOnlyDictionary<TKey, TValue> fd)
+        {
+            InitializeEntries(fd, Add);
+        }
+        else
+        {
+            Action<KeyValuePair<TKey, TValue>> lambda = ignoreDuplicates ? IndexerAdd : Add;
+            InitializeEntries(lambda, items);
+        }
+        Count = _data.Sum(static x => x.Count);
     }
 
     /// <inheritdoc />
@@ -253,6 +245,34 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue> :
 #pragma warning restore IDE0079 // Remove unnecessary suppression
     }
 
+    private void Add(KeyValuePair<TKey, TValue> item)
+    {
+        Dictionary<TKey, TValue> d = GetPartition(item.Key);
+        Monitor.Enter(d);
+        try
+        {
+            d.Add(item.Key, item.Value);
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
+    }
+
+    private void IndexerAdd(KeyValuePair<TKey, TValue> item)
+    {
+        Dictionary<TKey, TValue> d = GetPartition(item.Key);
+        Monitor.Enter(d);
+        try
+        {
+            d[item.Key] = item.Value;
+        }
+        finally
+        {
+            Monitor.Exit(d);
+        }
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private Dictionary<TKey, TValue> GetPartition(TKey key)
     {
@@ -300,14 +320,14 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue> :
             );
     }
 
-    private bool TryGetPartition(int position, [NotNullWhen(true)] out Dictionary<TKey, TValue>? partition)
+    private bool TryGetEnumerator(int position, [NotNullWhen(true)] out IEnumerator<KeyValuePair<TKey, TValue>>? enumerator)
     {
         if (position >= 0 && position < PartitionCount)
         {
-            partition = _data[position];
+            enumerator = _data[position].GetEnumerator();
             return true;
         }
-        partition = default;
+        enumerator = default;
         return false;
     }
 }

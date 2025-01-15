@@ -108,8 +108,11 @@ public sealed partial class FastDictionary<TKey, TValue> :
         int concurrencyLevel,
         IEqualityComparer<TKey>? comparer,
         IEnumerable<KeyValuePair<TKey, TValue>> initialData,
-        bool ignoreDuplicates) : this(comparer, initialCapacity, concurrencyLevel)
+        bool ignoreDuplicates)
     {
+        _comparer = comparer ?? EqualityComparer<TKey>.Default;
+        _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToPow2HashMask();
+        _data = CreateDataSet(initialCapacity, _concurrencyHash + 1, comparer);
         if (initialData is IFastReadOnlyDictionary<TKey, TValue> fd)
         {
             InitializeEntries(fd, Add);
@@ -118,18 +121,9 @@ public sealed partial class FastDictionary<TKey, TValue> :
         {
             Action<KeyValuePair<TKey, TValue>> lambda = ignoreDuplicates
                 ? (pair => this[pair.Key] = pair.Value)
-                : (pair => Add(pair));
+                : Add;
             InitializeEntries(lambda, initialData);
         }
-    }
-
-    private FastDictionary(IEqualityComparer<TKey>? comparer,
-        int initialCapacity,
-        int concurrencyLevel)
-    {
-        _comparer = comparer ?? EqualityComparer<TKey>.Default;
-        _concurrencyHash = Math.Max(concurrencyLevel, FixedValues.MinConcurrencyLevel).ToPow2HashMask();
-        _data = CreateDataSet(initialCapacity, _concurrencyHash + 1, comparer);
     }
 
     /// <inheritdoc cref="IDictionary{TKey,TValue}.this" />

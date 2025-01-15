@@ -64,9 +64,9 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue>
         private bool AcquireNextEnumerator()
         {
             _currentEnumerator!.Dispose();
-            if (_instance.TryGetPartition(_currentPosition++, out Dictionary<TKey, TValue>? d))
+            if (_instance.TryGetEnumerator(_currentPosition++, out IEnumerator<KeyValuePair<TKey, TValue>>? enumerator))
             {
-                _currentEnumerator = d.GetEnumerator();
+                _currentEnumerator = enumerator;
                 return true;
             }
             else
