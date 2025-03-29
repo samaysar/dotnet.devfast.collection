@@ -1,8 +1,8 @@
-﻿using DevFast.Net.Collection.Abstractions;
-using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
-using System.Collections;
+﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using DevFast.Net.Collection.Abstractions;
+using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 
 namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 
@@ -136,10 +136,10 @@ public sealed partial class FastDictionary<TKey, TValue> :
             Monitor.Enter(d);
             try
             {
-                d[key] = value;
             }
             finally
             {
+                d[key] = value;
                 Monitor.Exit(d);
             }
         }
@@ -192,21 +192,19 @@ public sealed partial class FastDictionary<TKey, TValue> :
             //this call will provide best-effort count.
             int totCount = 0;
             int i = _data.Length;
-#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
             for (; i > 0;)
             {
                 Dictionary<TKey, TValue> d = _data[--i];
                 Monitor.Enter(d);
                 try
                 {
-                    totCount += d.Count;
                 }
                 finally
                 {
+                    totCount += d.Count;
                     Monitor.Exit(d);
                 }
             }
-#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
 
             return totCount;
         }
@@ -261,10 +259,10 @@ public sealed partial class FastDictionary<TKey, TValue> :
         Monitor.Enter(d);
         try
         {
-            d.Add(key, value);
         }
         finally
         {
+            d.Add(key, value);
             Monitor.Exit(d);
         }
     }
@@ -299,21 +297,19 @@ public sealed partial class FastDictionary<TKey, TValue> :
         //We do not want to take all locks together
         //this call will provide best-effort clearing on whole collection.
         int i = _data.Length;
-#pragma warning disable S1264 // A "while" loop should be used instead of a "for" loop
         for (; i > 0;)
         {
             Dictionary<TKey, TValue> d = _data[--i];
             Monitor.Enter(d);
             try
             {
-                d.Clear();
             }
             finally
             {
+                d.Clear();
                 Monitor.Exit(d);
             }
         }
-#pragma warning restore S1264 // A "while" loop should be used instead of a "for" loop
     }
 
     /// <inheritdoc />
@@ -352,10 +348,10 @@ public sealed partial class FastDictionary<TKey, TValue> :
         Monitor.Enter(d);
         try
         {
-            foundValue = d.TryGetValue(item.Key, out v);
         }
         finally
         {
+            foundValue = d.TryGetValue(item.Key, out v);
             Monitor.Exit(d);
         }
 

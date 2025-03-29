@@ -9,10 +9,7 @@
 //#endif
 //    where T : notnull
 //{
-//    /// <summary>
-//    /// Gets the number of Partitions contained in the <see cref="IFastDictionary{TKey, TValue}"/>.
-//    /// </summary>
-//    int PartitionCount { get; }
+
 
 //    /// <summary>
 //    /// Removes all items from all the partitions.

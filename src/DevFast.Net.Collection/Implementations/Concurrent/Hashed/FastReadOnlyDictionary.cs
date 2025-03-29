@@ -1,8 +1,8 @@
-﻿using DevFast.Net.Collection.Abstractions;
-using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
-using System.Collections;
+﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using DevFast.Net.Collection.Abstractions;
+using DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 
 namespace DevFast.Net.Collection.Implementations.Concurrent.Hashed;
 
@@ -82,7 +82,7 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue> :
         bool ignoreDuplicates) :
         this(initialCapacity,
             FixedValues.ProcessorCountWithMinBound,
-            EqualityComparer<TKey>.Default,
+            comparer,
             items,
             ignoreDuplicates)
     {
@@ -258,10 +258,10 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue> :
         Monitor.Enter(d);
         try
         {
-            d.Add(item.Key, item.Value);
         }
         finally
         {
+            d.Add(item.Key, item.Value);
             Monitor.Exit(d);
         }
     }
@@ -272,10 +272,10 @@ public sealed partial class FastReadOnlyDictionary<TKey, TValue> :
         Monitor.Enter(d);
         try
         {
-            d[item.Key] = item.Value;
         }
         finally
         {
+            d[item.Key] = item.Value;
             Monitor.Exit(d);
         }
     }

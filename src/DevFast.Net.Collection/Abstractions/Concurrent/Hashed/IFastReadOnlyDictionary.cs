@@ -1,7 +1,7 @@
 ﻿namespace DevFast.Net.Collection.Abstractions.Concurrent.Hashed;
 
 /// <summary>
-/// Interface for a thread-safe collection of key-value pairs, for read-only purpose, that can be accessed by multiple threads concurrently.
+/// Interface for a generic collection of key-value pairs, for read-only purpose, that can be accessed by multiple threads concurrently.
 /// </summary>
 /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
 /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
@@ -9,7 +9,7 @@ public interface IFastReadOnlyDictionary<TKey, TValue> : IReadOnlyDictionary<TKe
     where TKey : notnull
 {
     /// <summary>
-    /// Gets the number of Partitions contained in the <see cref="IFastDictionary{TKey, TValue}"/>.
+    /// Gets the number of Partitions contained in the collection.
     /// </summary>
     int PartitionCount { get; }
 

@@ -69,10 +69,10 @@ public sealed partial class FastDictionary<TKey, TValue>
                 Monitor.Enter(d);
                 try
                 {
-                    _currentEnumerator = new List<KeyValuePair<TKey, TValue>>(d).GetEnumerator();
                 }
                 finally
                 {
+                    _currentEnumerator = new List<KeyValuePair<TKey, TValue>>(d).GetEnumerator();
                     Monitor.Exit(d);
                 }
                 return true;
